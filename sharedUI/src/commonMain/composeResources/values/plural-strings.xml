@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="star_rating">
+        <item quantity="one">1 Star</item>
+        <item quantity="other">%1$d Stars</item>
+    </plurals>
+
+    <plurals name="book_album">
+        <item quantity="one">1 book album</item>
+        <item quantity="other">%1$d book albums</item>
+    </plurals>
+</resources>
