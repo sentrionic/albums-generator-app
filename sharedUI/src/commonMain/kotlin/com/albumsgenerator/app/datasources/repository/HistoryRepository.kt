@@ -23,20 +23,21 @@ interface HistoryRepository {
         genre: String,
         limit: Int,
     ): Flow<List<History>>
+
     suspend fun hasUnratedHistory(): Boolean
     suspend fun historyCount(): Int
     suspend fun ratedAlbumsCount(): Int
     suspend fun averageRating(): Float
     suspend fun historiesByRating(rating: Rating): List<History>
-    suspend fun historiesByYear(
+    fun historiesByYear(
         year: String,
         limit: Int,
-    ): List<History>
+    ): Flow<List<History>>
+
     suspend fun artistHistories(artist: String): List<History>
 }
 
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealHistoryRepository(val historyDao: HistoryDao) : HistoryRepository {
     private val logger = Logger.withTag("RealHistoryRepository")
@@ -140,16 +141,22 @@ class RealHistoryRepository(val historyDao: HistoryDao) : HistoryRepository {
         return result
     }
 
-    override suspend fun historiesByYear(
+    override fun historiesByYear(
         year: String,
         limit: Int,
-    ): List<History> {
+    ): Flow<List<History>> {
         logger.i { "[HistoriesByYear] Fetching up to $limit albums with release date $year" }
-        val result = historyDao.getAlbumsByYear(year, limit).map { it.toDomain() }
-        logger.d {
-            "[HistoriesByRating] Fetched ${result.size} albums with with release date $year"
-        }
-        return result
+        return historyDao
+            .getAlbumsByYear(year, limit)
+            .map { histories ->
+                histories
+                    .map { it.toDomain() }
+            }
+            .onEach {
+                logger.d {
+                    "[HistoriesFlow] Successfully fetched ${it.size} albums with with release date $year."
+                }
+            }
     }
 
     override suspend fun artistHistories(artist: String): List<History> {

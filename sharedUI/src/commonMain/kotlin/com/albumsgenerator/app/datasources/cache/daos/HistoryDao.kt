@@ -60,10 +60,10 @@ interface HistoryDao {
     @Query(
         "SELECT h.* FROM histories h JOIN albums a ON a.uuid = h.albumId WHERE a.release_date = :year ORDER BY h.global_rating DESC LIMIT :limit",
     )
-    suspend fun getAlbumsByYear(
+    fun getAlbumsByYear(
         year: String,
         limit: Int,
-    ): List<HistoryWithAlbum>
+    ): Flow<List<HistoryWithAlbum>>
 
     @Upsert
     suspend fun insertAll(histories: List<HistoryEntity>)

@@ -7,53 +7,65 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.presentation.common.components.AlbumGrid
 import com.albumsgenerator.app.presentation.navigation.Route
+import com.albumsgenerator.app.presentation.screens.year.YearState
 import com.albumsgenerator.app.presentation.shared.components.AlbumWithArtistCard
+import com.albumsgenerator.app.presentation.shared.components.UnknownAlbumArtistCard
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun YearContent(
-    histories: List<History>,
+    state: YearState,
     navigateToAlbum: (Route.Album) -> Unit,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
     AlbumGrid(
-        header = stringResource(Res.string.top_book_albums, histories.size),
+        header = stringResource(Res.string.top_book_albums, state.stats.size),
         modifier = modifier,
         isLoading = isLoading,
     ) {
         items(
-            items = histories,
-            key = { it.album.uuid },
+            items = state.stats,
+            key = { it.name },
             contentType = { "album" },
-        ) { history ->
-            AlbumWithArtistCard(
-                album = history.album,
-                averageRating = history.globalRating,
-                modifier = Modifier
-                    .clip(MaterialTheme.shapes.large)
-                    .clickable(
-                        enabled = !isLoading,
-                        onClickLabel = stringResource(Res.string.album_navigate_accessibility),
-                        onClick = {
-                            navigateToAlbum(
-                                Route.Album(
-                                    albumId = history.album.uuid,
-                                    albumName = history.album.name,
-                                ),
-                            )
-                        },
-                    ),
-                isLoading = isLoading,
-            )
+        ) { stat ->
+            val relatedHistory = remember {
+                state.histories.firstOrNull {
+                    it.album.name == stat.name &&
+                        it.album.artist == stat.artist
+                }
+            }
+            if (relatedHistory != null || !state.spoilerFree) {
+                AlbumWithArtistCard(
+                    stats = stat,
+                    modifier = Modifier
+                        .clip(MaterialTheme.shapes.large)
+                        .clickable(
+                            enabled = !isLoading,
+                            onClickLabel = stringResource(Res.string.album_navigate_accessibility),
+                            onClick = {
+                                navigateToAlbum(
+                                    Route.Album(
+                                        albumId = "",
+                                        albumName = stat.name,
+                                        albumArtist = stat.artist,
+                                    ),
+                                )
+                            },
+                        ),
+                    isLoading = isLoading,
+                )
+            } else {
+                UnknownAlbumArtistCard()
+            }
         }
     }
 }
@@ -63,7 +75,11 @@ fun YearContent(
 private fun YearContentPreview() {
     AppTheme {
         YearContent(
-            histories = listOf(PreviewData.history),
+            state = YearState(
+                histories = listOf(PreviewData.history),
+                stats = listOf(PreviewData.stats),
+                spoilerFree = true,
+            ),
             navigateToAlbum = {},
         )
     }

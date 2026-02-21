@@ -22,7 +22,7 @@ import com.albumsgenerator.app.datasources.cache.entities.StatEntity
         ProjectEntity::class,
         StatEntity::class,
     ],
-    version = 1,
+    version = 2,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {

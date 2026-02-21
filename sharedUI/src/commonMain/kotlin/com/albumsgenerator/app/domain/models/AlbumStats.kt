@@ -5,10 +5,17 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class AlbumStats(
     val artist: String,
+    val artistOrigin: String,
     val averageRating: Double,
     val controversialScore: Double,
     val genres: List<String>,
+    val globalReviewsUrl: String,
+    val images: List<String>,
     val name: String,
+    val releaseDate: String,
+    val slug: String,
+    val spotifyId: String?,
+    val styles: List<String>,
     val votes: Int,
     val votesByGrade: VotesByGrade,
 ) {

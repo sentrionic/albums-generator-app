@@ -11,7 +11,6 @@ import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
 import kotlin.reflect.KClass
 
-@Inject
 @ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
 class InjectedViewModelFactory(

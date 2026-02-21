@@ -20,12 +20,12 @@ interface PreferencesRepository {
     suspend fun updateProjectName(name: String)
     suspend fun updateTheme(theme: Theme)
     suspend fun updateStreamingService(service: StreamingServices)
+    suspend fun updateSpoilerMode(spoilerFree: Boolean)
     suspend fun clear()
 }
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealPreferencesRepository(private val dataStore: DataStore<Preferences>) :
     PreferencesRepository {
@@ -42,6 +42,7 @@ class RealPreferencesRepository(private val dataStore: DataStore<Preferences>) :
                         it,
                     )
                 },
+                spoilerFree = prefs[DataStoreKeys.SPOILER_FREE_MODE] ?: true,
             )
         }
 
@@ -60,6 +61,12 @@ class RealPreferencesRepository(private val dataStore: DataStore<Preferences>) :
     override suspend fun updateStreamingService(service: StreamingServices) {
         dataStore.edit {
             it[DataStoreKeys.SELECTED_STREAMING_SERVICE] = service.ordinal
+        }
+    }
+
+    override suspend fun updateSpoilerMode(spoilerFree: Boolean) {
+        dataStore.edit {
+            it[DataStoreKeys.SPOILER_FREE_MODE] = spoilerFree
         }
     }
 

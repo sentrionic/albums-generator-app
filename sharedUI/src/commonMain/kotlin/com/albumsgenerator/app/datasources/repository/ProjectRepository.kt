@@ -23,7 +23,6 @@ interface ProjectRepository {
 }
 
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealProjectRepository(
     val albumGeneratorService: AlbumGeneratorService,

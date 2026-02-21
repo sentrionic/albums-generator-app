@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.models.Album
+import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.presentation.common.components.NetworkImage
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
@@ -22,15 +23,14 @@ import com.eygraber.compose.placeholder.material3.placeholder
 
 @Composable
 fun AlbumWithArtistCard(
-    album: Album,
-    averageRating: Double,
+    stats: AlbumStats,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
     Card(modifier = modifier) {
         Column {
             NetworkImage(
-                url = album.images.getOrNull(1),
+                url = stats.images.getOrNull(1),
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
@@ -43,7 +43,7 @@ fun AlbumWithArtistCard(
                 verticalArrangement = Arrangement.spacedBy(Paddings.extraSmall),
             ) {
                 Text(
-                    text = album.name,
+                    text = stats.name,
                     modifier = Modifier
                         .placeholder(isLoading),
                     fontWeight = FontWeight.SemiBold,
@@ -53,7 +53,7 @@ fun AlbumWithArtistCard(
                 )
 
                 Text(
-                    text = album.artist,
+                    text = stats.artist,
                     modifier = Modifier
                         .placeholder(isLoading),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -63,14 +63,14 @@ fun AlbumWithArtistCard(
                 )
 
                 Text(
-                    text = album.releaseDate,
+                    text = stats.releaseDate,
                     modifier = Modifier
                         .placeholder(isLoading),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Text(
-                    text = "$averageRating / 5",
+                    text = "${stats.averageRating} / 5",
                     modifier = Modifier
                         .placeholder(isLoading),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -85,8 +85,7 @@ fun AlbumWithArtistCard(
 private fun AlbumWithArtistCardPreview() {
     AppTheme {
         AlbumWithArtistCard(
-            album = PreviewData.album,
-            averageRating = PreviewData.stats.averageRating,
+            stats = PreviewData.stats,
         )
     }
 }

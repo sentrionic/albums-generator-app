@@ -8,5 +8,5 @@ import com.albumsgenerator.app.domain.models.AlbumStats
 data class ArtistState(
     val albums: List<Album>,
     val albumStats: List<AlbumStats>,
-    val unknownAlbums: Int,
+    val spoilerFree: Boolean,
 )

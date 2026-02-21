@@ -36,6 +36,19 @@ interface StatsDao {
         limit: Int,
     ): Flow<List<StatEntity>>
 
+    @Query(
+        """
+            SELECT * FROM stats
+            WHERE release_date = :year
+            ORDER BY average_rating DESC
+            LIMIT :limit
+        """,
+    )
+    fun getByYear(
+        year: String,
+        limit: Int,
+    ): Flow<List<StatEntity>>
+
     @Upsert
     suspend fun insertAll(stats: List<StatEntity>)
 }

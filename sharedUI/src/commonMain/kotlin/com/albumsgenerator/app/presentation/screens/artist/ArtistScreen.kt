@@ -80,7 +80,7 @@ fun ArtistScreen(
                         state = ArtistState(
                             albums = listOf(PreviewData.album),
                             albumStats = emptyList(),
-                            unknownAlbums = 0,
+                            spoilerFree = true,
                         ),
                         navigateToAlbum = {},
                         isLoading = true,

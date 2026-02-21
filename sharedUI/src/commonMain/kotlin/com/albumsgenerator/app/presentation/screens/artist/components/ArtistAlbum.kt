@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.models.Album
+import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.presentation.common.components.NetworkImage
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
@@ -22,7 +23,7 @@ import com.eygraber.compose.placeholder.material3.placeholder
 
 @Composable
 fun ArtistAlbum(
-    album: Album,
+    stat: AlbumStats,
     averageRating: Double,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
@@ -30,7 +31,7 @@ fun ArtistAlbum(
     Card(modifier = modifier) {
         Column {
             NetworkImage(
-                url = album.images.getOrNull(1),
+                url = stat.images.getOrNull(1),
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
@@ -43,7 +44,7 @@ fun ArtistAlbum(
                 verticalArrangement = Arrangement.spacedBy(Paddings.extraSmall),
             ) {
                 Text(
-                    text = album.name,
+                    text = stat.name,
                     modifier = Modifier
                         .placeholder(isLoading),
                     fontWeight = FontWeight.SemiBold,
@@ -53,7 +54,7 @@ fun ArtistAlbum(
                 )
 
                 Text(
-                    text = album.releaseDate,
+                    text = stat.releaseDate,
                     modifier = Modifier
                         .placeholder(isLoading),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -75,7 +76,7 @@ fun ArtistAlbum(
 private fun ArtistAlbumPreview() {
     AppTheme {
         ArtistAlbum(
-            album = PreviewData.album,
+            stat = PreviewData.stats,
             averageRating = PreviewData.stats.averageRating,
         )
     }

@@ -44,7 +44,7 @@ class StatsViewModel(
                     mostControversial = statsSortedByControversialScore.take(Constants.LIMIT),
                     leastControversial = statsSortedByControversialScore.takeLast(Constants.LIMIT)
                         .reversed(),
-                    votes = totalVotes - summedVotes,
+                    votes = totalVotes,
                     averageRating =
                         stats.sumOf { it.votesByGrade.average }.toFloat() / summedVotes.toFloat(),
                 ),

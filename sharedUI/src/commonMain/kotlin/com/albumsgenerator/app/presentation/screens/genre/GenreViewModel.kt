@@ -3,6 +3,7 @@ package com.albumsgenerator.app.presentation.screens.genre
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albumsgenerator.app.datasources.repository.HistoryRepository
+import com.albumsgenerator.app.datasources.repository.PreferencesRepository
 import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.Coroutines
@@ -24,15 +25,18 @@ class GenreViewModel(
     @Assisted navKey: Route.Genre,
     statsRepository: StatsRepository,
     historyRepository: HistoryRepository,
+    preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
     val state = combine(
         historyRepository.genreHistories(genre = navKey.genre, limit = Constants.LIMIT),
         statsRepository.statsForGenre(genre = navKey.genre, limit = Constants.LIMIT),
-    ) { histories, stats ->
+        preferencesRepository.userData,
+    ) { histories, stats, userData ->
         DataState.Success(
             GenreState(
                 histories = histories,
                 stats = stats,
+                spoilerFree = userData.spoilerFree,
             ),
         )
     }

@@ -77,6 +77,7 @@ class SettingsViewModel(
             SettingsEvents.Logout -> logout()
             is SettingsEvents.UpdateStreamingService -> updateStreamingService(event.service)
             is SettingsEvents.UpdateTheme -> updateTheme(event.theme)
+            is SettingsEvents.UpdateSpoilerMode -> updateSpoilerMode(event.spoilerFree)
             is SettingsEvents.Refresh -> reload()
             is SettingsEvents.ResetMessage -> message = null
         }
@@ -91,6 +92,12 @@ class SettingsViewModel(
     private fun updateTheme(theme: Theme) {
         viewModelScope.launch(ioDispatcher) {
             preferencesRepository.updateTheme(theme)
+        }
+    }
+
+    private fun updateSpoilerMode(spoilerFree: Boolean) {
+        viewModelScope.launch(ioDispatcher) {
+            preferencesRepository.updateSpoilerMode(spoilerFree)
         }
     }
 

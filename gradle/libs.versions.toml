@@ -6,27 +6,27 @@ app-name = "Albums Generator"
 app-vendor = "1001albumsgenerator"
 app-description = "Explore the history of music. One album a day. From the book 1001 Albums You Must Hear Before You Die."
 app-menugroup = "Other"
-activity-compose = "1.12.2"
+activity-compose = "1.12.4"
 android-compileSdk = "36"
-android-gradle = "9.1.0-alpha05"
+android-gradle = "9.0.1"
 android-minSdk = "28"
 android-targetSdk = "36"
 coil = "3.3.0"
-compose = "1.11.0-alpha01"
+compose = "1.11.0-alpha02"
 datastore = "1.2.0"
-ktor = "3.3.3"
-kotlin = "2.3.0"
-kotlinter = "5.3.0"
+ktor = "3.4.0"
+kotlin = "2.3.10"
+kotlinter = "5.4.2"
 kotlinx-coroutines = "1.10.2"
 ksp = "2.3.4"
-lifecycle = "2.10.0-alpha07"
-metro = "0.9.4"
-navigation3 = "1.1.0-alpha01"
+lifecycle = "2.10.0-alpha08"
+metro = "0.10.4"
+navigation3 = "1.1.0-alpha02"
 room = "2.8.4"
 
 [libraries]
 compose-webview-multiplatform = "com.saralapps:composemultiplatformwebview:0.1.5"
-jetpack-compose-rules = "io.nlopez.compose.rules:ktlint:0.5.3"
+jetpack-compose-rules = "io.nlopez.compose.rules:ktlint:0.5.6"
 material3-placeholder = "com.eygraber:compose-placeholder-material3:1.0.12"
 touchlab-kermit = "co.touchlab:kermit:2.0.8"
 
@@ -38,7 +38,7 @@ androidx-sqlite-bundled = "androidx.sqlite:sqlite-bundled:2.6.2"
 
 # JetBrains
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
-compose-material3 = "org.jetbrains.compose.material3:material3:1.10.0-alpha05"
+compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose" }
 compose-nav3 = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 compose-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
@@ -59,7 +59,7 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1"
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
 
 # Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

@@ -3,6 +3,7 @@ package com.albumsgenerator.app.presentation.screens.artist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albumsgenerator.app.datasources.repository.HistoryRepository
+import com.albumsgenerator.app.datasources.repository.PreferencesRepository
 import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
@@ -24,18 +25,20 @@ class ArtistViewModel(
     @Assisted navKey: Route.Artist,
     statsRepository: StatsRepository,
     historyRepository: HistoryRepository,
+    preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
     val state = combine(
         flow { emit(historyRepository.artistHistories(navKey.artist)) },
         statsRepository.statsForArtist(navKey.artist),
-    ) { histories, stats ->
+        preferencesRepository.userData,
+    ) { histories, stats, userData ->
         val albums = histories.map { it.album }.sortedBy { it.releaseDate }
 
         DataState.Success(
             ArtistState(
                 albums = albums,
-                albumStats = stats,
-                unknownAlbums = (stats.size - albums.size).coerceAtLeast(0),
+                albumStats = stats.sortedBy { it.releaseDate },
+                spoilerFree = userData.spoilerFree,
             ),
         )
     }

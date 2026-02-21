@@ -19,6 +19,7 @@ object DatabaseModule {
     @SingleIn(AppScope::class)
     fun providesAppDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase = builder
         .setDriver(BundledSQLiteDriver())
+        .fallbackToDestructiveMigration(true)
         .build()
 
     @Provides

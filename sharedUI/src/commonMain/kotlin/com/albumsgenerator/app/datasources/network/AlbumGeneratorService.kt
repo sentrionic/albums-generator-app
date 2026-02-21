@@ -19,7 +19,6 @@ interface AlbumGeneratorService {
 }
 
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealAlbumGeneratorService(private val httpClient: HttpClient) : AlbumGeneratorService {
     override suspend fun getProject(name: String) = httpClient

@@ -24,7 +24,9 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AlbumInfo(
-    album: Album,
+    name: String,
+    artist: String,
+    releaseDate: String,
     navigateToArtist: (Route.Artist) -> Unit,
     navigateToYear: (Route.Year) -> Unit,
     modifier: Modifier = Modifier,
@@ -36,7 +38,7 @@ fun AlbumInfo(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = album.name,
+            text = name,
             modifier = Modifier
                 .placeholder(visible = isLoading),
             fontWeight = FontWeight.SemiBold,
@@ -45,13 +47,13 @@ fun AlbumInfo(
         )
 
         Text(
-            text = album.artist,
+            text = artist,
             modifier = Modifier
                 .clickable(
                     enabled = !isLoading,
                     onClickLabel = stringResource(Res.string.artist_navigate_accessibility),
                     onClick = {
-                        navigateToArtist(Route.Artist(album.artist))
+                        navigateToArtist(Route.Artist(artist))
                     },
                 )
                 .placeholder(visible = isLoading),
@@ -61,13 +63,13 @@ fun AlbumInfo(
         )
 
         Text(
-            text = album.releaseDate,
+            text = releaseDate,
             modifier = Modifier
                 .clickable(
                     enabled = !isLoading,
                     onClickLabel = stringResource(Res.string.year_navigate_accessibility),
                     onClick = {
-                        navigateToYear(Route.Year(album.releaseDate))
+                        navigateToYear(Route.Year(releaseDate))
                     },
                 )
                 .placeholder(visible = isLoading),
@@ -83,7 +85,9 @@ fun AlbumInfo(
 private fun AlbumInfoPreview() {
     AppTheme {
         AlbumInfo(
-            album = PreviewData.album,
+            name = PreviewData.album.name,
+            artist = PreviewData.album.artist,
+            releaseDate = PreviewData.album.releaseDate,
             navigateToArtist = {},
             navigateToYear = {},
         )

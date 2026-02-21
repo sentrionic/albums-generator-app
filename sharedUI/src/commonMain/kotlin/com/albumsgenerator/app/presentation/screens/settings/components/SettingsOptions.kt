@@ -11,7 +11,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.StreamingServices
@@ -21,8 +20,6 @@ import com.albumsgenerator.app.presentation.common.components.SelectionMenu
 import com.albumsgenerator.app.presentation.screens.settings.SettingsEvents
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
-import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -89,6 +86,13 @@ fun SettingsOptions(
                 isItemCurrent = { it == userData.theme },
             )
         }
+
+        SpoilerOption(
+            spoilerFree = userData.spoilerFree,
+            onSpoilerFreeChange = {
+                sendEvent(SettingsEvents.UpdateSpoilerMode(it))
+            },
+        )
     }
 }
 
@@ -97,11 +101,7 @@ fun SettingsOptions(
 private fun SettingsOptionsPreview() {
     AppTheme {
         SettingsOptions(
-            userData = UserData(
-                projectName = null,
-                theme = Theme.SYSTEM,
-                service = null,
-            ),
+            userData = UserData.EMPTY,
             sendEvent = {},
         )
     }

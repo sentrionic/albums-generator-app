@@ -139,7 +139,8 @@ private fun CurrentAlbumMoreInfoSheetContent(
                 SectionHeader(text = stringResource(Res.string.album_other_streaming_services))
 
                 AlbumStreamingServices(
-                    album = album,
+                    streamingServices = album.streamingServices,
+                    serviceUrl = album::serviceUrl,
                     openUri = onOpenUri,
                 )
             }

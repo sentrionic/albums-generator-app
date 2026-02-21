@@ -73,6 +73,7 @@ fun GenreScreen(
                         state = GenreState(
                             histories = listOf(PreviewData.history),
                             stats = listOf(PreviewData.stats),
+                            spoilerFree = true,
                         ),
                         navigateToAlbum = {},
                         isLoading = true,

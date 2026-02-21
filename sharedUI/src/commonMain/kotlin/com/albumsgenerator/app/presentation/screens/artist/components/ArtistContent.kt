@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,39 +36,40 @@ fun ArtistContent(
         isLoading = isLoading,
     ) {
         items(
-            items = state.albums,
-            key = { it.uuid },
+            items = state.albumStats,
+            key = { it.name },
             contentType = { "album" },
-        ) { album ->
-            ArtistAlbum(
-                album = album,
-                averageRating =
-                    state.albumStats.firstOrNull { it.name == album.name }?.averageRating
-                        ?: 0.0,
-                modifier = Modifier
-                    .clip(MaterialTheme.shapes.large)
-                    .clickable(
-                        enabled = !isLoading,
-                        onClickLabel = stringResource(Res.string.album_navigate_accessibility),
-                        onClick = {
-                            navigateToAlbum(
-                                Route.Album(
-                                    albumId = album.uuid,
-                                    albumName = album.name,
-                                ),
-                            )
-                        },
-                    ),
-                isLoading = isLoading,
-            )
-        }
+        ) { stat ->
+            val relatedAlbum = remember {
+                state.albums.firstOrNull {
+                    it.name == stat.name && it.artist == stat.artist
+                }
+            }
 
-        items(
-            count = state.unknownAlbums,
-            key = { it },
-            contentType = { "unknown-album" },
-        ) {
-            UnknownAlbum()
+            if (relatedAlbum != null || !state.spoilerFree) {
+                ArtistAlbum(
+                    stat = stat,
+                    averageRating = stat.averageRating,
+                    modifier = Modifier
+                        .clip(MaterialTheme.shapes.large)
+                        .clickable(
+                            enabled = !isLoading,
+                            onClickLabel = stringResource(Res.string.album_navigate_accessibility),
+                            onClick = {
+                                navigateToAlbum(
+                                    Route.Album(
+                                        albumId = relatedAlbum?.uuid.orEmpty(),
+                                        albumName = stat.name,
+                                        albumArtist = stat.artist,
+                                    ),
+                                )
+                            },
+                        ),
+                    isLoading = isLoading,
+                )
+            } else {
+                UnknownAlbum()
+            }
         }
     }
 }
@@ -80,7 +82,7 @@ private fun ArtistContentPreview() {
             state = ArtistState(
                 albums = listOf(PreviewData.album),
                 albumStats = listOf(PreviewData.stats),
-                unknownAlbums = 1,
+                spoilerFree = true,
             ),
             navigateToAlbum = {},
         )

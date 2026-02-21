@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.albumsgenerator.app.datasources.repository.AlbumRepository
 import com.albumsgenerator.app.datasources.repository.HistoryRepository
+import com.albumsgenerator.app.datasources.repository.PreferencesRepository
 import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.di.modules.IO
 import com.albumsgenerator.app.domain.core.Coroutines
@@ -20,6 +21,8 @@ import dev.zacsweers.metrox.viewmodel.ManualViewModelAssistedFactory
 import dev.zacsweers.metrox.viewmodel.ManualViewModelAssistedFactoryKey
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -30,8 +33,38 @@ class AlbumViewModel(
     @param:IO private val ioDispatcher: CoroutineDispatcher,
     statsRepository: StatsRepository,
     historyRepository: HistoryRepository,
+    preferencesRepository: PreferencesRepository,
     private val albumRepository: AlbumRepository,
 ) : ViewModel() {
+    val state: StateFlow<DataState<AlbumState>> = combine(
+        if (navKey.albumName.isNotEmpty() &&
+            !navKey.albumArtist.isNullOrEmpty()
+        ) {
+            historyRepository.historyFlow(navKey.albumName, navKey.albumArtist)
+        } else {
+            historyRepository.historyFlow(navKey.albumId)
+        },
+        statsRepository.statsForAlbum(navKey.albumName),
+        preferencesRepository.userData,
+    ) { history, stats, userData ->
+        if (history == null && userData.spoilerFree) {
+            DataState.Error(Res.string.album_error_missing_history)
+        } else if (stats == null) {
+            DataState.Error(Res.string.album_error_missing_history)
+        } else {
+            DataState.Success(
+                AlbumState(
+                    history = history,
+                    stats = stats,
+                ),
+            )
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(Coroutines.SUBSCRIPTION_TIMEOUT_MS),
+        initialValue = DataState.Loading(),
+    )
+
     val history = if (navKey.albumName.isNotEmpty() &&
         !navKey.albumArtist.isNullOrEmpty()
     ) {
@@ -50,14 +83,6 @@ class AlbumViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(Coroutines.SUBSCRIPTION_TIMEOUT_MS),
             initialValue = DataState.Loading(),
-        )
-
-    val stats = statsRepository
-        .statsForAlbum(navKey.albumName)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(Coroutines.SUBSCRIPTION_TIMEOUT_MS),
-            initialValue = null,
         )
 
     init {

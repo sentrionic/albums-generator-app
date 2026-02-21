@@ -54,12 +54,27 @@ object PreviewData {
         index = 0,
     )
 
+    @Suppress("ktlint:standard:max-line-length")
     val stats = AlbumStats(
         artist = "Beatles",
+        artistOrigin = "uk",
         averageRating = 4.46,
         controversialScore = 0.814428505365509,
         genres = listOf("rock", "pop"),
+        globalReviewsUrl = "https://1001albumsgenerator.com/albums/0ETFjACtuP2ADo6LFhL6HN/abbey-road",
+        images = listOf(
+            "https://i.scdn.co/image/ab67616d0000b273dc30583ba717007b00cceb25",
+        ),
         name = "Abbey Road",
+        releaseDate = "1969",
+        slug = "abbey-road",
+        spotifyId = "0ETFjACtuP2ADo6LFhL6HN",
+        styles = listOf(
+            "psychedelic-rock",
+            "art-rock",
+            "symphonic-rock",
+            "prog-rock",
+        ),
         votes = 24116,
         votesByGrade = AlbumStats.VotesByGrade(
             x1 = 78,

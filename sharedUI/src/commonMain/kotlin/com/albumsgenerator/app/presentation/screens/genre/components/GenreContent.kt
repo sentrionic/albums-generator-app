@@ -43,10 +43,9 @@ fun GenreContent(
                         it.album.artist == stat.artist
                 }
             }
-            if (relatedHistory != null) {
+            if (relatedHistory != null || !state.spoilerFree) {
                 AlbumWithArtistCard(
-                    album = relatedHistory.album,
-                    averageRating = relatedHistory.globalRating,
+                    stats = stat,
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.large)
                         .clickable(
@@ -55,8 +54,9 @@ fun GenreContent(
                             onClick = {
                                 navigateToAlbum(
                                     Route.Album(
-                                        albumId = relatedHistory.album.uuid,
-                                        albumName = relatedHistory.album.name,
+                                        albumId = relatedHistory?.album?.uuid.orEmpty(),
+                                        albumName = stat.name,
+                                        albumArtist = stat.artist,
                                     ),
                                 )
                             },
@@ -78,6 +78,7 @@ private fun GenreContentPreview() {
             state = GenreState(
                 histories = listOf(PreviewData.history),
                 stats = listOf(PreviewData.stats),
+                spoilerFree = true,
             ),
             navigateToAlbum = {},
         )

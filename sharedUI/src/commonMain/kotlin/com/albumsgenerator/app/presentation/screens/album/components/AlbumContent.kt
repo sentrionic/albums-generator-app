@@ -24,6 +24,7 @@ import com.albumsgenerator.app.presentation.common.components.AlbumStreamingServ
 import com.albumsgenerator.app.presentation.common.components.NetworkImage
 import com.albumsgenerator.app.presentation.common.components.Section
 import com.albumsgenerator.app.presentation.navigation.Route
+import com.albumsgenerator.app.presentation.screens.album.AlbumState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
@@ -35,8 +36,7 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumContent(
-    history: History,
-    stats: AlbumStats?,
+    state: AlbumState,
     showMessage: (String) -> Unit,
     navigateTo: (Route) -> Unit,
     modifier: Modifier = Modifier,
@@ -44,8 +44,6 @@ fun AlbumContent(
 ) {
     val scope = rememberCoroutineScope()
     val uriHandler = LocalUriHandler.current
-
-    val album = history.album
 
     fun tryOpenUri(uri: String) {
         try {
@@ -62,9 +60,9 @@ fun AlbumContent(
         verticalArrangement = Arrangement.spacedBy(Paddings.extraLarge),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (album.coverUrl != null) {
+        state.coverUrl?.let { coverUrl ->
             NetworkImage(
-                url = album.coverUrl,
+                url = coverUrl,
                 modifier = Modifier
                     .fillMaxWidth(0.75f)
                     .aspectRatio(1f)
@@ -77,16 +75,19 @@ fun AlbumContent(
         }
 
         AlbumInfo(
-            album = album,
+            name = state.name,
+            artist = state.artist,
+            releaseDate = state.releaseDate,
             navigateToArtist = navigateTo,
             navigateToYear = navigateTo,
             isLoading = isLoading,
         )
 
-        if (album.streamingServices.isNotEmpty()) {
+        if (state.streamingServices.isNotEmpty()) {
             Section(header = stringResource(Res.string.album_streaming_services)) {
                 AlbumStreamingServices(
-                    album = album,
+                    streamingServices = state.streamingServices,
+                    serviceUrl = state::serviceUrl,
                     openUri = ::tryOpenUri,
                     modifier = Modifier
                         .placeholder(visible = isLoading),
@@ -94,18 +95,16 @@ fun AlbumContent(
             }
         }
 
-        if (stats != null) {
-            AlbumStatsSection(
-                stats = stats,
-                history = history,
-                isLoading = isLoading,
-            )
-        }
+        AlbumStatsSection(
+            stats = state.stats,
+            history = state.history,
+            isLoading = isLoading,
+        )
 
         Section(header = stringResource(Res.string.album_genres)) {
             AlbumGenres(
-                genres = album.genres,
-                subgenres = album.subGenres,
+                genres = state.genres,
+                subgenres = state.subGenres,
                 onNavigateToGenre = {
                     navigateTo(Route.Genre(it))
                 },
@@ -114,11 +113,13 @@ fun AlbumContent(
             )
         }
 
-        if (!album.summary.isNullOrEmpty()) {
+        val summary = state.history?.album?.summary
+        val wikipediaUrl = state.history?.album?.wikipediaUrl
+        if (!summary.isNullOrEmpty() && !wikipediaUrl.isNullOrEmpty()) {
             AlbumSummary(
-                summary = album.summary,
+                summary = summary,
                 openSummaryPage = {
-                    navigateTo(Route.Web(album.wikipediaUrl, "Wikipedia"))
+                    navigateTo(Route.Web(wikipediaUrl, "Wikipedia"))
                 },
                 isLoading = isLoading,
             )
@@ -131,8 +132,10 @@ fun AlbumContent(
 private fun AlbumContentPreview() {
     AppTheme {
         AlbumContent(
-            history = PreviewData.history,
-            stats = PreviewData.stats,
+            state = AlbumState(
+                history = PreviewData.history,
+                stats = PreviewData.stats,
+            ),
             showMessage = {},
             navigateTo = {},
         )
@@ -144,8 +147,10 @@ private fun AlbumContentPreview() {
 private fun AlbumContentLoadingPreview() {
     AppTheme {
         AlbumContent(
-            history = PreviewData.history,
-            stats = PreviewData.stats,
+            state = AlbumState(
+                history = PreviewData.history,
+                stats = PreviewData.stats,
+            ),
             showMessage = {},
             navigateTo = {},
             isLoading = true,

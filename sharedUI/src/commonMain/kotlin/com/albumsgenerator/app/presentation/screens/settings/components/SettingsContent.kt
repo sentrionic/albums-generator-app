@@ -214,11 +214,7 @@ private fun SettingsContentPreview() {
     AppTheme {
         SettingsContent(
             project = null,
-            userData = UserData(
-                projectName = null,
-                theme = Theme.SYSTEM,
-                service = null,
-            ),
+            userData = UserData.EMPTY,
             message = null,
             navigateTo = {},
             sendEvent = {},

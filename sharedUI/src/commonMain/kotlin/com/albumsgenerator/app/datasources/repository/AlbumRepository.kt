@@ -27,7 +27,6 @@ interface AlbumRepository {
 }
 
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealAlbumRepository(
     private val wikipediaService: WikipediaService,

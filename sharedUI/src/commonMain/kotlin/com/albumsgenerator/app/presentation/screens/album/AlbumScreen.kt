@@ -1,5 +1,8 @@
 package com.albumsgenerator.app.presentation.screens.album
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.reviews
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_warning
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -25,6 +28,7 @@ import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import dev.zacsweers.metrox.viewmodel.assistedMetroViewModel
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,13 +43,13 @@ fun AlbumScreen(
 ) {
     val scope = rememberCoroutineScope()
 
-    val historyFlow by viewModel.history.collectAsStateWithLifecycle()
-    val stats by viewModel.stats.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val loadingState by historyFlow.rememberLoadingState()
+    val loadingState by state.rememberLoadingState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val title = historyFlow.contentOrNull()?.album?.name ?: data.albumName
+    val title = data.albumName
+    val reviewsTitle = stringResource(Res.string.reviews)
 
     Scaffold(
         modifier = modifier
@@ -57,12 +61,22 @@ fun AlbumScreen(
                 title = title,
                 onBack = onBack,
                 onOpenWeb = {
-                    navigateTo(
-                        Route.Web(
-                            url = historyFlow.contentOrNull()?.album?.globalReviewsUrl.orEmpty(),
-                            title = "Reviews",
-                        ),
-                    )
+                    val globalReviewsUrl = state.contentOrNull()?.stats?.globalReviewsUrl
+
+                    if (globalReviewsUrl != null) {
+                        navigateTo(
+                            Route.Web(
+                                url = globalReviewsUrl,
+                                title = reviewsTitle,
+                            ),
+                        )
+                    } else {
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                getString(Res.string.spoiler_mode_warning),
+                            )
+                        }
+                    }
                 },
             )
         },
@@ -79,8 +93,10 @@ fun AlbumScreen(
             when (result) {
                 is DataState.Loading -> {
                     AlbumContent(
-                        history = PreviewData.history,
-                        stats = PreviewData.stats,
+                        state = AlbumState(
+                            history = PreviewData.history,
+                            stats = PreviewData.stats,
+                        ),
                         showMessage = {},
                         navigateTo = {},
                         modifier = Modifier
@@ -90,10 +106,8 @@ fun AlbumScreen(
                 }
 
                 is DataState.Success -> {
-                    val history = historyFlow.contentOrNull() ?: return@Crossfade
                     AlbumContent(
-                        history = history,
-                        stats = stats,
+                        state = state.contentOrNull() ?: return@Crossfade,
                         showMessage = {
                             scope.launch {
                                 snackbarHostState.showSnackbar(it)

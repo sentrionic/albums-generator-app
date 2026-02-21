@@ -25,12 +25,13 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun AlbumStreamingServices(
-    album: Album,
+    streamingServices: List<StreamingServices>,
+    serviceUrl: (StreamingServices) -> String,
     openUri: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val maxItemsInEachRow = remember(album) {
-        val size = album.streamingServices.size
+    val maxItemsInEachRow = remember(streamingServices) {
+        val size = streamingServices.size
         if (size > 4) {
             (size + 1) / 2
         } else {
@@ -48,9 +49,9 @@ fun AlbumStreamingServices(
         itemVerticalAlignment = Alignment.CenterVertically,
         maxItemsInEachRow = maxItemsInEachRow,
     ) {
-        for (service in album.streamingServices) {
+        for (service in streamingServices) {
             ServiceButton(
-                id = album.serviceUrl(service),
+                id = serviceUrl(service),
                 service = service,
                 onClick = openUri,
             )
@@ -96,7 +97,8 @@ private fun ServiceButton(
 private fun AlbumStreamingServicesPreview() {
     AppTheme {
         AlbumStreamingServices(
-            album = PreviewData.album,
+            streamingServices = PreviewData.album.streamingServices,
+            serviceUrl = { PreviewData.album.serviceUrl(it) },
             openUri = {},
         )
     }

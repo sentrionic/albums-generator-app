@@ -16,7 +16,6 @@ interface WikipediaService {
 }
 
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealWikipediaService(private val httpClient: HttpClient) : WikipediaService {
     override suspend fun getSummary(title: String) = httpClient.get(

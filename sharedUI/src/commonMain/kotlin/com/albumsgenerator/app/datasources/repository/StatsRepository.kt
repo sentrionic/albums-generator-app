@@ -20,11 +20,14 @@ interface StatsRepository {
         genre: String,
         limit: Int,
     ): Flow<List<AlbumStats>>
+    fun statsByYear(
+        year: String,
+        limit: Int,
+    ): Flow<List<AlbumStats>>
     suspend fun fetchAndStoreStats()
 }
 
 @ContributesBinding(AppScope::class)
-@Inject
 @Suppress("Unused")
 class RealStatsRepository(
     val albumGeneratorService: AlbumGeneratorService,
@@ -81,6 +84,19 @@ class RealStatsRepository(
             .map { entities -> entities.map { it.toDomain() } }
             .onEach {
                 logger.d { "[StatsFlow] Successfully fetched ${it.size} stats" }
+            }
+    }
+
+    override fun statsByYear(
+        year: String,
+        limit: Int,
+    ): Flow<List<AlbumStats>> {
+        logger.i { "[StatsFlow] Fetching the album stats for year $year" }
+        return statsDao
+            .getByYear(year = year, limit = limit)
+            .map { entities -> entities.map { it.toDomain() } }
+            .onEach {
+                logger.d { "[StatsFlow] Successfully fetched ${it.size} stats for year $year" }
             }
     }
 

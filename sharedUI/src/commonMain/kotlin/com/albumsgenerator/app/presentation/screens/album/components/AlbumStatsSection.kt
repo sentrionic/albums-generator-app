@@ -32,7 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun AlbumStatsSection(
     stats: AlbumStats,
-    history: History,
+    history: History?,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
@@ -60,7 +60,7 @@ fun AlbumStatsSection(
                     value = "${stats.averageRating}",
                 )
 
-                val rating = history.rating?.toIntOrNull()
+                val rating = history?.rating?.toIntOrNull()
                 if (rating != null) {
                     StatDisplay(
                         label = stringResource(Res.string.album_rating_label),

@@ -7,7 +7,7 @@
     <string name="action_open_service">Open in %1$s</string>
     <string name="action_open_web">Open in web</string>
     <string name="action_open_wikipedia">Open Wikipedia page</string>
-    <string name="album_error_missing_history">Seems like you haven't had this album yet.\nTo view this album's info please visit the website.\n(This is a limitation of the API)</string>
+    <string name="album_error_missing_history">Seems like you haven't had this album yet.</string>
     <string name="album_genres">Genres</string>
     <string name="album_navigate_accessibility">Navigate to the album</string>
     <string name="album_other_streaming_services">Also available on</string>
@@ -54,6 +54,7 @@
     <string name="please_choose">Please Choose</string>
     <string name="previous_album_action">Continue to app</string>
     <string name="previous_album_title">Previous Album</string>
+    <string name="reviews">Reviews</string>
     <string name="settings_app_info_action">Visit repository</string>
     <string name="settings_app_info_body">Found bugs or got suggestions?</string>
     <string name="settings_app_info_title">App Info</string>
@@ -70,6 +71,9 @@
     <string name="settings_sharing_title">Sharing</string>
     <string name="settings_streaming_source">Streaming Source</string>
     <string name="settings_theme">Theme</string>
+    <string name="spoiler_mode_label">Spoiler free</string>
+    <string name="spoiler_mode_title">Show future albums?</string>
+    <string name="spoiler_mode_warning">Spoiler free mode is on</string>
     <string name="statistics_average_rating">AVERAGE RATING</string>
     <string name="statistics_item_votes_accessibility">%1$d votes</string>
     <string name="statistics_section_controversial">Controversial Albums</string>

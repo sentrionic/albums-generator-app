@@ -15,6 +15,7 @@ import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
+import com.albumsgenerator.app.presentation.screens.genre.GenreState
 import com.albumsgenerator.app.presentation.screens.year.components.YearContent
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
@@ -31,9 +32,9 @@ fun YearScreen(
     viewModel: YearViewModel =
         assistedMetroViewModel<YearViewModel, YearViewModel.Factory> { create(data) },
 ) {
-    val histories by viewModel.histories.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val loadingState by histories.rememberLoadingState()
+    val loadingState by state.rememberLoadingState()
 
     val title = data.year
 
@@ -66,16 +67,20 @@ fun YearScreen(
             when (result) {
                 is DataState.Loading -> {
                     YearContent(
-                        histories = listOf(PreviewData.history),
+                        state = YearState(
+                            histories = listOf(PreviewData.history),
+                            stats = listOf(PreviewData.stats),
+                            spoilerFree = true,
+                        ),
                         navigateToAlbum = {},
                         isLoading = true,
                     )
                 }
 
                 is DataState.Success -> {
-                    val state = histories.contentOrNull() ?: return@Crossfade
+                    val state = state.contentOrNull() ?: return@Crossfade
                     YearContent(
-                        histories = state,
+                        state = state,
                         navigateToAlbum = navigateTo,
                     )
                 }
