@@ -100,7 +100,7 @@ fun CurrentAlbumActions(
         CurrentIconButton(
             iconRes = Res.drawable.ic_wikipedia,
             onClick = {
-                showWebRoute(Route.Web(url = album.wikipediaUrl, title = "Wikipedia"))
+                showWebRoute(Route.Web(url = album.responsiveWikipediaUrl, title = "Wikipedia"))
             },
             contentDescription = stringResource(Res.string.action_open_wikipedia),
             enabled = !isLoading,

@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.domain.models.AlbumStats
-import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.presentation.common.components.AlbumGenres
 import com.albumsgenerator.app.presentation.common.components.AlbumStreamingServices
 import com.albumsgenerator.app.presentation.common.components.NetworkImage
@@ -114,7 +112,7 @@ fun AlbumContent(
         }
 
         val summary = state.history?.album?.summary
-        val wikipediaUrl = state.history?.album?.wikipediaUrl
+        val wikipediaUrl = state.history?.album?.responsiveWikipediaUrl
         if (!summary.isNullOrEmpty() && !wikipediaUrl.isNullOrEmpty()) {
             AlbumSummary(
                 summary = summary,
