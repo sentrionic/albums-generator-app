@@ -33,7 +33,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.StreamingServices
 import com.albumsgenerator.app.presentation.common.components.Tooltip
 import com.albumsgenerator.app.presentation.navigation.Route
@@ -115,7 +115,7 @@ fun CurrentAlbumActions(
             iconRes = Res.drawable.ic_external_link,
             onClick = {
                 showWebRoute(
-                    Route.Web(url = "${BuildConfig.WEBSITE_URL}/${state.project.name}", title = ""),
+                    Route.Web(url = "${Constants.WEBSITE_URL}/${state.project.name}", title = ""),
                 )
             },
             contentDescription = stringResource(Res.string.action_open_web),

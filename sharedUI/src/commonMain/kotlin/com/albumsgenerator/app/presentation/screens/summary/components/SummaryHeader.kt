@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.presentation.common.components.A11yRow
 import com.albumsgenerator.app.presentation.common.components.StatDisplay
 import com.albumsgenerator.app.presentation.screens.summary.SummaryScreenState
@@ -81,7 +81,7 @@ fun SummaryHeader(
             Text(
                 text = stringResource(
                     Res.string.summary_albums_remaining,
-                    BuildConfig.TOTAL_ALBUMS_COUNT - summary.albumsRated,
+                    Constants.TOTAL_ALBUMS_COUNT - summary.albumsRated,
                 ),
                 modifier = Modifier
                     .placeholder(visible = isLoading),

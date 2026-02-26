@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.metro).apply(false)
     alias(libs.plugins.room).apply(false)
     alias(libs.plugins.ksp).apply(false)
-    alias(libs.plugins.gradle.buildconfig.plugin).apply(false)
     alias(libs.plugins.kotlinter).apply(false)
 }
 

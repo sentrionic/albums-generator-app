@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.presentation.common.components.Tooltip
 import com.albumsgenerator.app.presentation.utils.collectIsScreenReaderEnabledAsState
 import com.saralapps.composemultiplatformwebview.PlatformWebView
@@ -35,7 +35,7 @@ fun RateAlbumScreen(
     modifier: Modifier = Modifier,
 ) {
     val state = rememberPlatformWebViewState(
-        url = "${BuildConfig.WEBSITE_URL}/$projectName",
+        url = "${Constants.WEBSITE_URL}/$projectName",
         allowsFileAccess = false,
     )
     val isScreenReaderOn by collectIsScreenReaderEnabledAsState()

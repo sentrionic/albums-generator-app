@@ -1,6 +1,6 @@
 [versions]
 version-code = "1"
-version-name = "1.0.0"
+version-name = "1.1.1"
 app-pkg = "com.albumsgenerator.app"
 app-name = "Albums Generator"
 app-vendor = "1001albumsgenerator"
@@ -82,7 +82,6 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-kmp-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
-gradle-buildconfig-plugin = "com.github.gmazzo.buildconfig:6.0.7"
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }

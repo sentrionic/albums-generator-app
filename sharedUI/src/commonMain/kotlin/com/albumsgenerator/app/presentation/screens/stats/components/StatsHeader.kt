@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.presentation.common.components.A11yRow
 import com.albumsgenerator.app.presentation.common.components.StatDisplay
 import com.albumsgenerator.app.presentation.screens.stats.StatsScreenState
@@ -37,7 +37,7 @@ fun StatsHeader(
         ) {
             StatDisplay(
                 label = stringResource(Res.string.statistics_total_albums),
-                value = BuildConfig.TOTAL_ALBUMS_COUNT.toString(),
+                value = Constants.TOTAL_ALBUMS_COUNT.toString(),
                 modifier = Modifier
                     .weight(1f),
                 isLoading = isLoading,

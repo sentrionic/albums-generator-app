@@ -21,7 +21,3 @@ ktlint = disabled
 [sharedUI/build/generated/compose/resourceGenerator/**/*]
 # noinspection EditorConfigKeyCorrectness
 ktlint = disabled
-
-[sharedUI/build/generated/sources/buildConfig/**/*]
-# noinspection EditorConfigKeyCorrectness
-ktlint = disabled

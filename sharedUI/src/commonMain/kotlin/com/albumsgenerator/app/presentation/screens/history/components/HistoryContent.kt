@@ -37,7 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenEvents
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenState
@@ -101,7 +101,7 @@ fun HistoryContent(
                         Res.string.history_subtitle,
                         state.historiesWithRatingCount,
                         state.historiesCount,
-                        BuildConfig.TOTAL_ALBUMS_COUNT,
+                        Constants.TOTAL_ALBUMS_COUNT,
                     ),
                     modifier = Modifier
                         .placeholder(visible = isLoading),

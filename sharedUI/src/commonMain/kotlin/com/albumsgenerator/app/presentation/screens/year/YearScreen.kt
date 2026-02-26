@@ -10,12 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
-import com.albumsgenerator.app.presentation.screens.genre.GenreState
 import com.albumsgenerator.app.presentation.screens.year.components.YearContent
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
@@ -50,7 +49,7 @@ fun YearScreen(
                 onOpenWeb = {
                     navigateTo(
                         Route.Web(
-                            url = "${BuildConfig.WEBSITE_URL}/years/$title",
+                            url = "${Constants.WEBSITE_URL}/years/$title",
                             title = title,
                         ),
                     )

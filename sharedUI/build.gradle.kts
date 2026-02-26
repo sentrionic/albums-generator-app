@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -11,7 +10,6 @@ plugins {
     alias(libs.plugins.metro)
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.gradle.buildconfig.plugin)
     alias(libs.plugins.kotlinter)
 }
 
@@ -100,17 +98,6 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.ui.tooling)
-}
-
-buildConfig {
-    // BuildConfig configuration here.
-    // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
-    packageName = "com.albumsgenerator.app"
-
-    buildConfigField("String", "APP_REPOSITORY", "\"https://github.com/sentrionic/albums-generator-app\"")
-    buildConfigField("String", "WEBSITE_API", "\"https://1001albumsgenerator.com/api/v1\"")
-    buildConfigField("String", "WEBSITE_URL", "\"https://1001albumsgenerator.com\"")
-    buildConfigField("int", "TOTAL_ALBUMS_COUNT", "1089")
 }
 
 room {

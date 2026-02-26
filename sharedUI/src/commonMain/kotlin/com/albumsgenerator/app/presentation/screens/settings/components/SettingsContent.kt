@@ -49,8 +49,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation3.runtime.NavKey
 import co.touchlab.kermit.Logger
-import com.albumsgenerator.app.BuildConfig
-import com.albumsgenerator.app.domain.core.Theme
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.models.Project
 import com.albumsgenerator.app.domain.models.UserData
 import com.albumsgenerator.app.presentation.common.components.BottomBar
@@ -168,7 +167,7 @@ fun SettingsContent(
                 onAction = {
                     navigateTo(
                         Route.Web(
-                            url = "${BuildConfig.WEBSITE_URL}/${project?.name}/info",
+                            url = "${Constants.WEBSITE_URL}/${project?.name}/info",
                             title = "Info",
                         ),
                     )
@@ -182,7 +181,7 @@ fun SettingsContent(
                 actionLabel = stringResource(Res.string.settings_app_info_action),
                 onAction = {
                     try {
-                        uriHandler.openUri(BuildConfig.APP_REPOSITORY)
+                        uriHandler.openUri(Constants.APP_REPOSITORY)
                     } catch (e: Exception) {
                         Logger.e(e) { "Could not open the url" }
                         scope.launch {

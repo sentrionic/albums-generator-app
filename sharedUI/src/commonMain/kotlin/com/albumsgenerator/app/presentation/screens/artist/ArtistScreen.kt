@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.albumsgenerator.app.BuildConfig
+import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
@@ -60,7 +60,7 @@ fun ArtistScreen(
                         .replace("/", "") // AC/DC
                     navigateTo(
                         Route.Web(
-                            url = "${BuildConfig.WEBSITE_URL}/artists/$slug",
+                            url = "${Constants.WEBSITE_URL}/artists/$slug",
                             title = title,
                         ),
                     )
