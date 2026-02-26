@@ -2,6 +2,8 @@ package com.albumsgenerator.app.domain.models
 
 import androidx.compose.runtime.Immutable
 import com.albumsgenerator.app.domain.core.StreamingServices
+import com.albumsgenerator.app.presentation.utils.Platform
+import com.albumsgenerator.app.presentation.utils.getCurrentPlatform
 
 @Immutable
 data class Album(
@@ -29,6 +31,13 @@ data class Album(
     val coverUrl by lazy {
         images.firstOrNull()
     }
+
+    val responsiveWikipediaUrl
+        get() = if (getCurrentPlatform() == Platform.DESKTOP) {
+            wikipediaUrl
+        } else {
+            "$wikipediaUrl?mobileaction=toggle_view_mobile"
+        }
 
     val streamingServices by lazy {
         buildList {
