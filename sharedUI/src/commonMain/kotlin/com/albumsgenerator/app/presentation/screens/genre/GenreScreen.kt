@@ -16,8 +16,8 @@ import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.genre.components.GenreContent
+import com.albumsgenerator.app.presentation.screens.top.TopState
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
-import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.albumsgenerator.app.presentation.utils.capitalize
 import dev.zacsweers.metrox.viewmodel.assistedMetroViewModel
 import org.jetbrains.compose.resources.stringResource
@@ -70,11 +70,7 @@ fun GenreScreen(
             when (result) {
                 is DataState.Loading -> {
                     GenreContent(
-                        state = GenreState(
-                            histories = listOf(PreviewData.history),
-                            stats = listOf(PreviewData.stats),
-                            spoilerFree = true,
-                        ),
+                        state = TopState.EMPTY,
                         navigateToAlbum = {},
                         isLoading = true,
                     )

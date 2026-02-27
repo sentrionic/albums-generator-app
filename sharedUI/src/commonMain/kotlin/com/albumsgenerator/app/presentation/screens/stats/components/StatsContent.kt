@@ -12,18 +12,23 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.stats.StatsScreenState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
@@ -45,23 +50,6 @@ fun StatsContent(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
-    @Composable
-    fun Modifier.listItemModifier(stat: AlbumStats) = fillMaxWidth()
-        .clip(MaterialTheme.shapes.medium)
-        .clickable(
-            enabled = !isLoading,
-            onClickLabel = stringResource(Res.string.album_navigate_accessibility),
-            onClick = {
-                navigateTo(
-                    Route.Album(
-                        albumId = "",
-                        albumName = stat.name,
-                        albumArtist = stat.artist,
-                    ),
-                )
-            },
-        )
-
     @Composable
     fun Modifier.headerModifier() = padding(vertical = Paddings.medium)
         .semantics { heading() }
@@ -93,18 +81,37 @@ fun StatsContent(
             )
         }
 
-        items(
-            items = state.topAlbums,
-            key = { it.name },
-            contentType = { ContentTypes.ALBUMS },
-        ) { stat ->
-            StatListItem(
-                stat = stat,
-                modifier = Modifier
-                    .listItemModifier(stat),
-                isLoading = isLoading,
-            )
-        }
+        albums(
+            albums = state.topAlbums,
+            previousAlbumNames = state.previousAlbumNames,
+            spoilerMode = state.spoilerMode,
+            onAlbumClick = { stat ->
+                navigateTo(
+                    Route.Album(
+                        albumId = "",
+                        albumName = stat.name,
+                        albumArtist = stat.artist,
+                    ),
+                )
+            },
+            isLoading = isLoading,
+        )
+
+        albums(
+            albums = state.topAlbums,
+            previousAlbumNames = state.previousAlbumNames,
+            spoilerMode = state.spoilerMode,
+            onAlbumClick = { stat ->
+                navigateTo(
+                    Route.Album(
+                        albumId = "",
+                        albumName = stat.name,
+                        albumArtist = stat.artist,
+                    ),
+                )
+            },
+            isLoading = isLoading,
+        )
 
         item(
             key = "Lowest Rated Albums",
@@ -117,18 +124,21 @@ fun StatsContent(
             )
         }
 
-        items(
-            items = state.bottomAlbums,
-            key = { it.name },
-            contentType = { ContentTypes.ALBUMS },
-        ) { stat ->
-            StatListItem(
-                stat = stat,
-                modifier = Modifier
-                    .listItemModifier(stat),
-                isLoading = isLoading,
-            )
-        }
+        albums(
+            albums = state.bottomAlbums,
+            previousAlbumNames = state.previousAlbumNames,
+            spoilerMode = state.spoilerMode,
+            onAlbumClick = { stat ->
+                navigateTo(
+                    Route.Album(
+                        albumId = "",
+                        albumName = stat.name,
+                        albumArtist = stat.artist,
+                    ),
+                )
+            },
+            isLoading = isLoading,
+        )
 
         item(
             key = "Controversial Albums",
@@ -141,18 +151,21 @@ fun StatsContent(
             )
         }
 
-        items(
-            items = state.mostControversial,
-            key = { it.name },
-            contentType = { ContentTypes.ALBUMS },
-        ) { stat ->
-            StatListItem(
-                stat = stat,
-                modifier = Modifier
-                    .listItemModifier(stat),
-                isLoading = isLoading,
-            )
-        }
+        albums(
+            albums = state.mostControversial,
+            previousAlbumNames = state.previousAlbumNames,
+            spoilerMode = state.spoilerMode,
+            onAlbumClick = { stat ->
+                navigateTo(
+                    Route.Album(
+                        albumId = "",
+                        albumName = stat.name,
+                        albumArtist = stat.artist,
+                    ),
+                )
+            },
+            isLoading = isLoading,
+        )
 
         item(
             key = "Uncontroversial Albums",
@@ -165,18 +178,65 @@ fun StatsContent(
             )
         }
 
-        items(
-            items = state.leastControversial,
-            key = { it.name },
-            contentType = { ContentTypes.ALBUMS },
-        ) { stat ->
-            StatListItem(
-                stat = stat,
-                modifier = Modifier
-                    .listItemModifier(stat),
-                isLoading = isLoading,
-            )
-        }
+        albums(
+            albums = state.leastControversial,
+            previousAlbumNames = state.previousAlbumNames,
+            spoilerMode = state.spoilerMode,
+            onAlbumClick = { stat ->
+                navigateTo(
+                    Route.Album(
+                        albumId = "",
+                        albumName = stat.name,
+                        albumArtist = stat.artist,
+                    ),
+                )
+            },
+            isLoading = isLoading,
+        )
+    }
+}
+
+private fun LazyListScope.albums(
+    albums: List<AlbumStats>,
+    previousAlbumNames: List<String>,
+    spoilerMode: SpoilerMode,
+    onAlbumClick: (AlbumStats) -> Unit,
+    isLoading: Boolean,
+) = items(
+    items = albums,
+    key = { it.name },
+    contentType = { ContentTypes.ALBUMS },
+) { stat ->
+    val previousAlbum = remember {
+        stat.name in previousAlbumNames
+    }
+
+    if (previousAlbum || spoilerMode == SpoilerMode.VISIBLE) {
+        StatListItem(
+            name = stat.name,
+            artist = stat.artist,
+            averageRating = stat.averageRating,
+            votes = stat.votes,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.medium)
+                .clickable(
+                    enabled = !isLoading,
+                    onClickLabel = stringResource(Res.string.album_navigate_accessibility),
+                    onClick = {
+                        onAlbumClick(stat)
+                    },
+                ),
+            isLoading = isLoading,
+        )
+    } else {
+        HiddenStatItem(
+            modifier = Modifier
+                .clearAndSetSemantics {
+                    stateDescription = "Hidden Album"
+                },
+            isLoading = isLoading,
+        )
     }
 }
 
@@ -190,6 +250,21 @@ private fun SectionHeader(
         modifier = modifier,
         fontWeight = FontWeight.SemiBold,
         style = MaterialTheme.typography.titleLarge,
+    )
+}
+
+@Composable
+private fun HiddenStatItem(
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+) {
+    StatListItem(
+        name = "?",
+        artist = "?",
+        averageRating = 0.0,
+        votes = 0,
+        modifier = modifier,
+        isLoading = isLoading,
     )
 }
 

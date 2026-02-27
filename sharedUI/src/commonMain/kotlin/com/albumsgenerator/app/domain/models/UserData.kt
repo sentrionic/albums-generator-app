@@ -9,14 +9,14 @@ data class UserData(
     val projectName: String?,
     val theme: Theme,
     val service: StreamingServices?,
-    val spoilerFree: Boolean,
+    val spoilerMode: SpoilerMode,
 ) {
     companion object {
         val EMPTY = UserData(
             projectName = null,
             theme = Theme.SYSTEM,
             service = null,
-            spoilerFree = true,
+            spoilerMode = SpoilerMode.VISIBLE,
         )
     }
 }

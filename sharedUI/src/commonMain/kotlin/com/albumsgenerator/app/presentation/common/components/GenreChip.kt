@@ -1,5 +1,7 @@
 package com.albumsgenerator.app.presentation.common.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.navigate_accessibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FilterChip
@@ -8,11 +10,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.utils.capitalize
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun GenreChip(
@@ -21,6 +27,8 @@ fun GenreChip(
     onClick: () -> Unit = {},
     enabled: Boolean = true,
 ) {
+    val navigateLabel = stringResource(Res.string.navigate_accessibility)
+
     FilterChip(
         selected = true,
         onClick = onClick,
@@ -29,7 +37,17 @@ fun GenreChip(
         },
         modifier = modifier
             .clearAndSetSemantics {
-                contentDescription = label
+                stateDescription = label
+                if (enabled) {
+                    role = Role.Button
+                    onClick(
+                        label = navigateLabel,
+                        action = {
+                            onClick()
+                            true
+                        },
+                    )
+                }
             },
         enabled = enabled,
         shape = CircleShape,

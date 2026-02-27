@@ -47,7 +47,7 @@ class AlbumViewModel(
         statsRepository.statsForAlbum(navKey.albumName),
         preferencesRepository.userData,
     ) { history, stats, userData ->
-        if (history == null && userData.spoilerFree) {
+        if (history == null && userData.spoilerMode.isOn) {
             DataState.Error(Res.string.album_error_missing_history)
         } else if (stats == null) {
             DataState.Error(Res.string.album_error_missing_history)

@@ -147,6 +147,13 @@ fun SettingsContent(
                     userData = userData,
                     sendEvent = sendEvent,
                 )
+
+                SpoilerOptionSection(
+                    spoilerMode = userData.spoilerMode,
+                    onSpoilerModeChange = {
+                        sendEvent(SettingsEvents.UpdateSpoilerMode(it))
+                    },
+                )
             }
 
             SettingsCardWithAction(

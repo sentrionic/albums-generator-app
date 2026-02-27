@@ -86,13 +86,6 @@ fun SettingsOptions(
                 isItemCurrent = { it == userData.theme },
             )
         }
-
-        SpoilerOption(
-            spoilerFree = userData.spoilerFree,
-            onSpoilerFreeChange = {
-                sendEvent(SettingsEvents.UpdateSpoilerMode(it))
-            },
-        )
     }
 }
 

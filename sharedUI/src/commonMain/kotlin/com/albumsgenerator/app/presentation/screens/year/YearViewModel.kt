@@ -8,7 +8,7 @@ import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.navigation.Route
-import com.albumsgenerator.app.presentation.screens.genre.GenreState
+import com.albumsgenerator.app.presentation.screens.top.TopState
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -33,10 +33,10 @@ class YearViewModel(
         preferencesRepository.userData,
     ) { histories, stats, userData ->
         DataState.Success(
-            YearState(
+            TopState(
                 histories = histories,
                 stats = stats,
-                spoilerFree = userData.spoilerFree,
+                spoilerMode = userData.spoilerMode,
             ),
         )
     }

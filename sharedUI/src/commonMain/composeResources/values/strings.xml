@@ -50,6 +50,7 @@
     <string name="login_subtitle">A book with 1001 albums chosen by a panel of music critics to be the most important and influential in popular music.</string>
     <string name="login_success">Successfully fetched your project!</string>
     <string name="logout">Logout</string>
+    <string name="navigate_accessibility">Navigate</string>
     <string name="navigate_up">Navigate up</string>
     <string name="please_choose">Please Choose</string>
     <string name="previous_album_action">Continue to app</string>
@@ -71,8 +72,13 @@
     <string name="settings_sharing_title">Sharing</string>
     <string name="settings_streaming_source">Streaming Source</string>
     <string name="settings_theme">Theme</string>
-    <string name="spoiler_mode_label">Spoiler free</string>
-    <string name="spoiler_mode_title">Show future albums?</string>
+    <string name="spoiler_mode_hidden_description">Only display already generated albums.</string>
+    <string name="spoiler_mode_hidden_label">Hidden</string>
+    <string name="spoiler_mode_partial_description">Hides future album names and artists.</string>
+    <string name="spoiler_mode_partial_label">Partial</string>
+    <string name="spoiler_mode_visible_description">Default. Matches the website.</string>
+    <string name="spoiler_mode_visible_label">Visible</string>
+    <string name="spoiler_mode_title">Spoiler Mode</string>
     <string name="spoiler_mode_warning">Spoiler free mode is on</string>
     <string name="statistics_average_rating">AVERAGE RATING</string>
     <string name="statistics_item_votes_accessibility">%1$d votes</string>

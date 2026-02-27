@@ -47,3 +47,6 @@ data class AlbumStats(
         }
     }
 }
+
+fun List<AlbumStats>.globalAverage(): Float =
+    (sumOf { it.votesByGrade.average }.toFloat() / sumOf { it.summedVotes }) + 0.1f

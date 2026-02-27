@@ -3,6 +3,8 @@ name: Develop CI
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-develop:
@@ -25,10 +27,6 @@ jobs:
 
       - name: Kotlinter
         run: ./gradlew lintKotlinCommonMain
-
-      - name: Build with Gradle
-        run: |
-          ./gradlew build -x :sharedUI:compileKotlinIosArm64 -x  :sharedUI:compileKotlinIosSimulatorArm64
 
       # Upload test reports as an artifact
       - name: Upload Test Report

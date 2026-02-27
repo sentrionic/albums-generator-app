@@ -3,7 +3,6 @@ package com.albumsgenerator.app.datasources.local
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import okio.Path.Companion.toPath
@@ -19,5 +18,5 @@ object DataStoreKeys {
     val PROJECT_NAME = stringPreferencesKey("project_name")
     val SELECTED_STREAMING_SERVICE = intPreferencesKey("selected_streaming_service")
     val SELECTED_THEME_MODE = intPreferencesKey("selected_theme_mode")
-    val SPOILER_FREE_MODE = booleanPreferencesKey("spoiler_free_mode")
+    val SELECTED_SPOILER_MODE = intPreferencesKey("selected_spoiler_mode")
 }
