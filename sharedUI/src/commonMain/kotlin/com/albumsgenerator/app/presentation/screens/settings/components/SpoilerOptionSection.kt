@@ -58,12 +58,12 @@ fun SpoilerOptionSection(
                             .weight(1f),
                     ) {
                         Text(
-                            text = mode.label,
+                            text = stringResource(mode.label),
                             style = MaterialTheme.typography.titleMedium,
                         )
 
                         Text(
-                            text = mode.description,
+                            text = stringResource(mode.description),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }

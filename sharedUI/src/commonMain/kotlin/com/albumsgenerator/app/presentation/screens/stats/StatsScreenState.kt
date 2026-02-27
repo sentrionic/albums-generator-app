@@ -14,14 +14,4 @@ data class StatsScreenState(
     val averageRating: Float = 0.0f,
     val spoilerMode: SpoilerMode = SpoilerMode.VISIBLE,
     val previousAlbumNames: List<String> = emptyList(),
-) {
-    val topAlbumsCalculated get() = topAlbums.filterIfSpoiler
-    val bottomAlbumsCalculated get() = bottomAlbums.filterIfSpoiler
-    val mostControversialCalculated get() = mostControversial.filterIfSpoiler
-    val leastControversialCalculated get() = leastControversial.filterIfSpoiler
-
-    private val List<AlbumStats>.filterIfSpoiler get() = when (spoilerMode) {
-        SpoilerMode.HIDDEN -> this.filter { it.name in previousAlbumNames }
-        else -> this
-    }
-}
+)

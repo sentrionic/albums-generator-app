@@ -1,17 +1,26 @@
 package com.albumsgenerator.app.domain.models
 
-enum class SpoilerMode(val label: String, val description: String) {
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_hidden_description
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_hidden_label
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_partial_description
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_partial_label
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_visible_description
+import albumsgenerator.sharedui.generated.resources.spoiler_mode_visible_label
+import org.jetbrains.compose.resources.StringResource
+
+enum class SpoilerMode(val label: StringResource, val description: StringResource) {
     VISIBLE(
-        label = "Visible",
-        description = "Default. Matches the website",
+        label = Res.string.spoiler_mode_visible_label,
+        description = Res.string.spoiler_mode_visible_description,
     ),
     PARTIAL(
-        label = "Partial",
-        description = "Hides future album names and artists.",
+        label = Res.string.spoiler_mode_partial_label,
+        description = Res.string.spoiler_mode_partial_description,
     ),
     HIDDEN(
-        label = "Hidden",
-        description = "Only display already generated albums.",
+        label = Res.string.spoiler_mode_hidden_label,
+        description = Res.string.spoiler_mode_hidden_description,
     ),
     ;
 

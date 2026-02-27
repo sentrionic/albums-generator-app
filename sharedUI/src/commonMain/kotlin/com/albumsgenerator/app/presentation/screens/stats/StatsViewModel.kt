@@ -9,6 +9,8 @@ import com.albumsgenerator.app.di.modules.IO
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.domain.models.globalAverage
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -43,17 +45,28 @@ class StatsViewModel(
             it.controversialScore
         }
 
+        val previousAlbumNames = histories.map { it.album.name }
+
+        fun List<AlbumStats>.takeVisible() = when (userData.spoilerMode) {
+            SpoilerMode.HIDDEN -> this.filter { it.name in previousAlbumNames }
+            else -> this
+        }
+
         DataState.Success(
             StatsScreenState(
-                topAlbums = stats.take(Constants.LIMIT),
-                bottomAlbums = stats.takeLast(Constants.LIMIT).reversed(),
-                mostControversial = statsSortedByControversialScore.take(Constants.LIMIT),
-                leastControversial = statsSortedByControversialScore.takeLast(Constants.LIMIT)
+                topAlbums = stats.take(Constants.LIMIT).takeVisible(),
+                bottomAlbums = stats.takeLast(Constants.LIMIT).reversed().takeVisible(),
+                mostControversial = statsSortedByControversialScore.take(
+                    Constants.LIMIT,
+                ).takeVisible(),
+                leastControversial = statsSortedByControversialScore.takeLast(
+                    Constants.LIMIT,
+                ).takeVisible()
                     .reversed(),
                 votes = totalVotes,
                 averageRating = stats.globalAverage(),
                 spoilerMode = userData.spoilerMode,
-                previousAlbumNames = histories.map { it.album.name },
+                previousAlbumNames = previousAlbumNames,
             ),
         )
     }

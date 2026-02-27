@@ -3,12 +3,15 @@ package com.albumsgenerator.app.presentation.screens.year.components
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.album_navigate_accessibility
 import albumsgenerator.sharedui.generated.resources.top_book_albums
+import albumsgenerator.sharedui.generated.resources.unknown_album
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.presentation.common.components.AlbumGrid
@@ -58,7 +61,13 @@ fun YearContent(
                     isLoading = isLoading,
                 )
             } else if (state.spoilerMode == SpoilerMode.PARTIAL) {
-                UnknownAlbumArtistCard()
+                val description = stringResource(Res.string.unknown_album)
+                UnknownAlbumArtistCard(
+                    modifier = Modifier
+                        .clearAndSetSemantics {
+                            stateDescription = description
+                        },
+                )
             }
         }
     }

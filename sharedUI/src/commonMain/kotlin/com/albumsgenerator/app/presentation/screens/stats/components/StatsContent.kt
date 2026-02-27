@@ -21,8 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.models.AlbumStats
@@ -80,7 +82,7 @@ fun StatsContent(
         }
 
         albums(
-            albums = state.topAlbumsCalculated,
+            albums = state.topAlbums,
             previousAlbumNames = state.previousAlbumNames,
             spoilerMode = state.spoilerMode,
             onAlbumClick = { stat ->
@@ -96,7 +98,7 @@ fun StatsContent(
         )
 
         albums(
-            albums = state.topAlbumsCalculated,
+            albums = state.topAlbums,
             previousAlbumNames = state.previousAlbumNames,
             spoilerMode = state.spoilerMode,
             onAlbumClick = { stat ->
@@ -123,7 +125,7 @@ fun StatsContent(
         }
 
         albums(
-            albums = state.bottomAlbumsCalculated,
+            albums = state.bottomAlbums,
             previousAlbumNames = state.previousAlbumNames,
             spoilerMode = state.spoilerMode,
             onAlbumClick = { stat ->
@@ -150,7 +152,7 @@ fun StatsContent(
         }
 
         albums(
-            albums = state.mostControversialCalculated,
+            albums = state.mostControversial,
             previousAlbumNames = state.previousAlbumNames,
             spoilerMode = state.spoilerMode,
             onAlbumClick = { stat ->
@@ -177,7 +179,7 @@ fun StatsContent(
         }
 
         albums(
-            albums = state.leastControversialCalculated,
+            albums = state.leastControversial,
             previousAlbumNames = state.previousAlbumNames,
             spoilerMode = state.spoilerMode,
             onAlbumClick = { stat ->
@@ -230,7 +232,9 @@ private fun LazyListScope.albums(
     } else {
         HiddenStatItem(
             modifier = Modifier
-                .semantics(mergeDescendants = true) {},
+                .clearAndSetSemantics {
+                    stateDescription = "Hidden Album"
+                },
             isLoading = isLoading,
         )
     }
