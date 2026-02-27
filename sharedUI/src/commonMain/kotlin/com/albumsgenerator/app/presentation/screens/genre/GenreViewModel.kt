@@ -9,6 +9,7 @@ import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.navigation.Route
+import com.albumsgenerator.app.presentation.screens.top.TopState
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -33,10 +34,10 @@ class GenreViewModel(
         preferencesRepository.userData,
     ) { histories, stats, userData ->
         DataState.Success(
-            GenreState(
+            TopState(
                 histories = histories,
                 stats = stats,
-                spoilerFree = userData.spoilerFree,
+                spoilerMode = userData.spoilerMode,
             ),
         )
     }

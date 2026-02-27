@@ -16,8 +16,8 @@ import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.artist.components.ArtistContent
+import com.albumsgenerator.app.presentation.screens.top.TopState
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
-import com.albumsgenerator.app.presentation.utils.PreviewData
 import dev.zacsweers.metrox.viewmodel.assistedMetroViewModel
 import org.jetbrains.compose.resources.stringResource
 
@@ -77,11 +77,7 @@ fun ArtistScreen(
             when (result) {
                 is DataState.Loading -> {
                     ArtistContent(
-                        state = ArtistState(
-                            albums = listOf(PreviewData.album),
-                            albumStats = emptyList(),
-                            spoilerFree = true,
-                        ),
+                        state = TopState.EMPTY,
                         navigateToAlbum = {},
                         isLoading = true,
                     )

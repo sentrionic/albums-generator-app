@@ -15,9 +15,9 @@ import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
+import com.albumsgenerator.app.presentation.screens.top.TopState
 import com.albumsgenerator.app.presentation.screens.year.components.YearContent
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
-import com.albumsgenerator.app.presentation.utils.PreviewData
 import dev.zacsweers.metrox.viewmodel.assistedMetroViewModel
 import org.jetbrains.compose.resources.stringResource
 
@@ -66,11 +66,7 @@ fun YearScreen(
             when (result) {
                 is DataState.Loading -> {
                     YearContent(
-                        state = YearState(
-                            histories = listOf(PreviewData.history),
-                            stats = listOf(PreviewData.stats),
-                            spoilerFree = true,
-                        ),
+                        state = TopState.EMPTY,
                         navigateToAlbum = {},
                         isLoading = true,
                     )

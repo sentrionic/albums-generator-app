@@ -72,7 +72,7 @@
     <string name="settings_streaming_source">Streaming Source</string>
     <string name="settings_theme">Theme</string>
     <string name="spoiler_mode_label">Spoiler free</string>
-    <string name="spoiler_mode_title">Show future albums?</string>
+    <string name="spoiler_mode_title">Spoiler Mode</string>
     <string name="spoiler_mode_warning">Spoiler free mode is on</string>
     <string name="statistics_average_rating">AVERAGE RATING</string>
     <string name="statistics_item_votes_accessibility">%1$d votes</string>

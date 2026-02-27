@@ -18,6 +18,7 @@ import com.albumsgenerator.app.di.modules.Main
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.StreamingServices
 import com.albumsgenerator.app.domain.core.Theme
+import com.albumsgenerator.app.domain.models.SpoilerMode
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -77,7 +78,7 @@ class SettingsViewModel(
             SettingsEvents.Logout -> logout()
             is SettingsEvents.UpdateStreamingService -> updateStreamingService(event.service)
             is SettingsEvents.UpdateTheme -> updateTheme(event.theme)
-            is SettingsEvents.UpdateSpoilerMode -> updateSpoilerMode(event.spoilerFree)
+            is SettingsEvents.UpdateSpoilerMode -> updateSpoilerMode(event.spoilerMode)
             is SettingsEvents.Refresh -> reload()
             is SettingsEvents.ResetMessage -> message = null
         }
@@ -95,9 +96,9 @@ class SettingsViewModel(
         }
     }
 
-    private fun updateSpoilerMode(spoilerFree: Boolean) {
+    private fun updateSpoilerMode(spoilerMode: SpoilerMode) {
         viewModelScope.launch(ioDispatcher) {
-            preferencesRepository.updateSpoilerMode(spoilerFree)
+            preferencesRepository.updateSpoilerMode(spoilerMode)
         }
     }
 

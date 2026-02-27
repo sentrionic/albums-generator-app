@@ -8,6 +8,7 @@ import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.presentation.navigation.Route
+import com.albumsgenerator.app.presentation.screens.top.TopState
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -32,13 +33,11 @@ class ArtistViewModel(
         statsRepository.statsForArtist(navKey.artist),
         preferencesRepository.userData,
     ) { histories, stats, userData ->
-        val albums = histories.map { it.album }.sortedBy { it.releaseDate }
-
         DataState.Success(
-            ArtistState(
-                albums = albums,
-                albumStats = stats.sortedBy { it.releaseDate },
-                spoilerFree = userData.spoilerFree,
+            TopState(
+                histories = histories.sortedBy { it.album.releaseDate },
+                stats = stats.sortedBy { it.releaseDate },
+                spoilerMode = userData.spoilerMode,
             ),
         )
     }

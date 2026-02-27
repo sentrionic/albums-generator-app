@@ -6,10 +6,10 @@ import androidx.datastore.preferences.core.edit
 import com.albumsgenerator.app.datasources.local.DataStoreKeys
 import com.albumsgenerator.app.domain.core.StreamingServices
 import com.albumsgenerator.app.domain.core.Theme
+import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.domain.models.UserData
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,7 +20,7 @@ interface PreferencesRepository {
     suspend fun updateProjectName(name: String)
     suspend fun updateTheme(theme: Theme)
     suspend fun updateStreamingService(service: StreamingServices)
-    suspend fun updateSpoilerMode(spoilerFree: Boolean)
+    suspend fun updateSpoilerMode(mode: SpoilerMode)
     suspend fun clear()
 }
 
@@ -42,7 +42,9 @@ class RealPreferencesRepository(private val dataStore: DataStore<Preferences>) :
                         it,
                     )
                 },
-                spoilerFree = prefs[DataStoreKeys.SPOILER_FREE_MODE] ?: true,
+                spoilerMode = prefs[DataStoreKeys.SELECTED_SPOILER_MODE]?.let { mode ->
+                    SpoilerMode.entries.getOrNull(mode)
+                } ?: SpoilerMode.VISIBLE,
             )
         }
 
@@ -64,9 +66,9 @@ class RealPreferencesRepository(private val dataStore: DataStore<Preferences>) :
         }
     }
 
-    override suspend fun updateSpoilerMode(spoilerFree: Boolean) {
+    override suspend fun updateSpoilerMode(mode: SpoilerMode) {
         dataStore.edit {
-            it[DataStoreKeys.SPOILER_FREE_MODE] = spoilerFree
+            it[DataStoreKeys.SELECTED_SPOILER_MODE] = mode.ordinal
         }
     }
 
@@ -75,6 +77,7 @@ class RealPreferencesRepository(private val dataStore: DataStore<Preferences>) :
             it.remove(DataStoreKeys.PROJECT_NAME)
             it.remove(DataStoreKeys.SELECTED_THEME_MODE)
             it.remove(DataStoreKeys.SELECTED_STREAMING_SERVICE)
+            it.remove(DataStoreKeys.SELECTED_SPOILER_MODE)
         }
     }
 }

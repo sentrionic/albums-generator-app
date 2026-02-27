@@ -17,7 +17,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
@@ -26,7 +25,10 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun StatListItem(
-    stat: AlbumStats,
+    name: String,
+    artist: String,
+    averageRating: Double,
+    votes: Int,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
@@ -42,7 +44,7 @@ fun StatListItem(
                     .weight(1f),
             ) {
                 Text(
-                    text = stat.name,
+                    text = name,
                     modifier = Modifier
                         .placeholder(visible = isLoading),
                     fontWeight = FontWeight.SemiBold,
@@ -50,7 +52,7 @@ fun StatListItem(
                 )
 
                 Text(
-                    text = stat.artist,
+                    text = artist,
                     modifier = Modifier
                         .placeholder(visible = isLoading),
                     style = MaterialTheme.typography.titleSmall,
@@ -61,9 +63,9 @@ fun StatListItem(
                 horizontalAlignment = Alignment.End,
             ) {
                 val averageRatingDescription =
-                    stringResource(Res.string.album_rating_global_accessibility, stat.averageRating)
+                    stringResource(Res.string.album_rating_global_accessibility, averageRating)
                 Text(
-                    text = "${stat.averageRating}",
+                    text = "$averageRating",
                     modifier = Modifier
                         .semantics {
                             contentDescription = averageRatingDescription
@@ -73,9 +75,9 @@ fun StatListItem(
                 )
 
                 val votesDescription =
-                    stringResource(Res.string.statistics_item_votes_accessibility, stat.votes)
+                    stringResource(Res.string.statistics_item_votes_accessibility, votes)
                 Text(
-                    text = stat.votes.toString(),
+                    text = votes.toString(),
                     modifier = Modifier
                         .semantics {
                             contentDescription = votesDescription
@@ -92,8 +94,26 @@ fun StatListItem(
 @Composable
 private fun AlbumListItemPreview() {
     AppTheme {
-        StatListItem(
-            stat = PreviewData.stats,
-        )
+        Column(
+            modifier = Modifier
+                .padding(all = Paddings.medium),
+            verticalArrangement = Arrangement.spacedBy(Paddings.small),
+        ) {
+            with(PreviewData.stats) {
+                StatListItem(
+                    name = name,
+                    artist = artist,
+                    averageRating = averageRating,
+                    votes = votes,
+                )
+            }
+
+            StatListItem(
+                name = "?",
+                artist = "?",
+                averageRating = 0.0,
+                votes = 0,
+            )
+        }
     }
 }
