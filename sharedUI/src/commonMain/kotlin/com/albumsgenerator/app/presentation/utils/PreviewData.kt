@@ -5,6 +5,7 @@ import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.models.Project
+import com.albumsgenerator.app.domain.models.VotesByGrade
 import kotlin.time.Instant
 
 object PreviewData {
@@ -76,7 +77,7 @@ object PreviewData {
             "prog-rock",
         ),
         votes = 24116,
-        votesByGrade = AlbumStats.VotesByGrade(
+        votesByGrade = VotesByGrade(
             x1 = 78,
             x2 = 241,
             x3 = 1053,

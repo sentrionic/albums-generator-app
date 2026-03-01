@@ -88,4 +88,10 @@ interface HistoryDao {
         genreBoth: String,
         limit: Int,
     ): Flow<List<HistoryWithAlbum>>
+
+    @Transaction
+    @Query(
+        "SELECT * FROM histories WHERE rating IN ('1', '2', '3', '4', '5') ORDER BY generated_at DESC",
+    )
+    fun getWithRating(): Flow<List<HistoryWithAlbum>>
 }

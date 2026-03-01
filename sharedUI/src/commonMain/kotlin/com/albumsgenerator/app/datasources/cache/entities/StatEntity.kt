@@ -3,7 +3,7 @@ package com.albumsgenerator.app.datasources.cache.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.albumsgenerator.app.datasources.network.dtos.AlbumStatsDto
+import com.albumsgenerator.app.datasources.network.dtos.VotesByGradeDto
 import com.albumsgenerator.app.domain.models.AlbumStats
 import kotlinx.serialization.json.Json
 
@@ -52,7 +52,7 @@ data class StatEntity(
         spotifyId = spotifyId,
         styles = styles.split(SEPARATOR),
         votes = votes,
-        votesByGrade = Json.decodeFromString<AlbumStatsDto.VotesByGradeDto>(votesByGrade)
+        votesByGrade = Json.decodeFromString<VotesByGradeDto>(votesByGrade)
             .toDomain(),
     )
 
@@ -74,7 +74,7 @@ data class StatEntity(
             styles = stat.styles.joinToString(SEPARATOR),
             votes = stat.votes,
             votesByGrade = Json.encodeToString(
-                AlbumStatsDto.VotesByGradeDto.fromDomain(stat.votesByGrade),
+                VotesByGradeDto.fromDomain(stat.votesByGrade),
             ),
         )
     }

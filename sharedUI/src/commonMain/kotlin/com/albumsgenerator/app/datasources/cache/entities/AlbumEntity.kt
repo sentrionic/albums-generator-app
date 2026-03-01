@@ -54,15 +54,27 @@ data class AlbumEntity(
         artist = artist,
         artistOrigin = artistOrigin,
         deezerId = deezerId,
-        genres = genres.split(SEPARATOR),
+        genres = if (genres.isEmpty()) {
+            emptyList()
+        } else {
+            genres.split(SEPARATOR)
+        },
         globalReviewsUrl = globalReviewsUrl,
-        images = images.split(SEPARATOR),
+        images = if (images.isEmpty()) {
+            emptyList()
+        } else {
+            images.split(SEPARATOR)
+        },
         name = name,
         qobuzId = qobuzId,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        subGenres = subGenres.split(SEPARATOR),
+        subGenres = if (subGenres.isEmpty()) {
+            emptyList()
+        } else {
+            subGenres.split(SEPARATOR)
+        },
         tidalId = tidalId,
         uuid = uuid,
         wikipediaUrl = wikipediaUrl,

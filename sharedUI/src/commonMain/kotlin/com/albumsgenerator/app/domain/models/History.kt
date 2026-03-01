@@ -1,9 +1,9 @@
 package com.albumsgenerator.app.domain.models
 
 import androidx.compose.runtime.Immutable
-import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Instant
 
 @Immutable
 data class History(
@@ -21,7 +21,18 @@ data class History(
 
     val hasRating: Boolean get() = rating != null && rating != SKIPPED_TAG
 
+    val ratingDiff by lazy {
+        if (hasRating) {
+            (rating!!.toInt() - globalRating).toFloat()
+        } else {
+            0.0f
+        }
+    }
+
     companion object {
         const val SKIPPED_TAG = "did-not-listen"
     }
 }
+
+fun List<History>.averageRating() =
+    sumOf { it.rating?.toIntOrNull() ?: 0 }.toFloat() / size.toFloat()

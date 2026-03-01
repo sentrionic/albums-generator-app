@@ -38,7 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.Constants
-import com.albumsgenerator.app.domain.models.Album
+import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenEvents
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
@@ -54,7 +54,7 @@ fun HistoryContent(
     state: HistoryScreenState,
     query: TextFieldValue,
     sendEvent: (HistoryScreenEvents) -> Unit,
-    navigateToAlbum: (Album) -> Unit,
+    navigateTo: (Route) -> Unit,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
@@ -88,6 +88,9 @@ fun HistoryContent(
                     genres = state.genres,
                     genre = state.genre,
                     sendEvent = sendEvent,
+                    navigateToJourney = {
+                        navigateTo(Route.Journey)
+                    },
                     isLoading = isLoading,
                 )
             }
@@ -124,7 +127,10 @@ fun HistoryContent(
                             enabled = !isLoading,
                             onClickLabel = stringResource(Res.string.album_navigate_accessibility),
                             onClick = {
-                                navigateToAlbum(history.album)
+                                val album = history.album
+                                navigateTo(
+                                    Route.Album(albumId = album.uuid, albumName = album.name),
+                                )
                             },
                         ),
                     isLoading = isLoading,
@@ -193,7 +199,7 @@ private fun HistoryContentPreview() {
             ),
             query = TextFieldValue(),
             sendEvent = {},
-            navigateToAlbum = {},
+            navigateTo = {},
         )
     }
 }

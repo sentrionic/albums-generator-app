@@ -52,6 +52,9 @@ sealed interface Route : NavKey {
         NavKey
 
     @Serializable
+    data object Journey : Route, NavKey
+
+    @Serializable
     data class Web(val url: String, val title: String) :
         Route,
         NavKey

@@ -83,7 +83,7 @@ fun HistoryScreen(
                         ),
                         query = TextFieldValue(),
                         sendEvent = {},
-                        navigateToAlbum = {},
+                        navigateTo = {},
                         isLoading = true,
                     )
                 }
@@ -94,9 +94,7 @@ fun HistoryScreen(
                         state = state,
                         query = viewModel.query,
                         sendEvent = viewModel::onEvent,
-                        navigateToAlbum = { album ->
-                            navigateTo(Route.Album(albumId = album.uuid, albumName = album.name))
-                        },
+                        navigateTo = navigateTo,
                     )
                 }
 

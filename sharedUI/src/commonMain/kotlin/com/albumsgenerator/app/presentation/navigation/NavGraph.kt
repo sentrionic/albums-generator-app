@@ -18,6 +18,7 @@ import com.albumsgenerator.app.presentation.screens.artist.ArtistScreen
 import com.albumsgenerator.app.presentation.screens.current.CurrentAlbumScreen
 import com.albumsgenerator.app.presentation.screens.genre.GenreScreen
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreen
+import com.albumsgenerator.app.presentation.screens.journey.JourneyScreen
 import com.albumsgenerator.app.presentation.screens.login.LoginScreen
 import com.albumsgenerator.app.presentation.screens.rate.RateAlbumScreen
 import com.albumsgenerator.app.presentation.screens.settings.SettingsScreen
@@ -143,6 +144,14 @@ fun NavGraph(
                 YearScreen(
                     data = key,
                     navigateTo = navigateTo,
+                    onBack = onBack,
+                )
+            }
+
+            entry<Route.Journey>(
+                metadata = defaultTransitionSpec(),
+            ) {
+                JourneyScreen(
                     onBack = onBack,
                 )
             }
