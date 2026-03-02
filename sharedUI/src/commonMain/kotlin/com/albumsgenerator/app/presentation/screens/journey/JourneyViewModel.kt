@@ -222,17 +222,23 @@ class JourneyViewModel(
             }
     }
 
-    private fun aboveAverageOutliers(histories: List<History>): ImmutableList<History> = histories
-        .filter {
-            it.ratingDiff > RATING_THRESHOLD
+    private suspend fun aboveAverageOutliers(histories: List<History>): ImmutableList<History> =
+        withContext(defaultDispatcher) {
+            histories
+                .filter {
+                    it.ratingDiff > RATING_THRESHOLD
+                }
+                .immutableSortedByDescending { it.ratingDiff }
         }
-        .immutableSortedByDescending { it.ratingDiff }
 
-    private fun belowAverageOutliers(histories: List<History>): ImmutableList<History> = histories
-        .filter {
-            it.ratingDiff < (RATING_THRESHOLD * -1)
+    private suspend fun belowAverageOutliers(histories: List<History>): ImmutableList<History> =
+        withContext(defaultDispatcher) {
+            histories
+                .filter {
+                    it.ratingDiff < (RATING_THRESHOLD * -1)
+                }
+                .immutableSortedByDescending { it.ratingDiff }
         }
-        .immutableSortedByDescending { it.ratingDiff }
 
     private companion object {
         private const val RATING_THRESHOLD = 1.8
