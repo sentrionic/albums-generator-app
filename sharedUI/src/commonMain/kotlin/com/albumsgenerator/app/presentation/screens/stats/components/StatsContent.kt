@@ -27,6 +27,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.presentation.navigation.Route
@@ -271,7 +272,7 @@ private fun HiddenStatItem(
 @Preview(showBackground = true)
 @Composable
 private fun StatsContentPreview() {
-    val albums = listOf(PreviewData.stats)
+    val albums = immutableListOf(PreviewData.stats)
 
     AppTheme {
         StatsContent(

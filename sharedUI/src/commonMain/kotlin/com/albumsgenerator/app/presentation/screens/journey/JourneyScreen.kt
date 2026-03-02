@@ -1,5 +1,7 @@
 package com.albumsgenerator.app.presentation.screens.journey
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.your_album_journey
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +13,7 @@ import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.screens.journey.components.JourneyContent
@@ -29,7 +32,7 @@ fun JourneyScreen(
 
     val loadingState by state.rememberLoadingState()
 
-    val title = "Your album journey"
+    val title = stringResource(Res.string.your_album_journey)
 
     Scaffold(
         modifier = modifier
@@ -51,7 +54,7 @@ fun JourneyScreen(
         ) { result ->
             when (result) {
                 is DataState.Loading -> {
-                    val placeholderItems = List(10) {
+                    val placeholderItems = (0..10).immutableMap {
                         JourneyState.Item(
                             label = "Label",
                             albumsCount = 10,

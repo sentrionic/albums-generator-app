@@ -3,7 +3,10 @@ package com.albumsgenerator.app.datasources.cache.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.albumsgenerator.app.domain.core.emptyImmutableList
+import com.albumsgenerator.app.domain.core.immutableSplit
 import com.albumsgenerator.app.domain.models.Album
+import kotlinx.collections.immutable.ImmutableList
 
 @Entity(tableName = "albums")
 data class AlbumEntity(
@@ -54,27 +57,15 @@ data class AlbumEntity(
         artist = artist,
         artistOrigin = artistOrigin,
         deezerId = deezerId,
-        genres = if (genres.isEmpty()) {
-            emptyList()
-        } else {
-            genres.split(SEPARATOR)
-        },
+        genres = genres.splitOrEmpty(),
         globalReviewsUrl = globalReviewsUrl,
-        images = if (images.isEmpty()) {
-            emptyList()
-        } else {
-            images.split(SEPARATOR)
-        },
+        images = images.splitOrEmpty(),
         name = name,
         qobuzId = qobuzId,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        subGenres = if (subGenres.isEmpty()) {
-            emptyList()
-        } else {
-            subGenres.split(SEPARATOR)
-        },
+        subGenres = subGenres.splitOrEmpty(),
         tidalId = tidalId,
         uuid = uuid,
         wikipediaUrl = wikipediaUrl,
@@ -85,6 +76,12 @@ data class AlbumEntity(
 
     companion object {
         const val SEPARATOR = ","
+
+        private fun String.splitOrEmpty(): ImmutableList<String> = if (isEmpty()) {
+            emptyImmutableList()
+        } else {
+            immutableSplit(SEPARATOR)
+        }
 
         fun fromDomain(album: Album): AlbumEntity = AlbumEntity(
             amazonMusicId = album.amazonMusicId,

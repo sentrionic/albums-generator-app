@@ -1,6 +1,9 @@
 package com.albumsgenerator.app.datasources.network.dtos
 
+import com.albumsgenerator.app.domain.core.immutableMap
+import com.albumsgenerator.app.domain.core.orEmpty
 import com.albumsgenerator.app.domain.models.AlbumStats
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -46,14 +49,14 @@ data class AlbumStatsDto(
         artistOrigin = artistOrigin ?: "other",
         averageRating = averageRating,
         controversialScore = controversialScore,
-        genres = genres,
+        genres = genres.toImmutableList(),
         globalReviewsUrl = globalReviewsUrl,
-        images = images.map { it.url },
+        images = images.immutableMap { it.url },
         name = name,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        styles = styles.orEmpty(),
+        styles = styles?.toImmutableList().orEmpty(),
         votes = votes,
         votesByGrade = votesByGrade.toDomain(),
     )

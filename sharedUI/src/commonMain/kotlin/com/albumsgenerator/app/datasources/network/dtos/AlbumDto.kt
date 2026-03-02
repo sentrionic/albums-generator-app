@@ -1,6 +1,8 @@
 package com.albumsgenerator.app.datasources.network.dtos
 
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.models.Album
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -49,15 +51,15 @@ data class AlbumDto(
         artist = artist,
         artistOrigin = artistOrigin,
         deezerId = deezerId,
-        genres = genres,
+        genres = genres.toImmutableList(),
         globalReviewsUrl = globalReviewsUrl,
-        images = images.map { it.url },
+        images = images.immutableMap { it.url },
         name = name,
         qobuzId = qobuzId,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        subGenres = subGenres,
+        subGenres = subGenres.toImmutableList(),
         tidalId = tidalId,
         uuid = uuid,
         wikipediaUrl = wikipediaUrl,

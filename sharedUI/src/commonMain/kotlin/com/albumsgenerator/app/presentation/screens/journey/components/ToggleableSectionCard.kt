@@ -1,5 +1,8 @@
 package com.albumsgenerator.app.presentation.screens.journey.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.accordion_collapse_accesibility
+import albumsgenerator.sharedui.generated.resources.accordion_expand_accesibility
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.common.modifiers.listSemantics
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ToggleableSectionCard(
@@ -42,11 +46,13 @@ fun ToggleableSectionCard(
 ) {
     var showSection by rememberSaveable { mutableStateOf(false) }
 
-    val onClickLabel = if (showSection) {
-        "Hide the content"
-    } else {
-        "Expand the content"
-    }
+    val onClickLabel = stringResource(
+        if (showSection) {
+            Res.string.accordion_collapse_accesibility
+        } else {
+            Res.string.accordion_expand_accesibility
+        },
+    )
 
     Card(
         modifier = modifier,

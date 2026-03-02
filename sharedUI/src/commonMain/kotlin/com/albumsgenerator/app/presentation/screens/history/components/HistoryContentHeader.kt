@@ -6,6 +6,8 @@ import albumsgenerator.sharedui.generated.resources.history_filter_all_ratings
 import albumsgenerator.sharedui.generated.resources.history_filter_rating_unrated
 import albumsgenerator.sharedui.generated.resources.history_filter_search
 import albumsgenerator.sharedui.generated.resources.star_rating
+import albumsgenerator.sharedui.generated.resources.your_journey
+import albumsgenerator.sharedui.generated.resources.your_journey_navigate_accessibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +38,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.LabelValuePair
+import com.albumsgenerator.app.domain.core.emptyImmutableList
+import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.values.Rating
 import com.albumsgenerator.app.presentation.common.components.A11yRow
@@ -44,6 +48,7 @@ import com.albumsgenerator.app.presentation.screens.history.HistoryScreenEvents
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.eygraber.compose.placeholder.material3.placeholder
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -51,7 +56,7 @@ import org.jetbrains.compose.resources.stringResource
 fun HistoryContentHeader(
     query: TextFieldValue,
     rating: Rating?,
-    genres: List<LabelValuePair>,
+    genres: ImmutableList<LabelValuePair>,
     genre: String?,
     sendEvent: (HistoryScreenEvents) -> Unit,
     navigateToJourney: () -> Unit,
@@ -67,7 +72,7 @@ fun HistoryContentHeader(
                 .clip(MaterialTheme.shapes.large)
                 .clickable(
                     enabled = !isLoading,
-                    onClickLabel = "View statistics and other info.",
+                    onClickLabel = stringResource(Res.string.your_journey_navigate_accessibility),
                     role = Role.Button,
                     onClick = navigateToJourney,
                 )
@@ -102,7 +107,7 @@ private fun YourJourneyCard(modifier: Modifier = Modifier) {
                 .fillMaxWidth(),
         ) {
             Text(
-                text = "Your Journey",
+                text = stringResource(Res.string.your_journey),
                 modifier = Modifier
                     .weight(1f),
             )
@@ -173,7 +178,7 @@ private fun SearchField(
 @Composable
 private fun FilterMenus(
     rating: Rating?,
-    genres: List<LabelValuePair>,
+    genres: ImmutableList<LabelValuePair>,
     genre: String?,
     sendEvent: (HistoryScreenEvents) -> Unit,
     modifier: Modifier = Modifier,
@@ -228,7 +233,7 @@ private fun RatingMenu(
     val unratedString = stringResource(Res.string.history_filter_rating_unrated)
 
     val ratingOptions = remember {
-        listOf(
+        immutableListOf(
             LabelValuePair(
                 label = fiveString,
                 value = "5",
@@ -279,7 +284,7 @@ private fun HistoryContentHeaderPreview() {
         HistoryContentHeader(
             query = TextFieldValue(),
             rating = null,
-            genres = emptyList(),
+            genres = emptyImmutableList(),
             genre = null,
             sendEvent = {},
             navigateToJourney = {},
@@ -296,7 +301,7 @@ private fun HistoryContentHeaderLoadingPreview() {
         HistoryContentHeader(
             query = TextFieldValue(),
             rating = null,
-            genres = emptyList(),
+            genres = emptyImmutableList(),
             genre = null,
             sendEvent = {},
             navigateToJourney = {},

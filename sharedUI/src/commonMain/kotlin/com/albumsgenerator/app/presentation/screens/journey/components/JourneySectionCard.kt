@@ -1,5 +1,9 @@
 package com.albumsgenerator.app.presentation.screens.journey.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.your_journey_section_albums
+import albumsgenerator.sharedui.generated.resources.your_journey_section_global
+import albumsgenerator.sharedui.generated.resources.your_journey_section_your_average
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -21,6 +25,7 @@ import com.albumsgenerator.app.presentation.common.modifiers.listSemantics
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.eygraber.compose.placeholder.material3.placeholder
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun JourneySectionCard(
@@ -66,7 +71,7 @@ fun JourneySectionCard(
                 )
 
                 Text(
-                    text = "ALBUMS",
+                    text = stringResource(Res.string.your_journey_section_albums),
                     modifier = Modifier
                         .weight(1f)
                         .placeholder(isLoading),
@@ -76,7 +81,7 @@ fun JourneySectionCard(
                 )
 
                 Text(
-                    text = "YOUR AVG",
+                    text = stringResource(Res.string.your_journey_section_your_average),
                     modifier = Modifier
                         .weight(1f)
                         .placeholder(isLoading),
@@ -86,7 +91,7 @@ fun JourneySectionCard(
                 )
 
                 Text(
-                    text = "GLOBAL",
+                    text = stringResource(Res.string.your_journey_section_global),
                     modifier = Modifier
                         .weight(1f)
                         .placeholder(isLoading),

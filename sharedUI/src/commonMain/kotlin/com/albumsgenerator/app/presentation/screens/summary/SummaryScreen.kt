@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.presentation.common.components.BottomBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
@@ -72,7 +73,7 @@ fun SummaryScreen(
             when (result) {
                 is DataState.Loading -> {
                     val loadingAlbums = remember {
-                        (0..<20).map {
+                        (0..<20).immutableMap {
                             PreviewData.album.copy(uuid = "Album #$it")
                         }
                     }

@@ -14,6 +14,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -48,7 +49,7 @@ class CurrentAlbumViewModel(
                     DataState.Success(
                         CurrentAlbumState(
                             project = project,
-                            previousAlbums = previousAlbums,
+                            previousAlbums = previousAlbums.toImmutableList(),
                         ),
                     )
                 }

@@ -7,6 +7,8 @@ import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.di.modules.Default
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableMap
+import com.albumsgenerator.app.domain.core.immutableSortedByDescending
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.models.averageRating
@@ -16,6 +18,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -54,7 +57,7 @@ class JourneyViewModel(
     private suspend fun getByDecade(
         histories: List<History>,
         stats: List<AlbumStats>,
-    ): List<JourneyState.Item> = withContext(defaultDispatcher) {
+    ): ImmutableList<JourneyState.Item> = withContext(defaultDispatcher) {
         val items = mutableMapOf<Int, List<History>>()
         val decadeToGlobal = mutableMapOf<Int, List<AlbumStats>>()
 
@@ -112,7 +115,7 @@ class JourneyViewModel(
                     global = relatedStat.globalAverage(),
                 )
             }
-            .sortedByDescending {
+            .immutableSortedByDescending {
                 it.average
             }
     }
@@ -120,7 +123,7 @@ class JourneyViewModel(
     private suspend fun getByGenre(
         histories: List<History>,
         stats: List<AlbumStats>,
-    ): List<JourneyState.Item> = withContext(defaultDispatcher) {
+    ): ImmutableList<JourneyState.Item> = withContext(defaultDispatcher) {
         val items = mutableMapOf<String, List<History>>()
         val genreToGlobal = mutableMapOf<String, List<AlbumStats>>()
 
@@ -147,7 +150,7 @@ class JourneyViewModel(
                     global = relatedStat.globalAverage(),
                 )
             }
-            .sortedByDescending {
+            .immutableSortedByDescending {
                 it.average
             }
     }
@@ -155,7 +158,7 @@ class JourneyViewModel(
     private suspend fun getByOrigin(
         histories: List<History>,
         stats: List<AlbumStats>,
-    ): List<JourneyState.Item> = withContext(defaultDispatcher) {
+    ): ImmutableList<JourneyState.Item> = withContext(defaultDispatcher) {
         val groupedHistories = histories.groupBy { it.album.artistOrigin.orEmpty() }
         val groupedStats = stats.groupBy { it.artistOrigin }
 
@@ -169,7 +172,7 @@ class JourneyViewModel(
                     global = relatedStat.globalAverage(),
                 )
             }
-            .sortedByDescending {
+            .immutableSortedByDescending {
                 it.average
             }
     }
@@ -177,7 +180,7 @@ class JourneyViewModel(
     private suspend fun getByStyles(
         histories: List<History>,
         stats: List<AlbumStats>,
-    ): List<JourneyState.ItemWithAlbums> = withContext(defaultDispatcher) {
+    ): ImmutableList<JourneyState.ItemWithAlbums> = withContext(defaultDispatcher) {
         val items = mutableMapOf<String, List<History>>()
 
         for (stat in stats) {
@@ -193,42 +196,43 @@ class JourneyViewModel(
                 JourneyState.ItemWithAlbums(
                     label = style.capitalize(),
                     average = albums.averageRating(),
-                    albums = albums.sortedBy { it.generatedAt }.map { it.album },
+                    albums = albums.sortedBy { it.generatedAt }.immutableMap { it.album },
                 )
             }
-            .sortedByDescending {
+            .immutableSortedByDescending {
                 it.average
             }
     }
 
-    private suspend fun getByYear(histories: List<History>): List<JourneyState.ItemWithAlbums> =
-        withContext(defaultDispatcher) {
-            val groupedHistories = histories.groupBy { it.album.releaseDate }
+    private suspend fun getByYear(
+        histories: List<History>,
+    ): ImmutableList<JourneyState.ItemWithAlbums> = withContext(defaultDispatcher) {
+        val groupedHistories = histories.groupBy { it.album.releaseDate }
 
-            return@withContext groupedHistories
-                .mapNotNull { (year, albums) ->
-                    JourneyState.ItemWithAlbums(
-                        label = year,
-                        average = albums.averageRating(),
-                        albums = albums.sortedBy { it.generatedAt }.map { it.album },
-                    )
-                }
-                .sortedByDescending {
-                    it.average
-                }
-        }
+        return@withContext groupedHistories
+            .mapNotNull { (year, albums) ->
+                JourneyState.ItemWithAlbums(
+                    label = year,
+                    average = albums.averageRating(),
+                    albums = albums.sortedBy { it.generatedAt }.immutableMap { it.album },
+                )
+            }
+            .immutableSortedByDescending {
+                it.average
+            }
+    }
 
-    private fun aboveAverageOutliers(histories: List<History>): List<History> = histories
+    private fun aboveAverageOutliers(histories: List<History>): ImmutableList<History> = histories
         .filter {
             it.ratingDiff > RATING_THRESHOLD
         }
-        .sortedByDescending { it.ratingDiff }
+        .immutableSortedByDescending { it.ratingDiff }
 
-    private fun belowAverageOutliers(histories: List<History>): List<History> = histories
+    private fun belowAverageOutliers(histories: List<History>): ImmutableList<History> = histories
         .filter {
             it.ratingDiff < (RATING_THRESHOLD * -1)
         }
-        .sortedBy { it.ratingDiff }
+        .immutableSortedByDescending { it.ratingDiff }
 
     private companion object {
         private const val RATING_THRESHOLD = 1.8

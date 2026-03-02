@@ -22,8 +22,9 @@ data class History(
     val hasRating: Boolean get() = rating != null && rating != SKIPPED_TAG
 
     val ratingDiff by lazy {
-        if (hasRating) {
-            (rating!!.toInt() - globalRating).toFloat()
+        val parsedRating = rating?.toIntOrNull()
+        if (hasRating && parsedRating != null) {
+            (parsedRating - globalRating).toFloat()
         } else {
             0.0f
         }

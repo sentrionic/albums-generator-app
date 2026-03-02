@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.Constants
+import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenEvents
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenState
@@ -192,7 +193,7 @@ private fun HistoryContentPreview() {
     AppTheme {
         HistoryContent(
             state = HistoryScreenState(
-                filteredHistories = listOf(PreviewData.history),
+                filteredHistories = immutableListOf(PreviewData.history),
                 historiesCount = 1,
                 historiesWithRatingCount = 1,
                 genres = PreviewData.genres,

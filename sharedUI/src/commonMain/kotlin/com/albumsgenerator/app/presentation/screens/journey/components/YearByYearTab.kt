@@ -9,14 +9,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.presentation.common.modifiers.listItemSemantics
 import com.albumsgenerator.app.presentation.screens.journey.JourneyState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun YearByYearTab(
-    byYear: List<JourneyState.ItemWithAlbums>,
+    byYear: ImmutableList<JourneyState.ItemWithAlbums>,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -47,7 +49,7 @@ fun YearByYearTab(
 private fun YearByYearTabPreview() {
     AppTheme {
         YearByYearTab(
-            byYear = emptyList(),
+            byYear = emptyImmutableList(),
         )
     }
 }

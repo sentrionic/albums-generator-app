@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.albumsgenerator.app.datasources.network.dtos.VotesByGradeDto
+import com.albumsgenerator.app.domain.core.immutableSplit
 import com.albumsgenerator.app.domain.models.AlbumStats
 import kotlinx.serialization.json.Json
 
@@ -43,14 +44,14 @@ data class StatEntity(
         artistOrigin = artistOrigin,
         averageRating = averageRating,
         controversialScore = controversialScore,
-        genres = genres.split(SEPARATOR),
+        genres = genres.immutableSplit(SEPARATOR),
         globalReviewsUrl = globalReviewsUrl,
-        images = images.split(SEPARATOR),
+        images = images.immutableSplit(SEPARATOR),
         name = name,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        styles = styles.split(SEPARATOR),
+        styles = styles.immutableSplit(SEPARATOR),
         votes = votes,
         votesByGrade = Json.decodeFromString<VotesByGradeDto>(votesByGrade)
             .toDomain(),

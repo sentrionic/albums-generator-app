@@ -11,8 +11,8 @@ android-compileSdk = "36"
 android-gradle = "9.0.1"
 android-minSdk = "28"
 android-targetSdk = "36"
-coil = "3.3.0"
-compose = "1.11.0-alpha02"
+coil = "3.4.0"
+compose = "1.11.0-alpha03"
 datastore = "1.2.0"
 ktor = "3.4.0"
 kotlin = "2.3.10"
@@ -20,8 +20,8 @@ kotlinter = "5.4.2"
 kotlinx-coroutines = "1.10.2"
 ksp = "2.3.4"
 lifecycle = "2.10.0-alpha08"
-metro = "0.10.4"
-navigation3 = "1.1.0-alpha02"
+metro = "0.11.1"
+navigation3 = "1.1.0-alpha03"
 room = "2.8.4"
 
 [libraries]
@@ -55,6 +55,7 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
 coil-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil"}
 
 # KotlinX
+kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0"
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }

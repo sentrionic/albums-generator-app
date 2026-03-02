@@ -14,6 +14,7 @@ import com.albumsgenerator.app.datasources.repository.HistoryRepository
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.domain.core.LabelValuePair
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.values.Rating
 import com.albumsgenerator.app.presentation.utils.capitalize
 import dev.zacsweers.metro.AppScope
@@ -23,6 +24,7 @@ import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -78,7 +80,7 @@ class HistoryViewModel(
 
         DataState.Success(
             HistoryScreenState(
-                filteredHistories = filteredHistories,
+                filteredHistories = filteredHistories.toImmutableList(),
                 genre = genre,
                 rating = rating,
                 historiesCount = histories.size,
@@ -88,7 +90,7 @@ class HistoryViewModel(
                 genres = histories
                     .flatMap { it.album.genres }
                     .distinct()
-                    .map { LabelValuePair(label = it.capitalize(), value = it) },
+                    .immutableMap { LabelValuePair(label = it.capitalize(), value = it) },
             ),
         )
     }.stateIn(

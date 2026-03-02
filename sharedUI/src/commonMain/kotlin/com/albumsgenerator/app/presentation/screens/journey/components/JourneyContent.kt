@@ -1,5 +1,9 @@
 package com.albumsgenerator.app.presentation.screens.journey.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.your_journey_tab_journey
+import albumsgenerator.sharedui.generated.resources.your_journey_tab_styles
+import albumsgenerator.sharedui.generated.resources.your_journey_tab_year
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -18,11 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.screens.journey.JourneyState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
-private enum class Destination(val label: String) {
-    JOURNEY(label = "Journey"),
-    STYLES(label = "Styles"),
-    YEAR(label = "Year by Year"),
+private enum class Destination(val label: StringResource) {
+    JOURNEY(label = Res.string.your_journey_tab_journey),
+    STYLES(label = Res.string.your_journey_tab_styles),
+    YEAR(label = Res.string.your_journey_tab_year),
 }
 
 @Composable
@@ -46,7 +52,7 @@ fun JourneyContent(
                     enabled = !isLoading,
                     text = {
                         Text(
-                            text = destination.label,
+                            text = stringResource(destination.label),
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                         )
