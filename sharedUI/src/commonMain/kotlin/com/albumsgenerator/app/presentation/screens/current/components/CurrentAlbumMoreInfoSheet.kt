@@ -31,6 +31,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.albumsgenerator.app.domain.core.emptyImmutableList
+import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.presentation.common.components.AlbumGenres
@@ -41,6 +43,7 @@ import com.albumsgenerator.app.presentation.common.components.SectionHeader
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -49,7 +52,7 @@ import org.jetbrains.compose.resources.stringResource
 fun CurrentAlbumMoreInfoSheet(
     onDismiss: () -> Unit,
     album: Album,
-    previousAlbums: List<History>,
+    previousAlbums: ImmutableList<History>,
     onOpenUri: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -89,7 +92,7 @@ fun CurrentAlbumMoreInfoSheet(
 @Composable
 private fun CurrentAlbumMoreInfoSheetContent(
     album: Album,
-    previousAlbums: List<History>,
+    previousAlbums: ImmutableList<History>,
     onOpenUri: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -111,7 +114,7 @@ private fun CurrentAlbumMoreInfoSheetContent(
             ) {
                 AlbumGenres(
                     genres = album.genres,
-                    subgenres = emptyList(),
+                    subgenres = emptyImmutableList(),
                 )
             }
         }
@@ -123,7 +126,7 @@ private fun CurrentAlbumMoreInfoSheetContent(
                     .fillMaxWidth(),
             ) {
                 AlbumGenres(
-                    genres = emptyList(),
+                    genres = emptyImmutableList(),
                     subgenres = album.subGenres,
                 )
             }
@@ -210,7 +213,7 @@ private fun AlbumInfo(
 
 @Composable
 private fun PreviousAlbumsList(
-    previousAlbums: List<History>,
+    previousAlbums: ImmutableList<History>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -301,7 +304,7 @@ private fun CurrentAlbumMoreInfoSheetPreview() {
     AppTheme {
         CurrentAlbumMoreInfoSheetContent(
             album = PreviewData.album,
-            previousAlbums = listOf(PreviewData.history),
+            previousAlbums = immutableListOf(PreviewData.history),
             onOpenUri = {},
             modifier = Modifier
                 .padding(all = Paddings.large),

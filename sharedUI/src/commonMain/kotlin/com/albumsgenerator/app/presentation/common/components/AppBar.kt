@@ -28,8 +28,8 @@ import org.jetbrains.compose.resources.stringResource
 fun AppBar(
     title: String,
     onBack: () -> Unit,
-    onOpenWeb: () -> Unit,
     modifier: Modifier = Modifier,
+    onOpenWeb: (() -> Unit)? = null,
 ) {
     val isScreenReaderOn by collectIsScreenReaderEnabledAsState()
 
@@ -58,17 +58,19 @@ fun AppBar(
             }
         },
         actions = {
-            Tooltip(
-                text = stringResource(Res.string.action_open_web),
-                enableUserInput = !isScreenReaderOn,
-            ) {
-                IconButton(
-                    onClick = onOpenWeb,
+            if (onOpenWeb != null) {
+                Tooltip(
+                    text = stringResource(Res.string.action_open_web),
+                    enableUserInput = !isScreenReaderOn,
                 ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_external_link),
-                        contentDescription = stringResource(Res.string.action_open_web),
-                    )
+                    IconButton(
+                        onClick = onOpenWeb,
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.ic_external_link),
+                            contentDescription = stringResource(Res.string.action_open_web),
+                        )
+                    }
                 }
             }
         },

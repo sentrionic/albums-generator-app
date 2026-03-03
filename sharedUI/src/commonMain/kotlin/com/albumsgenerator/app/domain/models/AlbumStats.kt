@@ -1,6 +1,8 @@
 package com.albumsgenerator.app.domain.models
 
 import androidx.compose.runtime.Immutable
+import com.albumsgenerator.app.domain.core.immutableListOf
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class AlbumStats(
@@ -8,19 +10,19 @@ data class AlbumStats(
     val artistOrigin: String,
     val averageRating: Double,
     val controversialScore: Double,
-    val genres: List<String>,
+    val genres: ImmutableList<String>,
     val globalReviewsUrl: String,
-    val images: List<String>,
+    val images: ImmutableList<String>,
     val name: String,
     val releaseDate: String,
     val slug: String,
     val spotifyId: String?,
-    val styles: List<String>,
+    val styles: ImmutableList<String>,
     val votes: Int,
     val votesByGrade: VotesByGrade,
 ) {
     val votesList by lazy {
-        listOf(
+        immutableListOf(
             votesByGrade.x1,
             votesByGrade.x2,
             votesByGrade.x3,
@@ -35,16 +37,6 @@ data class AlbumStats(
 
     val maxValue by lazy {
         votesList.maxOf { it / summedVotes.toFloat() } + 0.2f
-    }
-
-    data class VotesByGrade(val x1: Int, val x2: Int, val x3: Int, val x4: Int, val x5: Int) {
-        val totalVotes by lazy {
-            x1 + x2 + x3 + x4 + x5
-        }
-
-        val average: Int by lazy {
-            x1 + x2 * 2 + x3 * 3 + x4 * 4 + x5 * 5
-        }
     }
 }
 

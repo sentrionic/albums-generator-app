@@ -4,6 +4,7 @@ import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.history_title
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -15,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.presentation.common.components.BottomBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
@@ -74,16 +75,16 @@ fun HistoryScreen(
                     val album = PreviewData.history.album
                     HistoryContent(
                         state = HistoryScreenState(
-                            filteredHistories = (0..<20).map {
+                            filteredHistories = (0..<20).immutableMap {
                                 PreviewData.history.copy(album = album.copy(uuid = "$it"))
                             },
                             historiesCount = 20,
                             historiesWithRatingCount = 20,
                             genres = PreviewData.genres,
                         ),
-                        query = TextFieldValue(),
+                        query = TextFieldState(),
                         sendEvent = {},
-                        navigateToAlbum = {},
+                        navigateTo = {},
                         isLoading = true,
                     )
                 }
@@ -94,9 +95,7 @@ fun HistoryScreen(
                         state = state,
                         query = viewModel.query,
                         sendEvent = viewModel::onEvent,
-                        navigateToAlbum = { album ->
-                            navigateTo(Route.Album(albumId = album.uuid, albumName = album.name))
-                        },
+                        navigateTo = navigateTo,
                     )
                 }
 

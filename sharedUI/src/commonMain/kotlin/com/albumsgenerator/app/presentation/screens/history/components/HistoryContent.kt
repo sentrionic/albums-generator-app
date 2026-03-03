@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -35,10 +36,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.Constants
-import com.albumsgenerator.app.domain.models.Album
+import com.albumsgenerator.app.domain.core.immutableListOf
+import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenEvents
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
@@ -52,9 +53,9 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun HistoryContent(
     state: HistoryScreenState,
-    query: TextFieldValue,
+    query: TextFieldState,
     sendEvent: (HistoryScreenEvents) -> Unit,
-    navigateToAlbum: (Album) -> Unit,
+    navigateTo: (Route) -> Unit,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
@@ -88,6 +89,9 @@ fun HistoryContent(
                     genres = state.genres,
                     genre = state.genre,
                     sendEvent = sendEvent,
+                    navigateToJourney = {
+                        navigateTo(Route.Journey)
+                    },
                     isLoading = isLoading,
                 )
             }
@@ -124,7 +128,10 @@ fun HistoryContent(
                             enabled = !isLoading,
                             onClickLabel = stringResource(Res.string.album_navigate_accessibility),
                             onClick = {
-                                navigateToAlbum(history.album)
+                                val album = history.album
+                                navigateTo(
+                                    Route.Album(albumId = album.uuid, albumName = album.name),
+                                )
                             },
                         ),
                     isLoading = isLoading,
@@ -186,14 +193,14 @@ private fun HistoryContentPreview() {
     AppTheme {
         HistoryContent(
             state = HistoryScreenState(
-                filteredHistories = listOf(PreviewData.history),
+                filteredHistories = immutableListOf(PreviewData.history),
                 historiesCount = 1,
                 historiesWithRatingCount = 1,
                 genres = PreviewData.genres,
             ),
-            query = TextFieldValue(),
+            query = TextFieldState(),
             sendEvent = {},
-            navigateToAlbum = {},
+            navigateTo = {},
         )
     }
 }

@@ -44,6 +44,7 @@ kotlin {
             implementation(libs.coil.network)
             implementation(libs.compose.nav3)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.ktor.client.content.negotiation)

@@ -21,7 +21,19 @@ data class History(
 
     val hasRating: Boolean get() = rating != null && rating != SKIPPED_TAG
 
+    val ratingDiff by lazy {
+        val parsedRating = rating?.toIntOrNull()
+        if (hasRating && parsedRating != null) {
+            (parsedRating - globalRating).toFloat()
+        } else {
+            0.0f
+        }
+    }
+
     companion object {
         const val SKIPPED_TAG = "did-not-listen"
     }
 }
+
+fun List<History>.averageRating() =
+    sumOf { it.rating?.toIntOrNull() ?: 0 }.toFloat() / size.toFloat()

@@ -1,8 +1,9 @@
 package com.albumsgenerator.app.presentation.screens.history
 
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.createSavedStateHandle
@@ -14,6 +15,7 @@ import com.albumsgenerator.app.datasources.repository.HistoryRepository
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.domain.core.LabelValuePair
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.values.Rating
 import com.albumsgenerator.app.presentation.utils.capitalize
 import dev.zacsweers.metro.AppScope
@@ -23,6 +25,7 @@ import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -38,11 +41,11 @@ class HistoryViewModel(
     private val genre = MutableStateFlow<String?>(null)
 
     @OptIn(SavedStateHandleSaveableApi::class)
-    var query by savedStateHandle.saveable(stateSaver = TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue(""))
+    var query by savedStateHandle.saveable(stateSaver = TextFieldState.Saver) {
+        mutableStateOf(TextFieldState(""))
     }
 
-    private val queryFlow = snapshotFlow { query }
+    private val queryFlow = snapshotFlow { query.text }
 
     val state = combine(
         historyRepository.historiesFlow(),
@@ -51,14 +54,14 @@ class HistoryViewModel(
         queryFlow,
     ) { histories, genre, rating, query ->
         val filteredHistories = if (genre.isNullOrEmpty() && rating?.value.isNullOrEmpty() &&
-            query.text.isBlank()
+            query.isBlank()
         ) {
             histories
         } else {
             histories.filter { history ->
                 val album = history.album
-                val matchesName = album.name.contains(query.text, true) ||
-                    album.artist.contains(query.text, true)
+                val matchesName = album.name.contains(query, true) ||
+                    album.artist.contains(query, true)
 
                 val matchesGenre = if (!genre.isNullOrEmpty()) {
                     genre in album.genres
@@ -78,7 +81,7 @@ class HistoryViewModel(
 
         DataState.Success(
             HistoryScreenState(
-                filteredHistories = filteredHistories,
+                filteredHistories = filteredHistories.toImmutableList(),
                 genre = genre,
                 rating = rating,
                 historiesCount = histories.size,
@@ -88,7 +91,7 @@ class HistoryViewModel(
                 genres = histories
                     .flatMap { it.album.genres }
                     .distinct()
-                    .map { LabelValuePair(label = it.capitalize(), value = it) },
+                    .immutableMap { LabelValuePair(label = it.capitalize(), value = it) },
             ),
         )
     }.stateIn(
@@ -101,7 +104,7 @@ class HistoryViewModel(
         when (event) {
             is HistoryScreenEvents.UpdateGenre -> genre.update { event.genre }
             is HistoryScreenEvents.UpdateRating -> rating.update { event.rating }
-            is HistoryScreenEvents.UpdateQuery -> query = event.query
+            is HistoryScreenEvents.UpdateQuery -> query.setTextAndPlaceCursorAtEnd(event.query)
         }
     }
 

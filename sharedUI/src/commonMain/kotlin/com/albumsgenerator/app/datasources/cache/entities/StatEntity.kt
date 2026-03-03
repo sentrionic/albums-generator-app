@@ -3,8 +3,11 @@ package com.albumsgenerator.app.datasources.cache.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.albumsgenerator.app.datasources.network.dtos.AlbumStatsDto
+import com.albumsgenerator.app.datasources.network.dtos.VotesByGradeDto
+import com.albumsgenerator.app.domain.core.emptyImmutableList
+import com.albumsgenerator.app.domain.core.immutableSplit
 import com.albumsgenerator.app.domain.models.AlbumStats
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.json.Json
 
 @Entity(tableName = "stats")
@@ -43,21 +46,27 @@ data class StatEntity(
         artistOrigin = artistOrigin,
         averageRating = averageRating,
         controversialScore = controversialScore,
-        genres = genres.split(SEPARATOR),
+        genres = genres.splitOrEmpty(),
         globalReviewsUrl = globalReviewsUrl,
-        images = images.split(SEPARATOR),
+        images = images.splitOrEmpty(),
         name = name,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        styles = styles.split(SEPARATOR),
+        styles = styles.splitOrEmpty(),
         votes = votes,
-        votesByGrade = Json.decodeFromString<AlbumStatsDto.VotesByGradeDto>(votesByGrade)
+        votesByGrade = Json.decodeFromString<VotesByGradeDto>(votesByGrade)
             .toDomain(),
     )
 
     companion object {
         const val SEPARATOR = ","
+
+        private fun String.splitOrEmpty(): ImmutableList<String> = if (isEmpty()) {
+            emptyImmutableList()
+        } else {
+            immutableSplit(SEPARATOR)
+        }
 
         fun fromDomain(stat: AlbumStats): StatEntity = StatEntity(
             artist = stat.artist,
@@ -74,7 +83,7 @@ data class StatEntity(
             styles = stat.styles.joinToString(SEPARATOR),
             votes = stat.votes,
             votesByGrade = Json.encodeToString(
-                AlbumStatsDto.VotesByGradeDto.fromDomain(stat.votesByGrade),
+                VotesByGradeDto.fromDomain(stat.votesByGrade),
             ),
         )
     }

@@ -17,15 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.StreamingServices
-import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun AlbumStreamingServices(
-    streamingServices: List<StreamingServices>,
+    streamingServices: ImmutableList<StreamingServices>,
     serviceUrl: (StreamingServices) -> String,
     openUri: (String) -> Unit,
     modifier: Modifier = Modifier,

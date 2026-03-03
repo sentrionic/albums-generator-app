@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">1001 Albums Generator</string>
 
+    <string name="accordion_collapse_accesibility">Hide the content</string>
+    <string name="accordion_expand_accesibility">Expand the content</string>
     <string name="action_error">Could not open the link</string>
     <string name="action_open_info">View more info</string>
     <string name="action_open_reviews">View reviews</string>
@@ -103,4 +105,26 @@
     <string name="unknown_album">Mysterious album</string>
     <string name="unknown_artist">Mysterious artist</string>
     <string name="year_navigate_accessibility">Navigate to the year</string>
+    <string name="your_album_journey">Your album Journey</string>
+    <string name="your_journey">Your Journey</string>
+    <string name="your_journey_by_decade">By Decade</string>
+    <string name="your_journey_by_genre">By Genre</string>
+    <string name="your_journey_by_origin">By Origin</string>
+    <string name="your_journey_decade">Decade</string>
+    <string name="your_journey_genre">Genre</string>
+    <string name="your_journey_item_accessibility">%1$s. %2$d albums. Your average: %3$s. Global: %4$s</string>
+    <string name="your_journey_listening_history">Listening History</string>
+    <string name="your_journey_navigate_accessibility">View statistics and other info.</string>
+    <string name="your_journey_origin">Origin</string>
+    <string name="your_journey_outliers_above_average">Above Average</string>
+    <string name="your_journey_outliers_below_average">Below Average</string>
+    <string name="your_journey_outliers_description">Albums where your rating differs significantly from the average rating for that album.</string>
+    <string name="your_journey_outliers_item_accessibility">%1$s by %2$s. Your rating: %3$d. Global average: %4$s. Difference: %5$s</string>
+    <string name="your_journey_outliers_title">Outliers</string>
+    <string name="your_journey_section_albums">ALBUMS</string>
+    <string name="your_journey_section_global">GLOBAL</string>
+    <string name="your_journey_section_your_average">YOUR AVG</string>
+    <string name="your_journey_tab_journey">Journey</string>
+    <string name="your_journey_tab_styles">Styles</string>
+    <string name="your_journey_tab_year">Year by Year</string>
 </resources>

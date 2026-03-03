@@ -17,6 +17,7 @@ import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metrox.viewmodel.ManualViewModelAssistedFactory
 import dev.zacsweers.metrox.viewmodel.ManualViewModelAssistedFactoryKey
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -35,8 +36,8 @@ class GenreViewModel(
     ) { histories, stats, userData ->
         DataState.Success(
             TopState(
-                histories = histories,
-                stats = stats,
+                histories = histories.toImmutableList(),
+                stats = stats.toImmutableList(),
                 spoilerMode = userData.spoilerMode,
             ),
         )

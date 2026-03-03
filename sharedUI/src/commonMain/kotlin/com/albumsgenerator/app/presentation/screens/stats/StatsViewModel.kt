@@ -9,6 +9,8 @@ import com.albumsgenerator.app.di.modules.IO
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableFilter
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.domain.models.globalAverage
@@ -16,6 +18,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -45,11 +48,11 @@ class StatsViewModel(
             it.controversialScore
         }
 
-        val previousAlbumNames = histories.map { it.album.name }
+        val previousAlbumNames = histories.immutableMap { it.album.name }
 
         fun List<AlbumStats>.takeVisible() = when (userData.spoilerMode) {
-            SpoilerMode.HIDDEN -> this.filter { it.name in previousAlbumNames }
-            else -> this
+            SpoilerMode.HIDDEN -> this.immutableFilter { it.name in previousAlbumNames }
+            else -> this.toImmutableList()
         }
 
         DataState.Success(
@@ -62,7 +65,7 @@ class StatsViewModel(
                 leastControversial = statsSortedByControversialScore.takeLast(
                     Constants.LIMIT,
                 ).takeVisible()
-                    .reversed(),
+                    .reversed().toImmutableList(),
                 votes = totalVotes,
                 averageRating = stats.globalAverage(),
                 spoilerMode = userData.spoilerMode,

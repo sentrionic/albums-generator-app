@@ -7,6 +7,7 @@ import com.albumsgenerator.app.datasources.repository.PreferencesRepository
 import com.albumsgenerator.app.datasources.repository.StatsRepository
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableSortedBy
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.top.TopState
 import dev.zacsweers.metro.AppScope
@@ -35,8 +36,8 @@ class ArtistViewModel(
     ) { histories, stats, userData ->
         DataState.Success(
             TopState(
-                histories = histories.sortedBy { it.album.releaseDate },
-                stats = stats.sortedBy { it.releaseDate },
+                histories = histories.immutableSortedBy { it.album.releaseDate },
+                stats = stats.immutableSortedBy { it.releaseDate },
                 spoilerMode = userData.spoilerMode,
             ),
         )

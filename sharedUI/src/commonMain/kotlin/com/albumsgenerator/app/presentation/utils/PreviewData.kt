@@ -1,10 +1,13 @@
 package com.albumsgenerator.app.presentation.utils
 
 import com.albumsgenerator.app.domain.core.LabelValuePair
+import com.albumsgenerator.app.domain.core.immutableListOf
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.models.Project
+import com.albumsgenerator.app.domain.models.VotesByGrade
 import kotlin.time.Instant
 
 object PreviewData {
@@ -15,9 +18,9 @@ object PreviewData {
         artist = "Beatles",
         artistOrigin = "uk",
         deezerId = "12047952",
-        genres = listOf("rock", "pop"),
+        genres = immutableListOf("rock", "pop"),
         globalReviewsUrl = "https://1001albumsgenerator.com/albums/0ETFjACtuP2ADo6LFhL6HN/abbey-road",
-        images = listOf(
+        images = immutableListOf(
             "https://i.scdn.co/image/ab67616d0000b273dc30583ba717007b00cceb25",
         ),
         name = "Abbey Road",
@@ -25,7 +28,7 @@ object PreviewData {
         releaseDate = "1969",
         slug = "abbey-road",
         spotifyId = "0ETFjACtuP2ADo6LFhL6HN",
-        subGenres = listOf(
+        subGenres = immutableListOf(
             "beatlesque",
             "british-invasion",
             "classic-rock",
@@ -60,23 +63,23 @@ object PreviewData {
         artistOrigin = "uk",
         averageRating = 4.46,
         controversialScore = 0.814428505365509,
-        genres = listOf("rock", "pop"),
+        genres = immutableListOf("rock", "pop"),
         globalReviewsUrl = "https://1001albumsgenerator.com/albums/0ETFjACtuP2ADo6LFhL6HN/abbey-road",
-        images = listOf(
+        images = immutableListOf(
             "https://i.scdn.co/image/ab67616d0000b273dc30583ba717007b00cceb25",
         ),
         name = "Abbey Road",
         releaseDate = "1969",
         slug = "abbey-road",
         spotifyId = "0ETFjACtuP2ADo6LFhL6HN",
-        styles = listOf(
+        styles = immutableListOf(
             "psychedelic-rock",
             "art-rock",
             "symphonic-rock",
             "prog-rock",
         ),
         votes = 24116,
-        votesByGrade = AlbumStats.VotesByGrade(
+        votesByGrade = VotesByGrade(
             x1 = 78,
             x2 = 241,
             x3 = 1053,
@@ -95,5 +98,5 @@ object PreviewData {
         updateFrequency = "dailyWithWeekends",
     )
 
-    val genres = album.genres.map { LabelValuePair(it.capitalize(), it) }
+    val genres = album.genres.immutableMap { LabelValuePair(it.capitalize(), it) }
 }

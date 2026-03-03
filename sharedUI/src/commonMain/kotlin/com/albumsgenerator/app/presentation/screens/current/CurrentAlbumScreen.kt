@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.domain.core.StreamingServices
+import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.presentation.common.components.BottomBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
@@ -89,7 +90,7 @@ fun CurrentAlbumScreen(
                     CurrentAlbumContent(
                         state = CurrentAlbumState(
                             project = PreviewData.project,
-                            previousAlbums = emptyList(),
+                            previousAlbums = emptyImmutableList(),
                         ),
                         service = StreamingServices.SPOTIFY,
                         showMessage = { },

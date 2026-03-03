@@ -10,11 +10,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun AlbumGenres(
-    genres: List<String>,
-    subgenres: List<String>,
+    genres: ImmutableList<String>,
+    subgenres: ImmutableList<String>,
     modifier: Modifier = Modifier,
     onNavigateToGenre: (String) -> Unit = {},
 ) {

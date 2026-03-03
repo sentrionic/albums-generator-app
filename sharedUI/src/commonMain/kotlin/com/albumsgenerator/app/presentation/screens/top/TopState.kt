@@ -1,19 +1,22 @@
 package com.albumsgenerator.app.presentation.screens.top
 
 import androidx.compose.runtime.Immutable
+import com.albumsgenerator.app.domain.core.immutableListOf
+import com.albumsgenerator.app.domain.core.immutableMapNotNull
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.presentation.utils.PreviewData
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class TopState(
-    val histories: List<History>,
-    val stats: List<AlbumStats>,
+    val histories: ImmutableList<History>,
+    val stats: ImmutableList<AlbumStats>,
     val spoilerMode: SpoilerMode,
 ) {
-    val items: List<Pair<AlbumStats, History?>>
-        get() = stats.mapNotNull { stat ->
+    val items: ImmutableList<Pair<AlbumStats, History?>>
+        get() = stats.immutableMapNotNull { stat ->
             val relatedHistory = histories.firstOrNull {
                 it.album.name == stat.name &&
                     it.album.artist == stat.artist
@@ -28,8 +31,8 @@ data class TopState(
 
     companion object {
         val EMPTY = TopState(
-            histories = listOf(PreviewData.history),
-            stats = listOf(PreviewData.stats),
+            histories = immutableListOf(PreviewData.history),
+            stats = immutableListOf(PreviewData.stats),
             spoilerMode = SpoilerMode.VISIBLE,
         )
 

@@ -39,6 +39,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import com.albumsgenerator.app.presentation.common.modifiers.onEscape
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
@@ -46,7 +47,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun <T : Any> DropdownMenu(
     label: String,
-    items: List<T>,
+    items: ImmutableList<T>,
     onSelect: (T) -> Unit,
     onReset: () -> Unit,
     modifier: Modifier = Modifier,
@@ -174,7 +175,7 @@ fun <T : Any> DropdownMenu(
 @Composable
 fun <T : Any> SelectionMenu(
     label: String,
-    items: List<T>,
+    items: ImmutableList<T>,
     onSelect: (T) -> Unit,
     modifier: Modifier = Modifier,
     formatItem: @Composable (T) -> String = { it.toString() },

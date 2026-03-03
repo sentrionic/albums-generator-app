@@ -6,7 +6,6 @@ import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.values.Rating
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -35,6 +34,7 @@ interface HistoryRepository {
     ): Flow<List<History>>
 
     suspend fun artistHistories(artist: String): List<History>
+    fun historiesWithRating(): Flow<List<History>>
 }
 
 @ContributesBinding(AppScope::class)
@@ -164,5 +164,22 @@ class RealHistoryRepository(val historyDao: HistoryDao) : HistoryRepository {
         val result = historyDao.getArtistAlbums(artist).map { it.toDomain() }
         logger.d { "[ArtistHistories] Fetched ${result.size} albums for artist $artist" }
         return result
+    }
+
+    override fun historiesWithRating(): Flow<List<History>> {
+        logger.i {
+            "[HistoriesWithRating] Fetching the current user's histories with valid rating."
+        }
+        return historyDao
+            .getWithRating()
+            .map { histories ->
+                histories
+                    .map { (history, album) ->
+                        history.toDomain(album = album.toDomain())
+                    }
+            }
+            .onEach {
+                logger.d { "[HistoriesWithRating] Successfully fetched ${it.size} entries." }
+            }
     }
 }

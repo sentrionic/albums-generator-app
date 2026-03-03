@@ -20,6 +20,7 @@ import com.albumsgenerator.app.presentation.common.components.SelectionMenu
 import com.albumsgenerator.app.presentation.screens.settings.SettingsEvents
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -43,7 +44,7 @@ fun SettingsOptions(
 
             SelectionMenu(
                 label = userData.service?.label ?: stringResource(Res.string.please_choose),
-                items = StreamingServices.entries,
+                items = StreamingServices.entries.toImmutableList(),
                 onSelect = {
                     sendEvent(SettingsEvents.UpdateStreamingService(it))
                 },
@@ -70,7 +71,7 @@ fun SettingsOptions(
 
             SelectionMenu(
                 label = stringResource(userData.theme.label),
-                items = Theme.entries,
+                items = Theme.entries.toImmutableList(),
                 onSelect = {
                     sendEvent(SettingsEvents.UpdateTheme(it))
                 },

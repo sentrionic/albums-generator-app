@@ -7,6 +7,7 @@ import com.albumsgenerator.app.di.modules.IO
 import com.albumsgenerator.app.di.modules.Main
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.values.Rating
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -49,8 +50,8 @@ class SummaryViewModel(
                             percentageComplete =
                                 historyCount.await().toFloat() /
                                     Constants.TOTAL_ALBUMS_COUNT.toFloat(),
-                            fiveStarAlbums = fiveStarAlbums.await().map { it.album },
-                            oneStarAlbums = oneStarAlbums.await().map { it.album },
+                            fiveStarAlbums = fiveStarAlbums.await().immutableMap { it.album },
+                            oneStarAlbums = oneStarAlbums.await().immutableMap { it.album },
                         ),
                     )
                 }

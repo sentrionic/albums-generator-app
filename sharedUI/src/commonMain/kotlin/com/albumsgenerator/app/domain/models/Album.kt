@@ -4,6 +4,8 @@ import androidx.compose.runtime.Immutable
 import com.albumsgenerator.app.domain.core.StreamingServices
 import com.albumsgenerator.app.presentation.utils.Platform
 import com.albumsgenerator.app.presentation.utils.getCurrentPlatform
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Immutable
 data class Album(
@@ -12,15 +14,15 @@ data class Album(
     val artist: String,
     val artistOrigin: String?,
     val deezerId: String?,
-    val genres: List<String>,
+    val genres: ImmutableList<String>,
     val globalReviewsUrl: String,
-    val images: List<String>,
+    val images: ImmutableList<String>,
     val name: String,
     val qobuzId: String?,
     val releaseDate: String,
     val slug: String,
     val spotifyId: String?,
-    val subGenres: List<String>,
+    val subGenres: ImmutableList<String>,
     val tidalId: String?,
     val uuid: String,
     val wikipediaUrl: String,
@@ -68,7 +70,7 @@ data class Album(
             if (!youtubeMusicId.isNullOrEmpty()) {
                 add(StreamingServices.YOUTUBE)
             }
-        }
+        }.toImmutableList()
     }
 
     fun serviceUrl(service: StreamingServices): String {

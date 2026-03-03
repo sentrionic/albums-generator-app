@@ -21,6 +21,11 @@ object DispatchersModule {
     @Provides
     @Main
     fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+
+    @SingleIn(AppScope::class)
+    @Provides
+    @Default
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 }
 
 @Qualifier
@@ -30,3 +35,7 @@ annotation class IO
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Main
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Default

@@ -20,6 +20,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.summary.SummaryScreenState
@@ -153,8 +154,8 @@ private fun SummaryContentPreview() {
                 albumsRated = 123,
                 averageRating = 3.0f,
                 percentageComplete = 0.25f,
-                fiveStarAlbums = listOf(PreviewData.album),
-                oneStarAlbums = listOf(PreviewData.album),
+                fiveStarAlbums = immutableListOf(PreviewData.album),
+                oneStarAlbums = immutableListOf(PreviewData.album),
             ),
             navigateTo = {},
         )
