@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Card
@@ -24,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.LabelValuePair
 import com.albumsgenerator.app.domain.core.emptyImmutableList
@@ -44,7 +44,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HistoryContentHeader(
-    query: TextFieldValue,
+    query: TextFieldState,
     rating: Rating?,
     genres: ImmutableList<LabelValuePair>,
     genre: String?,
@@ -70,7 +70,7 @@ fun HistoryContentHeader(
         )
 
         SearchField(
-            query = query,
+            query = query.text.toString(),
             setQuery = { sendEvent(HistoryScreenEvents.UpdateQuery(it)) },
             enabled = !isLoading,
             modifier = Modifier
@@ -216,7 +216,7 @@ private fun RatingMenu(
 private fun HistoryContentHeaderPreview() {
     AppTheme {
         HistoryContentHeader(
-            query = TextFieldValue(),
+            query = TextFieldState(),
             rating = null,
             genres = emptyImmutableList(),
             genre = null,
@@ -233,7 +233,7 @@ private fun HistoryContentHeaderPreview() {
 private fun HistoryContentHeaderLoadingPreview() {
     AppTheme {
         HistoryContentHeader(
-            query = TextFieldValue(),
+            query = TextFieldState(),
             rating = null,
             genres = emptyImmutableList(),
             genre = null,

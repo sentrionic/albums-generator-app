@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.emptyImmutableList
@@ -41,11 +42,9 @@ fun ExpandableLazyList(
 ) {
     val scrollState = rememberLazyListState()
 
-    var query by rememberSaveable(TextFieldValue.Saver) {
-        mutableStateOf(TextFieldValue())
-    }
+    val query = rememberTextFieldState()
 
-    val filteredItems = remember(query, itemsWithAlbums) {
+    val filteredItems = remember(query.text, itemsWithAlbums) {
         if (query.text.isNotEmpty()) {
             itemsWithAlbums.immutableFilter {
                 it.label.contains(query.text, ignoreCase = true)
@@ -55,11 +54,11 @@ fun ExpandableLazyList(
         }
     }
 
-    var scrollToTop by rememberSaveable(query) {
+    var scrollToTop by rememberSaveable(query.text) {
         mutableStateOf(true)
     }
 
-    LaunchedEffect(query) {
+    LaunchedEffect(query.text) {
         if (scrollToTop && scrollState.firstVisibleItemIndex != 0) {
             scrollState.scrollToItem(0)
         }
@@ -68,8 +67,8 @@ fun ExpandableLazyList(
 
     Column(modifier = modifier) {
         SearchField(
-            query = query,
-            setQuery = { query = it },
+            query = query.text.toString(),
+            setQuery = query::setTextAndPlaceCursorAtEnd,
             enabled = !isLoading,
             modifier = Modifier
                 .fillMaxWidth()

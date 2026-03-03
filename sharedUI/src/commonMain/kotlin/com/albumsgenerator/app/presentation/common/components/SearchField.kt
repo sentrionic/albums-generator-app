@@ -18,15 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SearchField(
-    query: TextFieldValue,
-    setQuery: (TextFieldValue) -> Unit,
+    query: String,
+    setQuery: (String) -> Unit,
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -46,13 +45,13 @@ fun SearchField(
                 contentDescription = null,
             )
         },
-        trailingIcon = if (query.text.isEmpty()) {
+        trailingIcon = if (query.isEmpty()) {
             null
         } else {
             {
                 IconButton(
                     onClick = {
-                        setQuery(TextFieldValue())
+                        setQuery("")
                         keyboard?.hide()
                     },
                 ) {
@@ -84,7 +83,7 @@ fun SearchField(
 private fun SearchFieldPreview() {
     AppTheme {
         SearchField(
-            query = TextFieldValue(),
+            query = "",
             setQuery = {},
             enabled = true,
         )

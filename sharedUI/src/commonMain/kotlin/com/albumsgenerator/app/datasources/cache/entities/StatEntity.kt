@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.albumsgenerator.app.datasources.network.dtos.VotesByGradeDto
+import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.domain.core.immutableSplit
 import com.albumsgenerator.app.domain.models.AlbumStats
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.json.Json
 
 @Entity(tableName = "stats")
@@ -44,14 +46,14 @@ data class StatEntity(
         artistOrigin = artistOrigin,
         averageRating = averageRating,
         controversialScore = controversialScore,
-        genres = genres.immutableSplit(SEPARATOR),
+        genres = genres.splitOrEmpty(),
         globalReviewsUrl = globalReviewsUrl,
-        images = images.immutableSplit(SEPARATOR),
+        images = images.splitOrEmpty(),
         name = name,
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        styles = styles.immutableSplit(SEPARATOR),
+        styles = styles.splitOrEmpty(),
         votes = votes,
         votesByGrade = Json.decodeFromString<VotesByGradeDto>(votesByGrade)
             .toDomain(),
@@ -59,6 +61,12 @@ data class StatEntity(
 
     companion object {
         const val SEPARATOR = ","
+
+        private fun String.splitOrEmpty(): ImmutableList<String> = if (isEmpty()) {
+            emptyImmutableList()
+        } else {
+            immutableSplit(SEPARATOR)
+        }
 
         fun fromDomain(stat: AlbumStats): StatEntity = StatEntity(
             artist = stat.artist,
