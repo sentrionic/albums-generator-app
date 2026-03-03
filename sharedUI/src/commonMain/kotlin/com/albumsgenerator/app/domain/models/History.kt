@@ -1,9 +1,9 @@
 package com.albumsgenerator.app.domain.models
 
 import androidx.compose.runtime.Immutable
+import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import kotlin.time.Instant
 
 @Immutable
 data class History(
