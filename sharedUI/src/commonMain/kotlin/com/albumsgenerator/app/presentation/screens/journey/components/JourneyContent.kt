@@ -80,7 +80,7 @@ fun JourneyContent(
 
             Destination.YEAR.ordinal -> {
                 YearByYearTab(
-                    byYear = state.byYear,
+                    byYears = state.byYears,
                 )
             }
         }

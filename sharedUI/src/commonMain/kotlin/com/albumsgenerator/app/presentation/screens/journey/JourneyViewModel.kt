@@ -43,7 +43,7 @@ class JourneyViewModel(
                 byGenre = getByGenre(histories, stats),
                 byOrigin = getByOrigin(histories, stats),
                 byStyles = getByStyles(histories, stats),
-                byYear = getByYear(histories),
+                byYears = getByYears(histories),
                 aboveAverageOutliers = aboveAverageOutliers(histories),
                 belowAverageOutliers = belowAverageOutliers(histories),
             ),
@@ -204,7 +204,7 @@ class JourneyViewModel(
             }
     }
 
-    private suspend fun getByYear(
+    private suspend fun getByYears(
         histories: List<History>,
     ): ImmutableList<JourneyState.ItemWithAlbums> = withContext(defaultDispatcher) {
         val groupedHistories = histories.groupBy { it.album.releaseDate }

@@ -4,7 +4,6 @@ import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.history_filter_all_genres
 import albumsgenerator.sharedui.generated.resources.history_filter_all_ratings
 import albumsgenerator.sharedui.generated.resources.history_filter_rating_unrated
-import albumsgenerator.sharedui.generated.resources.history_filter_search
 import albumsgenerator.sharedui.generated.resources.star_rating
 import albumsgenerator.sharedui.generated.resources.your_journey
 import albumsgenerator.sharedui.generated.resources.your_journey_navigate_accessibility
@@ -14,27 +13,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.LabelValuePair
@@ -44,6 +33,7 @@ import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.values.Rating
 import com.albumsgenerator.app.presentation.common.components.A11yRow
 import com.albumsgenerator.app.presentation.common.components.DropdownMenu
+import com.albumsgenerator.app.presentation.common.components.SearchField
 import com.albumsgenerator.app.presentation.screens.history.HistoryScreenEvents
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
@@ -117,62 +107,6 @@ private fun YourJourneyCard(modifier: Modifier = Modifier) {
             )
         }
     }
-}
-
-@Composable
-private fun SearchField(
-    query: TextFieldValue,
-    setQuery: (TextFieldValue) -> Unit,
-    enabled: Boolean,
-    modifier: Modifier = Modifier,
-) {
-    val keyboard = LocalSoftwareKeyboardController.current
-
-    OutlinedTextField(
-        value = query,
-        onValueChange = setQuery,
-        modifier = modifier,
-        enabled = enabled,
-        placeholder = {
-            Text(text = stringResource(Res.string.history_filter_search))
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Outlined.Search,
-                contentDescription = null,
-            )
-        },
-        trailingIcon = if (query.text.isEmpty()) {
-            null
-        } else {
-            {
-                IconButton(
-                    onClick = {
-                        setQuery(TextFieldValue())
-                        keyboard?.hide()
-                    },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Cancel,
-                        contentDescription = null,
-                    )
-                }
-            }
-        },
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done,
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                keyboard?.hide()
-            },
-        ),
-        shape = CircleShape,
-        colors = OutlinedTextFieldDefaults.colors().copy(
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-        ),
-    )
 }
 
 @Composable

@@ -31,7 +31,6 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.presentation.common.modifiers.listItemSemantics
 import com.albumsgenerator.app.presentation.screens.journey.JourneyState
@@ -146,6 +145,8 @@ fun JourneyTab(
         }
 
         Column(
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(Paddings.small),
         ) {
             Text(
@@ -236,14 +237,10 @@ private fun JourneyTabPreview() {
 
     AppTheme {
         JourneyTab(
-            state = JourneyState(
+            state = JourneyState.EMPTY.copy(
                 byDecade = items,
                 byGenre = items,
                 byOrigin = items,
-                byStyles = emptyImmutableList(),
-                byYear = emptyImmutableList(),
-                aboveAverageOutliers = emptyImmutableList(),
-                belowAverageOutliers = emptyImmutableList(),
             ),
             modifier = Modifier
                 .verticalScroll(rememberScrollState())

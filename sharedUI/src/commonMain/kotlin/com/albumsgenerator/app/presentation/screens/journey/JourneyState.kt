@@ -12,7 +12,7 @@ data class JourneyState(
     val byGenre: ImmutableList<Item>,
     val byOrigin: ImmutableList<Item>,
     val byStyles: ImmutableList<ItemWithAlbums>,
-    val byYear: ImmutableList<ItemWithAlbums>,
+    val byYears: ImmutableList<ItemWithAlbums>,
     val aboveAverageOutliers: ImmutableList<History>,
     val belowAverageOutliers: ImmutableList<History>,
 ) {
@@ -32,7 +32,7 @@ data class JourneyState(
             byGenre = emptyImmutableList(),
             byOrigin = emptyImmutableList(),
             byStyles = emptyImmutableList(),
-            byYear = emptyImmutableList(),
+            byYears = emptyImmutableList(),
             aboveAverageOutliers = emptyImmutableList(),
             belowAverageOutliers = emptyImmutableList(),
         )

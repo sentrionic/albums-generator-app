@@ -35,11 +35,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.common.modifiers.listSemantics
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import com.albumsgenerator.app.presentation.utils.format
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ToggleableSectionCard(
     title: String,
+    average: Float,
     albumsCount: Int,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
@@ -87,7 +89,7 @@ fun ToggleableSectionCard(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "$title ($albumsCount)",
+                    text = "$title: ${average.format()} ($albumsCount)",
                     modifier = Modifier
                         .weight(1f),
                     fontWeight = FontWeight.SemiBold,
@@ -128,6 +130,7 @@ private fun ToggleableSectionCardPreview() {
     AppTheme {
         ToggleableSectionCard(
             title = "Section",
+            average = 0.0f,
             albumsCount = 0,
         ) {}
     }
