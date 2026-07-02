@@ -28,6 +28,9 @@ jobs:
       - name: Kotlinter
         run: ./gradlew lintKotlinCommonMain
 
+      - name: Detekt
+        run: ./gradlew :sharedUI:detekt
+
       # Upload test reports as an artifact
       - name: Upload Test Report
         if: failure()
