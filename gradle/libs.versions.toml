@@ -6,29 +6,30 @@ app-name = "Albums Generator"
 app-vendor = "1001albumsgenerator"
 app-description = "Explore the history of music. One album a day. From the book 1001 Albums You Must Hear Before You Die."
 app-menugroup = "Other"
-activity-compose = "1.12.4"
-android-compileSdk = "36"
-android-gradle = "9.0.1"
+activity-compose = "1.13.0"
+android-compileSdk = "37"
+android-gradle = "9.2.1"
 android-minSdk = "28"
-android-targetSdk = "36"
-coil = "3.4.0"
-compose = "1.11.0-alpha03"
-datastore = "1.2.0"
-ktor = "3.4.0"
-kotlin = "2.3.10"
-kotlinter = "5.4.2"
-kotlinx-coroutines = "1.10.2"
-ksp = "2.3.4"
-lifecycle = "2.10.0-alpha08"
-metro = "0.11.1"
-navigation3 = "1.1.0-alpha03"
+android-targetSdk = "37"
+coil = "3.5.0"
+compose = "1.12.0-alpha02"
+datastore = "1.2.1"
+detekt = "2.0.0-alpha.5"
+ktor = "3.5.1"
+kotlin = "2.4.0"
+kotlinter = "5.5.0"
+kotlinx-coroutines = "1.11.0"
+ksp = "2.3.6"
+lifecycle = "2.10.0"
+metro = "1.2.1"
+navigation3 = "1.1.1"
 room = "2.8.4"
 
 [libraries]
 compose-webview-multiplatform = "com.saralapps:composemultiplatformwebview:0.1.5"
-jetpack-compose-rules = "io.nlopez.compose.rules:ktlint:0.5.6"
+jetpack-compose-rules = "io.nlopez.compose.rules:ktlint:0.6.2"
 material3-placeholder = "com.eygraber:compose-placeholder-material3:1.0.12"
-touchlab-kermit = "co.touchlab:kermit:2.0.8"
+touchlab-kermit = "co.touchlab:kermit:2.1.0"
 
 # AndroidX
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -55,12 +56,12 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
 coil-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil"}
 
 # KotlinX
-kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0"
+kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.5.0"
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1"
-kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0"
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.8.0"
+kotlinx-serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
 
 # Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -83,6 +84,7 @@ android-application = { id = "com.android.application", version.ref = "android-g
 android-kmp-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }

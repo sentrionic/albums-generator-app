@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 
 @ContributesIntoMap(AppScope::class)
-@ViewModelKey(CurrentAlbumViewModel::class)
+@ViewModelKey
 @Inject
 class CurrentAlbumViewModel(
     projectRepository: ProjectRepository,
@@ -35,7 +35,6 @@ class CurrentAlbumViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val state = userData
-        .mapNotNull { it }
         .mapNotNull { it.projectName }
         .distinctUntilChanged() // Prevent project from being refetched if we just logged in.
         .flatMapConcat { projectName ->

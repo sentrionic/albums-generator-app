@@ -20,7 +20,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -41,6 +43,7 @@ import com.albumsgenerator.app.presentation.common.components.NetworkImage
 import com.albumsgenerator.app.presentation.common.components.Section
 import com.albumsgenerator.app.presentation.common.components.SectionHeader
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import com.albumsgenerator.app.presentation.ui.theme.AspectRatios
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import kotlinx.collections.immutable.ImmutableList
@@ -57,7 +60,9 @@ fun CurrentAlbumMoreInfoSheet(
     modifier: Modifier = Modifier,
 ) {
     val scope = rememberCoroutineScope()
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+    )
 
     fun closeSheet(action: () -> Unit) {
         scope.launch { sheetState.hide() }.invokeOnCompletion {
@@ -174,14 +179,14 @@ private fun AlbumInfo(
         NetworkImage(
             url = album.coverUrl,
             modifier = Modifier
-                .weight(1 / 3f)
+                .weight(AspectRatios.ONE_THIRD)
                 .aspectRatio(1f)
                 .clip(MaterialTheme.shapes.large),
         )
 
         Column(
             modifier = Modifier
-                .weight(2 / 3f),
+                .weight(AspectRatios.TWO_THIRD),
             verticalArrangement = Arrangement.spacedBy(Paddings.extraSmall),
         ) {
             Text(

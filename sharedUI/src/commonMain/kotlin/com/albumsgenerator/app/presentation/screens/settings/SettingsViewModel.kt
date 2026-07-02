@@ -36,7 +36,7 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.compose.resources.StringResource
 
 @ContributesIntoMap(AppScope::class)
-@ViewModelKey(SettingsViewModel::class)
+@ViewModelKey
 @Inject
 class SettingsViewModel(
     @param:IO private val ioDispatcher: CoroutineDispatcher,

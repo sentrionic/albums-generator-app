@@ -21,6 +21,7 @@ import com.albumsgenerator.app.domain.core.StreamingServices
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.current.CurrentAlbumState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import com.albumsgenerator.app.presentation.ui.theme.AspectRatios
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.albumsgenerator.app.presentation.utils.capitalize
@@ -53,7 +54,7 @@ fun CurrentAlbumInfo(
 
         HorizontalDivider(
             modifier = Modifier
-                .fillMaxWidth(0.3f)
+                .fillMaxWidth(AspectRatios.ONE_THIRD)
                 .padding(vertical = Paddings.small)
                 .placeholder(visible = isLoading),
             thickness = 3.dp,

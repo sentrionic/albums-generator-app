@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @ContributesIntoMap(AppScope::class)
-@ViewModelKey(MainViewModel::class)
+@ViewModelKey
 @Inject
 class MainViewModel(
     @param:IO private val ioDispatcher: CoroutineDispatcher,

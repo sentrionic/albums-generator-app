@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @ContributesIntoMap(AppScope::class)
-@ViewModelKey(SummaryViewModel::class)
+@ViewModelKey
 @Inject
 class SummaryViewModel(
     @param:IO private val ioDispatcher: CoroutineDispatcher,

@@ -62,10 +62,6 @@ fun CurrentAlbumActions(
     val scope = rememberCoroutineScope()
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
-    val isScreenReaderOn by collectIsScreenReaderEnabledAsState()
-
-    val album = remember(state) { state.project.currentAlbum }
-
     fun openStreamingService(uri: String) {
         try {
             uriHandler.openUri(uri)
@@ -79,7 +75,7 @@ fun CurrentAlbumActions(
 
     if (showBottomSheet) {
         CurrentAlbumMoreInfoSheet(
-            album = album,
+            album = state.project.currentAlbum,
             previousAlbums = state.previousAlbums,
             onOpenUri = ::openStreamingService,
             onDismiss = {
@@ -87,6 +83,33 @@ fun CurrentAlbumActions(
             },
         )
     }
+
+    CurrentAlbumActionButtons(
+        state = state,
+        service = service,
+        showWebRoute = showWebRoute,
+        openBottomSheet = {
+            showBottomSheet = true
+        },
+        onOpenUri = ::openStreamingService,
+        modifier = modifier,
+        isLoading = isLoading,
+    )
+}
+
+@Composable
+private fun CurrentAlbumActionButtons(
+    state: CurrentAlbumState,
+    service: StreamingServices,
+    showWebRoute: (Route.Web) -> Unit,
+    openBottomSheet: () -> Unit,
+    onOpenUri: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+) {
+    val isScreenReaderOn by collectIsScreenReaderEnabledAsState()
+
+    val album = remember(state) { state.project.currentAlbum }
 
     FlowRow(
         modifier = modifier,
@@ -133,7 +156,7 @@ fun CurrentAlbumActions(
         ) {
             FilledTonalIconButton(
                 onClick = {
-                    openStreamingService("${service.url}${album.serviceUrl(service)}")
+                    onOpenUri("${service.url}${album.serviceUrl(service)}")
                 },
                 modifier = Modifier
                     .size(60.dp)
@@ -171,9 +194,7 @@ fun CurrentAlbumActions(
 
         CurrentIconButton(
             iconRes = Res.drawable.ic_info,
-            onClick = {
-                showBottomSheet = true
-            },
+            onClick = openBottomSheet,
             contentDescription = stringResource(Res.string.action_open_info),
             enabled = !isLoading,
             modifier = Modifier

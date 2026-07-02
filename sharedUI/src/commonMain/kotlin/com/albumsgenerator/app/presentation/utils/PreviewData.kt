@@ -5,13 +5,14 @@ import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.domain.models.Project
 import com.albumsgenerator.app.domain.models.VotesByGrade
 import kotlin.time.Instant
 
 object PreviewData {
-    @Suppress("ktlint:standard:max-line-length")
+    @Suppress("ktlint:standard:max-line-length", "MaxLineLength")
     val album = Album(
         amazonMusicId = "B01929HGH4",
         appleMusicId = "1441164426",
@@ -44,7 +45,7 @@ object PreviewData {
             "Abbey Road is the eleventh studio album released by the English rock band the Beatles. It is the last album the group started recording, although Let It Be was the last album completed before the band's dissolution in April 1970. It was mostly recorded in April, July and August 1969, and was released on 26 September 1969 in the United Kingdom, and 1 October 1969 in the United States, reaching number one in both countries. A double A-side single from the album, \"Something\" / \"Come Together\" was released in October, which also topped the charts in the US.\n" +
                 "Abbey Road incorporates genres such as blues, pop, and progressive rock and makes prominent use of the moog synthesizer and the Leslie speaker. It is also notable for having a long medley of songs on side two that have subsequently been covered as one suite by other notable artists. The album was recorded in a more collegial atmosphere than the Get Back / Let It Be sessions earlier in the year, but there were still significant confrontations within the band, particularly over Paul McCartney's song \"Maxwell's Silver Hammer\", and John Lennon did not perform on several tracks. By the time the album was released, Lennon had left the group, though this was not publicly announced until McCartney also quit the following year.\n" +
                 "Although it was an immediate commercial success, it received mixed reviews. Some critics found its music inauthentic and criticized the production's artificial effects. By contrast, critics today view the album as one of the Beatles' best and rank it as one of the greatest albums of all time. George Harrison's two songs on the album, \"Something\" and \"Here Comes the Sun\", have been regarded as some of the best he wrote for the group. The album's cover, featuring the group walking across a zebra crossing outside Abbey Road Studios, has become one of the most famous and imitated in the history of recorded music.",
-        type = Album.AlbumType.OFFICIAL,
+        type = AlbumType.OFFICIAL,
     )
 
     val history = History(
@@ -86,6 +87,7 @@ object PreviewData {
             x4 = 3065,
             x5 = 7038,
         ),
+        type = AlbumType.OFFICIAL,
     )
 
     val project = Project(

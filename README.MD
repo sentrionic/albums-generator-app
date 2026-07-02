@@ -34,7 +34,7 @@ The app uses the following multiplatform dependencies in its implementation:
 - [Kotlinter](https://github.com/jeremymailen/kotlinter-gradle) for linting and formatting
 
 ## Architecture
-Currently all shared code in inside the `sharedUI/commonMain` directory.
+Currently, all shared code is inside the `sharedUI/commonMain` directory.
 - `datasources`: Network & Cache related code
 - `di`: Dependency Injection configuration
 - `domain`: Domain models
@@ -47,13 +47,13 @@ Currently all shared code in inside the `sharedUI/commonMain` directory.
 
 ## Credits
 - https://1001albumsgenerator.com/ Fantastic project, absolutely loving it
-- [Robert Munro](https://medium.com/@rrmunro) Github Actions
+- [Robert Munro](https://medium.com/@rrmunro) GitHub Actions
 
 ### Icons
 - Logo https://www.shutterstock.com/image-vector/dove-pigeon-on-vinyl-record-music-2039271557
 - [Amazon Music](href="https://icons8.com/icon/Dw8hR8kffAeB/amazon-music) from [Icon8](https://icons8.com)
 - Login Screen https://wallpapersafari.com/w/MwKbEO
-- Tabler Icons: Wikipedia, Tidal, Spotify, Deter
+- Tabler Icons: Wikipedia, Tidal, Spotify, Deezer
 - Simple Icons: Apple Music, YouTube Music
 - Lucide Icons: Star
 - Qobuz https://www.svgrepo.com/svg/504778/qobuz

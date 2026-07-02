@@ -10,10 +10,5 @@ plugins {
     alias(libs.plugins.room).apply(false)
     alias(libs.plugins.ksp).apply(false)
     alias(libs.plugins.kotlinter).apply(false)
-}
-
-buildscript {
-    dependencies {
-        classpath(libs.jetpack.compose.rules)
-    }
+    alias(libs.plugins.detekt).apply(false)
 }

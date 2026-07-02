@@ -3,25 +3,39 @@ package com.albumsgenerator.app.presentation.screens.stats
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.statistics_title
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.domain.core.immutableMap
+import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.presentation.common.components.BottomBar
+import com.albumsgenerator.app.presentation.common.components.DropdownItem
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.stats.components.StatsContent
+import com.albumsgenerator.app.presentation.screens.stats.components.StatsTopBar
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import dev.zacsweers.metrox.viewmodel.metroViewModel
@@ -41,14 +55,10 @@ fun StatsScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = title,
-                        fontWeight = FontWeight.SemiBold,
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                },
+            StatsTopBar(
+                title = title,
+                type = state.contentOrNull()?.displayType ?: AlbumType.OFFICIAL,
+                onChangeType = viewModel::toggleDisplayType,
             )
         },
         bottomBar = {
@@ -79,6 +89,7 @@ fun StatsScreen(
                             leastControversial = loadingAlbums,
                             votes = 12345678,
                             averageRating = 3.0f,
+                            displayType = AlbumType.OFFICIAL,
                         ),
                         navigateTo = {},
                         isLoading = true,

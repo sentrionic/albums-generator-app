@@ -1,6 +1,7 @@
 package com.albumsgenerator.app.domain.models
 
 import androidx.compose.runtime.Immutable
+import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.domain.core.immutableListOf
 import kotlinx.collections.immutable.ImmutableList
 
@@ -19,26 +20,32 @@ data class AlbumStats(
     val spotifyId: String?,
     val styles: ImmutableList<String>,
     val votes: Int,
-    val votesByGrade: VotesByGrade,
+    val votesByGrade: VotesByGrade?,
+    val type: AlbumType,
 ) {
     val votesList by lazy {
-        immutableListOf(
-            votesByGrade.x1,
-            votesByGrade.x2,
-            votesByGrade.x3,
-            votesByGrade.x4,
-            votesByGrade.x5,
-        )
+        if (votesByGrade != null) {
+            immutableListOf(
+                votesByGrade.x1,
+                votesByGrade.x2,
+                votesByGrade.x3,
+                votesByGrade.x4,
+                votesByGrade.x5,
+            )
+        } else {
+            emptyImmutableList()
+        }
     }
 
     val summedVotes by lazy {
-        votesByGrade.totalVotes
+        votesByGrade?.totalVotes
     }
 
     val maxValue by lazy {
-        votesList.maxOf { it / summedVotes.toFloat() } + 0.2f
+        summedVotes?.let {
+            votesList.maxOf { it / it.toFloat() }
+        }
     }
 }
 
-fun List<AlbumStats>.globalAverage(): Float =
-    (sumOf { it.votesByGrade.average }.toFloat() / sumOf { it.summedVotes }) + 0.1f
+fun List<AlbumStats>.globalAverage(): Float = (sumOf { it.averageRating } / size).toFloat()

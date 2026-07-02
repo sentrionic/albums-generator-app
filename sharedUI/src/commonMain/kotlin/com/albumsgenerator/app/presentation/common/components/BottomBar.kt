@@ -26,31 +26,6 @@ import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-data class NavigationItem(val label: StringResource, val icon: ImageVector)
-
-val TOP_LEVEL_DESTINATIONS = mapOf(
-    Route.CurrentAlbum to NavigationItem(
-        label = Res.string.destination_album,
-        icon = Icons.Default.Album,
-    ),
-    Route.History to NavigationItem(
-        label = Res.string.destination_history,
-        icon = Icons.Filled.History,
-    ),
-    Route.Stats to NavigationItem(
-        label = Res.string.destination_stats,
-        icon = Icons.Filled.AutoGraph,
-    ),
-    Route.Summary to NavigationItem(
-        label = Res.string.destination_summary,
-        icon = Icons.Default.Summarize,
-    ),
-    Route.Settings to NavigationItem(
-        label = Res.string.destination_settings,
-        icon = Icons.Default.Settings,
-    ),
-)
-
 @Composable
 fun BottomBar(
     current: NavKey,
@@ -81,6 +56,31 @@ fun BottomBar(
         }
     }
 }
+
+data class NavigationItem(val label: StringResource, val icon: ImageVector)
+
+val TOP_LEVEL_DESTINATIONS = mapOf(
+    Route.CurrentAlbum to NavigationItem(
+        label = Res.string.destination_album,
+        icon = Icons.Default.Album,
+    ),
+    Route.History to NavigationItem(
+        label = Res.string.destination_history,
+        icon = Icons.Filled.History,
+    ),
+    Route.Stats to NavigationItem(
+        label = Res.string.destination_stats,
+        icon = Icons.Filled.AutoGraph,
+    ),
+    Route.Summary to NavigationItem(
+        label = Res.string.destination_summary,
+        icon = Icons.Default.Summarize,
+    ),
+    Route.Settings to NavigationItem(
+        label = Res.string.destination_settings,
+        icon = Icons.Default.Settings,
+    ),
+)
 
 @Preview
 @Composable

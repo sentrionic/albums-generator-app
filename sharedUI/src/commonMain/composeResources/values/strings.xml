@@ -26,6 +26,8 @@
     <string name="album_subgenres">Subgenres</string>
     <string name="album_summary">Summary</string>
     <string name="album_summary_read_more">Read more on Wikipedia</string>
+    <string name="album_type_official">Official</string>
+    <string name="album_type_user">User</string>
     <string name="artist_navigate_accessibility">Navigate to the artist</string>
     <string name="book_title">1001 Albums You Must Hear Before You Die</string>
     <string name="close">Close</string>

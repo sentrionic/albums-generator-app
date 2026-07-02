@@ -22,7 +22,7 @@ import com.albumsgenerator.app.datasources.cache.entities.StatEntity
         ProjectEntity::class,
         StatEntity::class,
     ],
-    version = 2,
+    version = 3,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -51,4 +51,5 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
 }
 
+@Suppress("TopLevelPropertyNaming")
 internal const val DATABASE_NAME = "album-generator-database"

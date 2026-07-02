@@ -14,8 +14,6 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
 @Suppress(
-    "ktlint:compose:modifier-missing-check",
-    "ktlint:compose:vm-injection-check",
     "ModifierRequired",
 )
 fun App(

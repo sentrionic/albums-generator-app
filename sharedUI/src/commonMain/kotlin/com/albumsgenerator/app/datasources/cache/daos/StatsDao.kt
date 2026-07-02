@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StatsDao {
-    @Query("SELECT * FROM stats ORDER BY average_rating DESC")
-    fun getAll(): Flow<List<StatEntity>>
+    @Query("SELECT * FROM stats WHERE album_type = :type ORDER BY average_rating DESC")
+    fun streamAllByType(type: Int): Flow<List<StatEntity>>
 
     @Query("SELECT * FROM stats WHERE name = :name")
     fun getByAlbumName(name: String): Flow<StatEntity?>

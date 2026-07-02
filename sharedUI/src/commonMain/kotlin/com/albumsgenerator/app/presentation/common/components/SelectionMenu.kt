@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
@@ -39,13 +40,13 @@ import org.jetbrains.compose.resources.stringResource
 
 @Suppress("EffectKeys")
 @Composable
-fun <T : Any> DropdownMenu(
+fun <T : Any> SelectionMenu(
     label: String,
     items: ImmutableList<T>,
     onSelect: (T) -> Unit,
-    onReset: () -> Unit,
     modifier: Modifier = Modifier,
-    formatItem: (T) -> String = { it.toString() },
+    formatItem: @Composable (T) -> String = { it.toString() },
+    leadingIcon: (T) -> @Composable (() -> Unit)? = { null },
     isItemCurrent: (T) -> Boolean = { false },
     enabled: Boolean = true,
 ) {
@@ -53,12 +54,9 @@ fun <T : Any> DropdownMenu(
 
     val current = items.firstOrNull { isItemCurrent(it) }
 
-    val buttonText = remember(current, label) {
-        if (current != null) {
-            formatItem(current)
-        } else {
-            label
-        }
+    val currentLabelOrNull = current?.let { formatItem(it) }
+    val buttonText = remember(currentLabelOrNull, label) {
+        currentLabelOrNull ?: label
     }
 
     Box(modifier = modifier) {
@@ -70,7 +68,8 @@ fun <T : Any> DropdownMenu(
                 focusRequester.requestFocus()
             }
         }
-        DropdownMenuButton(
+
+        SelectionMenuButton(
             selected = current != null,
             label = buttonText,
             openMenu = { showMenu = true },
@@ -80,17 +79,21 @@ fun <T : Any> DropdownMenu(
                 .semantics {
                     role = Role.DropdownList
                 },
+            leadingIcon = if (current != null) {
+                leadingIcon(current)
+            } else {
+                null
+            },
         )
 
-        DropdownMenuContent(
+        SelectionMenuContent(
             showMenu = showMenu,
             hideMenu = { showMenu = false },
-            label = label,
             items = items,
             current = current,
             onSelect = onSelect,
-            onReset = onReset,
             formatItem = formatItem,
+            leadingIcon = leadingIcon,
             modifier = Modifier
                 .fillMaxWidth(AspectRatios.ONE_TO_EIGHT)
                 .aspectRatio(AspectRatios.ONE_TO_EIGHT)
@@ -103,12 +106,13 @@ fun <T : Any> DropdownMenu(
 }
 
 @Composable
-private fun DropdownMenuButton(
+private fun SelectionMenuButton(
     selected: Boolean,
     label: String,
     openMenu: () -> Unit,
     enabled: Boolean,
     modifier: Modifier = Modifier,
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
     FilterChip(
         selected = selected,
@@ -122,16 +126,7 @@ private fun DropdownMenuButton(
         },
         modifier = modifier,
         enabled = enabled,
-        leadingIcon = if (selected) {
-            {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = null,
-                )
-            }
-        } else {
-            null
-        },
+        leadingIcon = leadingIcon,
         trailingIcon = {
             Icon(
                 imageVector = Icons.Default.ArrowDropDown,
@@ -139,19 +134,19 @@ private fun DropdownMenuButton(
             )
         },
         shape = CircleShape,
+        border = AssistChipDefaults.assistChipBorder(enabled),
     )
 }
 
 @Composable
-private fun <T : Any> DropdownMenuContent(
+private fun <T : Any> SelectionMenuContent(
     showMenu: Boolean,
     hideMenu: () -> Unit,
-    label: String,
     items: ImmutableList<T>,
     current: T?,
     onSelect: (T) -> Unit,
-    onReset: () -> Unit,
-    formatItem: (T) -> String,
+    formatItem: @Composable (T) -> String,
+    leadingIcon: (T) -> @Composable (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
@@ -169,16 +164,6 @@ private fun <T : Any> DropdownMenuContent(
         modifier = modifier,
         scrollState = scrollState,
     ) {
-        DropdownItem(
-            label = label,
-            onSelect = {
-                onReset()
-                hideMenu()
-            },
-            isItemCurrent = false,
-            leadingIcon = null,
-        )
-
         for (item in items) {
             DropdownItem(
                 label = formatItem(item),
@@ -187,7 +172,7 @@ private fun <T : Any> DropdownMenuContent(
                     hideMenu()
                 },
                 isItemCurrent = item == current,
-                leadingIcon = null,
+                leadingIcon = leadingIcon(item),
             )
         }
 

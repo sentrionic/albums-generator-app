@@ -4,14 +4,18 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.albumsgenerator.app.datasources.network.dtos.VotesByGradeDto
+import com.albumsgenerator.app.domain.core.Utils
 import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.domain.core.immutableSplit
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.AlbumType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.json.Json
 
 @Entity(tableName = "stats")
 data class StatEntity(
+    @PrimaryKey
+    val id: String,
     @ColumnInfo("artist")
     val artist: String,
     @ColumnInfo("artist_origin")
@@ -26,7 +30,7 @@ data class StatEntity(
     val globalReviewsUrl: String,
     @ColumnInfo("images")
     val images: String,
-    @PrimaryKey
+    @ColumnInfo
     val name: String,
     @ColumnInfo("release_date")
     val releaseDate: String,
@@ -39,7 +43,9 @@ data class StatEntity(
     @ColumnInfo("votes")
     val votes: Int,
     @ColumnInfo("votes_by_grade")
-    val votesByGrade: String,
+    val votesByGrade: String?,
+    @ColumnInfo("album_type")
+    val type: Int,
 ) {
     fun toDomain(): AlbumStats = AlbumStats(
         artist = artist,
@@ -55,8 +61,11 @@ data class StatEntity(
         spotifyId = spotifyId,
         styles = styles.splitOrEmpty(),
         votes = votes,
-        votesByGrade = Json.decodeFromString<VotesByGradeDto>(votesByGrade)
-            .toDomain(),
+        votesByGrade = votesByGrade?.let {
+            Json.decodeFromString<VotesByGradeDto>(it)
+                .toDomain()
+        },
+        type = AlbumType.entries.firstOrNull { it.ordinal == type } ?: AlbumType.OFFICIAL,
     )
 
     companion object {
@@ -69,6 +78,7 @@ data class StatEntity(
         }
 
         fun fromDomain(stat: AlbumStats): StatEntity = StatEntity(
+            id = "${Utils.slugify(stat.artist)}-${Utils.slugify(stat.name)}",
             artist = stat.artist,
             artistOrigin = stat.artistOrigin,
             averageRating = stat.averageRating,
@@ -82,9 +92,12 @@ data class StatEntity(
             spotifyId = stat.spotifyId,
             styles = stat.styles.joinToString(SEPARATOR),
             votes = stat.votes,
-            votesByGrade = Json.encodeToString(
-                VotesByGradeDto.fromDomain(stat.votesByGrade),
-            ),
+            votesByGrade = stat.votesByGrade?.let {
+                Json.encodeToString(
+                    VotesByGradeDto.fromDomain(it),
+                )
+            },
+            type = stat.type.ordinal,
         )
     }
 }

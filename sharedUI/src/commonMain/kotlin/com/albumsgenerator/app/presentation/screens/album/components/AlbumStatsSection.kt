@@ -80,13 +80,19 @@ fun AlbumStatsSection(
             }
         }
 
-        Section(header = stringResource(Res.string.album_stats_vote_distribution)) {
-            AlbumVoteDistribution(
-                stats = stats,
-                modifier = Modifier
-                    .height(100.dp * density.fontScale)
-                    .placeholder(visible = isLoading),
-            )
+        val summedVotes = stats.summedVotes
+        val maxValue = stats.maxValue
+        if (summedVotes != null && maxValue != null) {
+            Section(header = stringResource(Res.string.album_stats_vote_distribution)) {
+                AlbumVoteDistribution(
+                    summedVotes = summedVotes,
+                    votesList = stats.votesList,
+                    maxValue = maxValue,
+                    modifier = Modifier
+                        .height(100.dp * density.fontScale)
+                        .placeholder(visible = isLoading),
+                )
+            }
         }
     }
 }

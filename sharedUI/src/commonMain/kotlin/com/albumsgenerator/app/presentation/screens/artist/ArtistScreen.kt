@@ -12,6 +12,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.DataState
+import com.albumsgenerator.app.domain.core.Utils
 import com.albumsgenerator.app.presentation.common.components.AppBar
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
@@ -47,17 +48,7 @@ fun ArtistScreen(
                 title = title,
                 onBack = onBack,
                 onOpenWeb = {
-                    val slug = title
-                        .lowercase()
-                        .replace(" ", "-") // The Beach Boys
-                        .replace("'", "") // The B-52's
-                        .replace(".", "") // B.B. King
-                        .replace(",", "") // Crosby, Stills & Nash
-                        .replace("\"", "") // Bonnie "Prince" Billy
-                        .replace("ö", "o") // Björk
-                        .replace("ó", "o") // Sigur Rós
-                        .replace("&", "and") // Simon & Garfunkel
-                        .replace("/", "") // AC/DC
+                    val slug = Utils.slugify(title)
                     navigateTo(
                         Route.Web(
                             url = "${Constants.WEBSITE_URL}/artists/$slug",
