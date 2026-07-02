@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.presentation.common.components.NetworkImage
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme

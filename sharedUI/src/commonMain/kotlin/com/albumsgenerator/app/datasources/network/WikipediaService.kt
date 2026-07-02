@@ -4,7 +4,6 @@ import com.albumsgenerator.app.datasources.network.dtos.PageContent
 import com.albumsgenerator.app.datasources.network.dtos.WikipediaDto
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

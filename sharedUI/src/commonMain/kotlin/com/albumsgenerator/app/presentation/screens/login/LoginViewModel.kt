@@ -105,7 +105,6 @@ class LoginViewModel(
     @AssistedFactory
     @ViewModelAssistedFactoryKey(LoginViewModel::class)
     @ContributesIntoMap(AppScope::class)
-    @Suppress("unused")
     interface Factory : ViewModelAssistedFactory {
         override fun create(extras: CreationExtras): ViewModel =
             create(extras.createSavedStateHandle())

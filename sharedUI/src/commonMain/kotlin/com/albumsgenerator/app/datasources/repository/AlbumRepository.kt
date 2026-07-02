@@ -7,7 +7,6 @@ import com.albumsgenerator.app.datasources.network.WikipediaService
 import com.albumsgenerator.app.domain.models.Album
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map

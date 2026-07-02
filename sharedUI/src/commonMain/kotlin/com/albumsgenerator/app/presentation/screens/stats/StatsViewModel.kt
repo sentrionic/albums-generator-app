@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.albumsgenerator.app.datasources.repository.HistoryRepository
 import com.albumsgenerator.app.datasources.repository.PreferencesRepository
 import com.albumsgenerator.app.datasources.repository.StatsRepository
-import com.albumsgenerator.app.di.modules.IO
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
@@ -18,29 +17,20 @@ import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.domain.models.globalAverage
-import com.albumsgenerator.app.presentation.screens.history.HistoryViewModel
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
-import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
 import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
-import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMap
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flatten
-import kotlinx.coroutines.flow.flattenConcat
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 @AssistedInject
@@ -126,7 +116,6 @@ class StatsViewModel(
     @AssistedFactory
     @ViewModelAssistedFactoryKey(StatsViewModel::class)
     @ContributesIntoMap(AppScope::class)
-    @Suppress("unused")
     interface Factory : ViewModelAssistedFactory {
         override fun create(extras: CreationExtras): ViewModel =
             create(extras.createSavedStateHandle())

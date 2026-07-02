@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings

@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.screens.login.LoginViewModel
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
