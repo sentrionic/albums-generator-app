@@ -28,6 +28,7 @@ import com.albumsgenerator.app.presentation.screens.summary.SummaryScreen
 import com.albumsgenerator.app.presentation.screens.webview.WebViewScreen
 import com.albumsgenerator.app.presentation.screens.year.YearScreen
 
+@Suppress("LongMethod")
 @Composable
 fun NavGraph(
     backStack: List<NavKey>,

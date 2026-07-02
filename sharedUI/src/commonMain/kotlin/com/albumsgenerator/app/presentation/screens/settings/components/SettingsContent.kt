@@ -75,10 +75,6 @@ fun SettingsContent(
     sendEvent: (SettingsEvents) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val uriHandler = LocalUriHandler.current
-    val clipboard = LocalClipboard.current
-
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     val title = stringResource(Res.string.destination_settings)
@@ -117,100 +113,19 @@ fun SettingsContent(
             SnackbarHost(hostState = snackbarHostState)
         },
     ) { innerPadding ->
-        Column(
+        SettingsLayout(
+            project = project,
+            userData = userData,
+            navigateTo = navigateTo,
+            sendEvent = sendEvent,
+            showMessage = {
+                snackbarHostState.showSnackbar(it)
+            },
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .padding(all = Paddings.large),
-            verticalArrangement = Arrangement.spacedBy(Paddings.large),
-        ) {
-            SettingsCardWithAction(
-                label = stringResource(Res.string.settings_sharing_title),
-                icon = Icons.Filled.Share,
-                subtitle = stringResource(Res.string.settings_sharing_body),
-                actionLabel = stringResource(Res.string.settings_sharing_action),
-                onAction = {
-                    scope.launch {
-                        clipboard.setClipEntry(clipEntryOf(project?.shareableUrl.orEmpty()))
-
-                        if (getCurrentPlatform() != Platform.ANDROID) {
-                            snackbarHostState.showSnackbar(
-                                getString(Res.string.copied_to_clipboard),
-                            )
-                        }
-                    }
-                },
-            )
-
-            if (userData != null) {
-                SettingsOptions(
-                    userData = userData,
-                    sendEvent = sendEvent,
-                )
-
-                SpoilerOptionSection(
-                    spoilerMode = userData.spoilerMode,
-                    onSpoilerModeChange = {
-                        sendEvent(SettingsEvents.UpdateSpoilerMode(it))
-                    },
-                )
-            }
-
-            SettingsCardWithAction(
-                label = stringResource(Res.string.settings_refresh_title),
-                icon = Icons.Filled.Sync,
-                subtitle = stringResource(Res.string.settings_refresh_body),
-                actionLabel = stringResource(Res.string.settings_refresh_action),
-                onAction = {
-                    sendEvent(SettingsEvents.Refresh)
-                },
-            )
-
-            SettingsCardWithAction(
-                label = stringResource(Res.string.settings_external_info_title),
-                icon = Icons.Filled.Web,
-                subtitle = stringResource(Res.string.settings_external_info_body),
-                actionLabel = stringResource(Res.string.settings_external_info_action),
-                onAction = {
-                    navigateTo(
-                        Route.Web(
-                            url = "${Constants.WEBSITE_URL}/${project?.name}/info",
-                            title = "Info",
-                        ),
-                    )
-                },
-            )
-
-            SettingsCardWithAction(
-                label = stringResource(Res.string.settings_app_info_title),
-                icon = Icons.Filled.DeveloperMode,
-                subtitle = stringResource(Res.string.settings_app_info_body),
-                actionLabel = stringResource(Res.string.settings_app_info_action),
-                onAction = {
-                    try {
-                        uriHandler.openUri(Constants.APP_REPOSITORY)
-                    } catch (e: Exception) {
-                        Logger.e(e) { "Could not open the url" }
-                        scope.launch {
-                            snackbarHostState.showSnackbar(getString(Res.string.action_error))
-                        }
-                    }
-                },
-            )
-
-            OutlinedButton(
-                onClick = {
-                    sendEvent(SettingsEvents.Logout)
-                },
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(Res.string.logout),
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
-        }
+        )
     }
 }
 

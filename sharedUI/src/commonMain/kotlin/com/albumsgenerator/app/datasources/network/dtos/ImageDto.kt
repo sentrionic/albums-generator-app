@@ -7,15 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ImageDto(
     @SerialName("height")
-    val height: Int,
+    val height: Int? = null,
     @SerialName("url")
     val url: String,
     @SerialName("width")
-    val width: Int,
+    val width: Int? = null,
 ) {
     fun toDomain(): Image = Image(
-        height = height,
+        height = height ?: Image.INVALID_SIZE,
         url = url,
-        width = width,
+        width = width ?: Image.INVALID_SIZE,
     )
 }

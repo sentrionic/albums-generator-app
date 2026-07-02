@@ -8,6 +8,7 @@ import com.albumsgenerator.app.di.modules.Default
 import com.albumsgenerator.app.domain.core.Coroutines
 import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.domain.core.immutableMap
+import com.albumsgenerator.app.domain.core.immutableSortedBy
 import com.albumsgenerator.app.domain.core.immutableSortedByDescending
 import com.albumsgenerator.app.domain.models.AlbumStats
 import com.albumsgenerator.app.domain.models.History
@@ -25,8 +26,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 
+@Suppress("MagicNumber")
 @ContributesIntoMap(AppScope::class)
-@ViewModelKey(JourneyViewModel::class)
+@ViewModelKey
 @Inject
 class JourneyViewModel(
     @param:Default private val defaultDispatcher: CoroutineDispatcher,
@@ -58,8 +60,26 @@ class JourneyViewModel(
         histories: List<History>,
         stats: List<AlbumStats>,
     ): ImmutableList<JourneyState.Item> = withContext(defaultDispatcher) {
+        val items = groupUserHistoryByDecade(histories)
+        val decadeToGlobal = groupGlobalStatsByDecade(stats)
+
+        return@withContext items
+            .mapNotNull { (decade, albums) ->
+                val relatedStat = decadeToGlobal[decade] ?: return@mapNotNull null
+                JourneyState.Item(
+                    label = "$decade",
+                    albumsCount = albums.size,
+                    average = albums.averageRating(),
+                    global = relatedStat.globalAverage(),
+                )
+            }
+            .immutableSortedByDescending {
+                it.average
+            }
+    }
+
+    private fun groupUserHistoryByDecade(histories: List<History>): Map<Int, List<History>> {
         val items = mutableMapOf<Int, List<History>>()
-        val decadeToGlobal = mutableMapOf<Int, List<AlbumStats>>()
 
         for (history in histories) {
             val album = history.album
@@ -75,6 +95,12 @@ class JourneyViewModel(
                 in 2020..<2030 -> items[2020] = items.getOrPut(2020) { emptyList() } + history
             }
         }
+
+        return items
+    }
+
+    private fun groupGlobalStatsByDecade(stats: List<AlbumStats>): Map<Int, List<AlbumStats>> {
+        val decadeToGlobal = mutableMapOf<Int, List<AlbumStats>>()
 
         for (stat in stats) {
             val year = stat.releaseDate.toIntOrNull()
@@ -105,19 +131,7 @@ class JourneyViewModel(
             }
         }
 
-        return@withContext items
-            .mapNotNull { (decade, albums) ->
-                val relatedStat = decadeToGlobal[decade] ?: return@mapNotNull null
-                JourneyState.Item(
-                    label = "$decade",
-                    albumsCount = albums.size,
-                    average = albums.averageRating(),
-                    global = relatedStat.globalAverage(),
-                )
-            }
-            .immutableSortedByDescending {
-                it.average
-            }
+        return decadeToGlobal
     }
 
     private suspend fun getByGenre(
@@ -237,7 +251,7 @@ class JourneyViewModel(
                 .filter {
                     it.ratingDiff < (RATING_THRESHOLD * -1)
                 }
-                .immutableSortedByDescending { it.ratingDiff }
+                .immutableSortedBy { it.ratingDiff }
         }
 
     private companion object {

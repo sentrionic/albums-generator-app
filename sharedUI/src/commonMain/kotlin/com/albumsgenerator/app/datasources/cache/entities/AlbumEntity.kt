@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import com.albumsgenerator.app.domain.core.emptyImmutableList
 import com.albumsgenerator.app.domain.core.immutableSplit
 import com.albumsgenerator.app.domain.models.Album
+import com.albumsgenerator.app.domain.models.AlbumType
 import kotlinx.collections.immutable.ImmutableList
 
 @Entity(tableName = "albums")
@@ -71,7 +72,7 @@ data class AlbumEntity(
         wikipediaUrl = wikipediaUrl,
         youtubeMusicId = youtubeMusicId,
         summary = summary,
-        type = Album.AlbumType.entries.getOrNull(type) ?: Album.AlbumType.OFFICIAL,
+        type = AlbumType.entries.getOrNull(type) ?: AlbumType.OFFICIAL,
     )
 
     companion object {

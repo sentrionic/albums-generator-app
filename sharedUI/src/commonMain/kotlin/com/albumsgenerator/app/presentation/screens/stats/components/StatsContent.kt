@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.immutableListOf
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.stats.StatsScreenState
@@ -43,6 +44,7 @@ private object ContentTypes {
     const val ALBUMS = "albums"
 }
 
+@Suppress("LongMethod")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StatsContent(
@@ -81,22 +83,6 @@ fun StatsContent(
                     .headerModifier(),
             )
         }
-
-        albums(
-            albums = state.topAlbums,
-            previousAlbumNames = state.previousAlbumNames,
-            spoilerMode = state.spoilerMode,
-            onAlbumClick = { stat ->
-                navigateTo(
-                    Route.Album(
-                        albumId = "",
-                        albumName = stat.name,
-                        albumArtist = stat.artist,
-                    ),
-                )
-            },
-            isLoading = isLoading,
-        )
 
         albums(
             albums = state.topAlbums,
@@ -283,6 +269,7 @@ private fun StatsContentPreview() {
                 leastControversial = albums,
                 votes = 12345678,
                 averageRating = 3.0f,
+                displayType = AlbumType.OFFICIAL,
             ),
             navigateTo = {},
         )

@@ -4,6 +4,7 @@ import com.albumsgenerator.app.datasources.network.dtos.ProjectDto
 import com.albumsgenerator.app.datasources.network.dtos.Stats
 import com.albumsgenerator.app.domain.core.Constants
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.domain.models.Project
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
@@ -28,10 +29,10 @@ class RealAlbumGeneratorService(private val httpClient: HttpClient) : AlbumGener
     override suspend fun getStats() = httpClient
         .get("${Constants.WEBSITE_API}/albums/stats")
         .body<Stats>()
-        .albums.map { it.toDomain() }
+        .albums.map { it.toDomain(type = AlbumType.OFFICIAL) }
 
     override suspend fun getUserAlbumStats() = httpClient
         .get("${Constants.WEBSITE_API}/user-albums/stats")
         .body<Stats>()
-        .albums.map { it.toDomain() }
+        .albums.map { it.toDomain(type = AlbumType.USER) }
 }

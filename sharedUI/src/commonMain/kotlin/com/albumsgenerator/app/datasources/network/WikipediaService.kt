@@ -18,6 +18,7 @@ interface WikipediaService {
 @ContributesBinding(AppScope::class)
 @Suppress("Unused")
 class RealWikipediaService(private val httpClient: HttpClient) : WikipediaService {
+    @Suppress("MaxLineLength")
     override suspend fun getSummary(title: String) = httpClient.get(
         "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=$title",
     )

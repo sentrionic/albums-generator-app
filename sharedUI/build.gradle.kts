@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.detektPlugins
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
@@ -11,12 +12,13 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinter)
+    alias(libs.plugins.detekt)
 }
 
 kotlin {
     android {
         namespace = "com.albumsgenerator.app"
-        compileSdk = 36
+        compileSdk = 37
         minSdk = 28
         androidResources.enable = true
         compilerOptions { jvmTarget.set(JvmTarget.JVM_21) }
@@ -111,5 +113,15 @@ dependencies {
         add("kspJvm", this)
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
+    }
+}
+
+detekt {
+    source = files(
+        "src/commonMain/kotlin",
+    )
+
+    dependencies {
+        detektPlugins(libs.jetpack.compose.rules)
     }
 }

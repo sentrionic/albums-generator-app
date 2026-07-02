@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "7a7502c639016b73dd90df77a3ef5d2a",
+    "version": 3,
+    "identityHash": "46946d95fc56a068697d581af1528c5e",
     "entities": [
       {
         "tableName": "albums",
@@ -260,8 +260,14 @@
       },
       {
         "tableName": "stats",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`artist` TEXT NOT NULL, `artist_origin` TEXT NOT NULL, `average_rating` REAL NOT NULL, `controversial_score` REAL NOT NULL, `genres` TEXT NOT NULL, `global_reviews_url` TEXT NOT NULL, `images` TEXT NOT NULL, `name` TEXT NOT NULL, `release_date` TEXT NOT NULL, `slug` TEXT NOT NULL, `spotify_id` TEXT, `styles` TEXT NOT NULL, `votes` INTEGER NOT NULL, `votes_by_grade` TEXT, PRIMARY KEY(`name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `artist` TEXT NOT NULL, `artist_origin` TEXT NOT NULL, `average_rating` REAL NOT NULL, `controversial_score` REAL NOT NULL, `genres` TEXT NOT NULL, `global_reviews_url` TEXT NOT NULL, `images` TEXT NOT NULL, `name` TEXT NOT NULL, `release_date` TEXT NOT NULL, `slug` TEXT NOT NULL, `spotify_id` TEXT, `styles` TEXT NOT NULL, `votes` INTEGER NOT NULL, `votes_by_grade` TEXT, `album_type` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "artist",
             "columnName": "artist",
@@ -343,19 +349,25 @@
             "fieldPath": "votesByGrade",
             "columnName": "votes_by_grade",
             "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "album_type",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "name"
+            "id"
           ]
         }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7a7502c639016b73dd90df77a3ef5d2a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '46946d95fc56a068697d581af1528c5e')"
     ]
   }
 }

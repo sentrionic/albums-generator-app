@@ -51,6 +51,48 @@ fun JourneyTab(
         verticalArrangement = Arrangement.spacedBy(Paddings.large),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        JourneyItems(
+            state = state,
+            isLoading = isLoading,
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(Paddings.small),
+        ) {
+            Text(
+                text = stringResource(Res.string.your_journey_outliers_title),
+                modifier = Modifier
+                    .placeholder(visible = isLoading),
+                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.titleMedium,
+            )
+
+            Text(
+                text = stringResource(Res.string.your_journey_outliers_description),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+
+        OutlierItems(
+            state = state,
+            isLoading = isLoading,
+        )
+    }
+}
+
+@Composable
+private fun JourneyItems(
+    state: JourneyState,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Paddings.large),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Text(
             text = stringResource(Res.string.your_journey_listening_history),
             modifier = Modifier
@@ -143,26 +185,20 @@ fun JourneyTab(
                 )
             }
         }
+    }
+}
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(Paddings.small),
-        ) {
-            Text(
-                text = stringResource(Res.string.your_journey_outliers_title),
-                modifier = Modifier
-                    .placeholder(visible = isLoading),
-                fontWeight = FontWeight.SemiBold,
-                style = MaterialTheme.typography.titleMedium,
-            )
-
-            Text(
-                text = stringResource(Res.string.your_journey_outliers_description),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
-
+@Composable
+private fun OutlierItems(
+    state: JourneyState,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(Paddings.large),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         OutlierSection(
             title = stringResource(Res.string.your_journey_outliers_above_average),
             albumsCount = state.aboveAverageOutliers.size,

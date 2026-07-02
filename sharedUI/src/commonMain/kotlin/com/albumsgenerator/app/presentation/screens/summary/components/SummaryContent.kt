@@ -25,6 +25,7 @@ import com.albumsgenerator.app.domain.models.Album
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.summary.SummaryScreenState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import com.albumsgenerator.app.presentation.ui.theme.Layouts
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.eygraber.compose.placeholder.material3.placeholder
@@ -57,7 +58,7 @@ fun SummaryContent(
         .placeholder(visible = isLoading)
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(Layouts.GRID_CELL_COUNT),
         modifier = modifier,
         contentPadding = PaddingValues(all = Paddings.large),
         verticalArrangement = Arrangement.spacedBy(Paddings.medium),

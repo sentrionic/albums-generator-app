@@ -2,6 +2,7 @@ package com.albumsgenerator.app.datasources.network.dtos
 
 import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.models.Album
+import com.albumsgenerator.app.domain.models.AlbumType
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -65,6 +66,6 @@ data class AlbumDto(
         wikipediaUrl = wikipediaUrl,
         youtubeMusicId = youtubeMusicId,
         summary = null,
-        type = Album.AlbumType.OFFICIAL,
+        type = AlbumType.OFFICIAL,
     )
 }

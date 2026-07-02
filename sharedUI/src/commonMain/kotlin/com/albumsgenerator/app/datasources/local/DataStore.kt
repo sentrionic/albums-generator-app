@@ -12,6 +12,7 @@ fun createDataStore(producePath: () -> String): DataStore<Preferences> =
         produceFile = { producePath().toPath() },
     )
 
+@Suppress("TopLevelPropertyNaming")
 internal const val DATA_STORE_FILE_NAME = "albums-generator.preferences_pb"
 
 object DataStoreKeys {

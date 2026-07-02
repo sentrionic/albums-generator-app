@@ -85,9 +85,4 @@ data class Album(
         }
         return url.orEmpty()
     }
-
-    enum class AlbumType {
-        OFFICIAL,
-        USER,
-    }
 }

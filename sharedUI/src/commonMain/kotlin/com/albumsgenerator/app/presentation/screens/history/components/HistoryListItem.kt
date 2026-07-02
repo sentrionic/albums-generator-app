@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.models.History
 import com.albumsgenerator.app.presentation.common.components.A11yRow
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import com.albumsgenerator.app.presentation.ui.theme.AspectRatios
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.albumsgenerator.app.presentation.utils.formatLocalDate
@@ -46,7 +47,7 @@ fun HistoryListItem(
         ) {
             Column(
                 modifier = Modifier
-                    .weight(0.5f),
+                    .weight(AspectRatios.ONE_HALF),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -93,7 +94,7 @@ fun HistoryListItem(
 
             A11yRow(
                 modifier = Modifier
-                    .weight(0.5f),
+                    .weight(AspectRatios.ONE_HALF),
                 horizontalArrangement = Arrangement.spacedBy(Paddings.small),
                 horizontalAlignment = Alignment.End,
             ) {

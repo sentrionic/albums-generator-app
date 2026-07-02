@@ -16,6 +16,7 @@ import com.albumsgenerator.app.presentation.common.components.NetworkImage
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.current.CurrentAlbumState
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import com.albumsgenerator.app.presentation.ui.theme.AspectRatios
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.eygraber.compose.placeholder.material3.placeholder
@@ -38,7 +39,7 @@ fun CurrentAlbumContent(
             NetworkImage(
                 url = image,
                 modifier = Modifier
-                    .fillMaxWidth(0.75f)
+                    .fillMaxWidth(AspectRatios.THREE_FOURTH)
                     .aspectRatio(1f)
                     .clip(shape = MaterialTheme.shapes.large)
                     .placeholder(

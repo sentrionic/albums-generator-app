@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.domain.core.Constants
+import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.presentation.common.components.A11yRow
 import com.albumsgenerator.app.presentation.common.components.StatDisplay
 import com.albumsgenerator.app.presentation.screens.stats.StatsScreenState
@@ -37,7 +38,7 @@ fun StatsHeader(
         ) {
             StatDisplay(
                 label = stringResource(Res.string.statistics_total_albums),
-                value = Constants.TOTAL_ALBUMS_COUNT.toString(),
+                value = state.totalAlbums.toString(),
                 modifier = Modifier
                     .weight(1f),
                 isLoading = isLoading,
@@ -68,8 +69,10 @@ private fun StatsHeaderPreview() {
     AppTheme {
         StatsHeader(
             state = StatsScreenState(
+                totalAlbums = Constants.TOTAL_ALBUMS_COUNT,
                 votes = 12345678,
                 averageRating = 3.0f,
+                displayType = AlbumType.OFFICIAL,
             ),
         )
     }

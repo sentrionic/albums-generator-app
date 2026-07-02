@@ -1,7 +1,10 @@
 package com.albumsgenerator.app.presentation.screens.stats
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.albumsgenerator.app.datasources.repository.HistoryRepository
 import com.albumsgenerator.app.datasources.repository.PreferencesRepository
 import com.albumsgenerator.app.datasources.repository.StatsRepository
@@ -12,33 +15,62 @@ import com.albumsgenerator.app.domain.core.DataState
 import com.albumsgenerator.app.domain.core.immutableFilter
 import com.albumsgenerator.app.domain.core.immutableMap
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.domain.models.SpoilerMode
 import com.albumsgenerator.app.domain.models.globalAverage
+import com.albumsgenerator.app.presentation.screens.history.HistoryViewModel
 import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactory
+import dev.zacsweers.metrox.viewmodel.ViewModelAssistedFactoryKey
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMap
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flatten
+import kotlinx.coroutines.flow.flattenConcat
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
-@ContributesIntoMap(AppScope::class)
-@ViewModelKey(StatsViewModel::class)
-@Inject
+@AssistedInject
 class StatsViewModel(
-    @param:IO private val ioDispatcher: CoroutineDispatcher,
+    @Assisted private val savedStateHandle: SavedStateHandle,
     preferencesRepository: PreferencesRepository,
     historyRepository: HistoryRepository,
     private val statsRepository: StatsRepository,
 ) : ViewModel() {
+    private val displayTypeFlow = savedStateHandle
+        .getStateFlow(STATS_TYPE_KEY, AlbumType.OFFICIAL.ordinal)
+        .map { type ->
+            AlbumType.entries.firstOrNull { it.ordinal == type } ?: AlbumType.OFFICIAL
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val statsFlow = displayTypeFlow.flatMapLatest { type ->
+        when (type) {
+            AlbumType.OFFICIAL -> statsRepository.statsFlow()
+            AlbumType.USER -> statsRepository.userStatsFlow()
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     val state = combine(
-        statsRepository.statsFlow(),
+        statsFlow,
         historyRepository.historiesFlow(),
         preferencesRepository.userData,
-    ) { stats, histories, userData ->
+        displayTypeFlow,
+    ) { stats, histories, userData, type ->
         if (stats.isEmpty()) {
             return@combine DataState.Loading()
         }
@@ -57,6 +89,7 @@ class StatsViewModel(
 
         DataState.Success(
             StatsScreenState(
+                totalAlbums = stats.size,
                 topAlbums = stats.take(Constants.LIMIT).takeVisible(),
                 bottomAlbums = stats.takeLast(Constants.LIMIT).reversed().takeVisible(),
                 mostControversial = statsSortedByControversialScore.take(
@@ -70,6 +103,7 @@ class StatsViewModel(
                 averageRating = stats.globalAverage(),
                 spoilerMode = userData.spoilerMode,
                 previousAlbumNames = previousAlbumNames,
+                displayType = type,
             ),
         )
     }
@@ -80,8 +114,27 @@ class StatsViewModel(
         )
 
     init {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             statsRepository.fetchAndStoreStats()
         }
+    }
+
+    fun toggleDisplayType(type: AlbumType) {
+        savedStateHandle[STATS_TYPE_KEY] = type.ordinal
+    }
+
+    @AssistedFactory
+    @ViewModelAssistedFactoryKey(StatsViewModel::class)
+    @ContributesIntoMap(AppScope::class)
+    @Suppress("unused")
+    interface Factory : ViewModelAssistedFactory {
+        override fun create(extras: CreationExtras): ViewModel =
+            create(extras.createSavedStateHandle())
+
+        fun create(@Assisted savedStateHandle: SavedStateHandle): StatsViewModel
+    }
+
+    companion object {
+        const val STATS_TYPE_KEY = "com.albumsgenerator.app.presentation.screens.stats.STATS_TYPE"
     }
 }

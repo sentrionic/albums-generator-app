@@ -23,30 +23,36 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.albumsgenerator.app.domain.models.AlbumStats
+import com.albumsgenerator.app.domain.models.VotesByGrade
 import com.albumsgenerator.app.presentation.common.components.Tooltip
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.albumsgenerator.app.presentation.utils.collectIsScreenReaderEnabledAsState
 import kotlin.math.round
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
+
+private const val PERCENTAGE = 100
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumVoteDistribution(
-    stats: AlbumStats,
+    summedVotes: Int,
+    votesList: ImmutableList<Int>,
+    maxValue: Float,
     modifier: Modifier = Modifier,
 ) {
     val isScreenReaderOn by collectIsScreenReaderEnabledAsState()
 
-    fun rounded(value: Int) = round(value * 100 / stats.summedVotes.toFloat()).toInt()
+    fun rounded(value: Int) = round(value * PERCENTAGE / summedVotes.toFloat()).toInt()
 
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(Paddings.small),
         verticalAlignment = Alignment.Bottom,
     ) {
-        for ((index, value) in stats.votesList.withIndex()) {
+        for ((index, value) in votesList.withIndex()) {
             val rating = index + 1
 
             Tooltip(
@@ -71,7 +77,7 @@ fun AlbumVoteDistribution(
                     Spacer(
                         modifier = Modifier
                             .fillMaxHeight(
-                                value / stats.summedVotes.toFloat() / stats.maxValue,
+                                value / summedVotes.toFloat() / maxValue,
                             )
                             .width(25.dp)
                             .background(MaterialTheme.colorScheme.primary),
@@ -88,7 +94,9 @@ fun AlbumVoteDistribution(
 private fun AlbumVoteDistributionPreview() {
     AppTheme {
         AlbumVoteDistribution(
-            stats = PreviewData.stats,
+            summedVotes = PreviewData.stats.summedVotes!!,
+            votesList = PreviewData.stats.votesList,
+            maxValue = PreviewData.stats.maxValue!!,
             modifier = Modifier
                 .padding(all = Paddings.medium)
                 .height(100.dp),
