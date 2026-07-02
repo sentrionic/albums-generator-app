@@ -65,7 +65,7 @@ data class StatEntity(
             Json.decodeFromString<VotesByGradeDto>(it)
                 .toDomain()
         },
-        type = AlbumType.entries.first { it.ordinal == type },
+        type = AlbumType.entries.firstOrNull { it.ordinal == type } ?: AlbumType.OFFICIAL,
     )
 
     companion object {

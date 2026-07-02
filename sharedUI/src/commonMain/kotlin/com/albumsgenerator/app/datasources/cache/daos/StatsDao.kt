@@ -11,9 +11,6 @@ interface StatsDao {
     @Query("SELECT * FROM stats WHERE album_type = :type ORDER BY average_rating DESC")
     fun streamAllByType(type: Int): Flow<List<StatEntity>>
 
-    @Query("SELECT * FROM stats WHERE album_type = :type ORDER BY average_rating DESC")
-    suspend fun getAllByType(type: Int): List<StatEntity>
-
     @Query("SELECT * FROM stats WHERE name = :name")
     fun getByAlbumName(name: String): Flow<StatEntity?>
 

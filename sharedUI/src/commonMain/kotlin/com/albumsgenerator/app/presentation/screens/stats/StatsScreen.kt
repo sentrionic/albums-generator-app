@@ -35,6 +35,7 @@ import com.albumsgenerator.app.presentation.common.components.DropdownItem
 import com.albumsgenerator.app.presentation.common.components.ErrorCard
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.screens.stats.components.StatsContent
+import com.albumsgenerator.app.presentation.screens.stats.components.StatsTopBar
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import dev.zacsweers.metrox.viewmodel.metroViewModel
@@ -51,51 +52,13 @@ fun StatsScreen(
 
     val title = stringResource(Res.string.statistics_title)
 
-    var showDialog by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = title,
-                        fontWeight = FontWeight.SemiBold,
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                },
-                actions = {
-                    Box {
-                        IconButton(
-                            onClick = {
-                                showDialog = true
-                            },
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.MoreVert,
-                                contentDescription = null,
-                            )
-                        }
-
-                        DropdownMenu(
-                            expanded = showDialog,
-                            onDismissRequest = { showDialog = false },
-                        ) {
-                            for (option in AlbumType.entries) {
-                                DropdownItem(
-                                    label = option.name,
-                                    onSelect = {
-                                        viewModel.toggleDisplayType(option)
-                                        showDialog = false
-                                    },
-                                    isItemCurrent = state.contentOrNull()?.displayType == option,
-                                )
-                            }
-                        }
-                    }
-                },
+            StatsTopBar(
+                title = title,
+                type = state.contentOrNull()?.displayType ?: AlbumType.OFFICIAL,
+                onChangeType = viewModel::toggleDisplayType,
             )
         },
         bottomBar = {
