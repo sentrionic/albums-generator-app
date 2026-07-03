@@ -2,15 +2,14 @@ package com.albumsgenerator.app.presentation.common.components
 
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.close
+import albumsgenerator.sharedui.generated.resources.ic_arrow_drop_down
+import albumsgenerator.sharedui.generated.resources.ic_check
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
@@ -35,6 +34,7 @@ import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Suppress("EffectKeys")
@@ -125,7 +125,7 @@ private fun DropdownMenuButton(
         leadingIcon = if (selected) {
             {
                 Icon(
-                    imageVector = Icons.Default.Check,
+                    painter = painterResource(Res.drawable.ic_check),
                     contentDescription = null,
                 )
             }
@@ -134,7 +134,7 @@ private fun DropdownMenuButton(
         },
         trailingIcon = {
             Icon(
-                imageVector = Icons.Default.ArrowDropDown,
+                painter = painterResource(Res.drawable.ic_arrow_drop_down),
                 contentDescription = null,
             )
         },

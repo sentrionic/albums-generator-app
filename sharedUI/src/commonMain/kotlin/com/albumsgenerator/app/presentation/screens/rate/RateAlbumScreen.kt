@@ -1,12 +1,11 @@
 package com.albumsgenerator.app.presentation.screens.rate
 
 import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_arrow_forward
 import albumsgenerator.sharedui.generated.resources.previous_album_action
 import albumsgenerator.sharedui.generated.resources.previous_album_title
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -25,6 +24,7 @@ import com.albumsgenerator.app.presentation.common.components.Tooltip
 import com.albumsgenerator.app.presentation.utils.collectIsScreenReaderEnabledAsState
 import com.saralapps.composemultiplatformwebview.PlatformWebView
 import com.saralapps.composemultiplatformwebview.rememberPlatformWebViewState
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +65,7 @@ fun RateAlbumScreen(
                             onClick = onContinue,
                         ) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowForward,
+                                painter = painterResource(Res.drawable.ic_arrow_forward),
                                 contentDescription = description,
                             )
                         }

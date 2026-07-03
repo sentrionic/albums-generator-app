@@ -1,27 +1,26 @@
 package com.albumsgenerator.app.domain.core
 
 import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_auto_mode
+import albumsgenerator.sharedui.generated.resources.ic_dark_mode
+import albumsgenerator.sharedui.generated.resources.ic_light_mode
 import albumsgenerator.sharedui.generated.resources.theme_dark
 import albumsgenerator.sharedui.generated.resources.theme_light
 import albumsgenerator.sharedui.generated.resources.theme_system
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoMode
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.ui.graphics.vector.ImageVector
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
-enum class Theme(val label: StringResource, val icon: ImageVector) {
+enum class Theme(val label: StringResource, val icon: DrawableResource) {
     LIGHT(
         label = Res.string.theme_light,
-        icon = Icons.Filled.LightMode,
+        icon = Res.drawable.ic_light_mode,
     ),
     DARK(
         label = Res.string.theme_dark,
-        icon = Icons.Filled.DarkMode,
+        icon = Res.drawable.ic_dark_mode,
     ),
     SYSTEM(
         label = Res.string.theme_system,
-        icon = Icons.Filled.AutoMode,
+        icon = Res.drawable.ic_auto_mode,
     ),
 }

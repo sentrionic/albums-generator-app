@@ -9,14 +9,13 @@ import albumsgenerator.sharedui.generated.resources.action_open_web
 import albumsgenerator.sharedui.generated.resources.action_open_wikipedia
 import albumsgenerator.sharedui.generated.resources.ic_external_link
 import albumsgenerator.sharedui.generated.resources.ic_info
+import albumsgenerator.sharedui.generated.resources.ic_play_arrow
 import albumsgenerator.sharedui.generated.resources.ic_reviews
 import albumsgenerator.sharedui.generated.resources.ic_wikipedia
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -45,6 +44,7 @@ import com.albumsgenerator.app.presentation.utils.collectIsScreenReaderEnabledAs
 import com.eygraber.compose.placeholder.material3.placeholder
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -167,7 +167,7 @@ private fun CurrentAlbumActionButtons(
                 enabled = !isLoading,
             ) {
                 Icon(
-                    imageVector = Icons.Filled.PlayArrow,
+                    painter = painterResource(Res.drawable.ic_play_arrow),
                     modifier = Modifier
                         .size(48.dp),
                     contentDescription = stringResource(

@@ -1,12 +1,12 @@
 package com.albumsgenerator.app.presentation.common.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_music_off
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MusicOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ErrorCard(
@@ -36,10 +37,10 @@ fun ErrorCard(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
-                imageVector = Icons.Filled.MusicOff,
+                painter = painterResource(Res.drawable.ic_music_off),
+                contentDescription = null,
                 modifier = Modifier
                     .size(76.dp),
-                contentDescription = null,
             )
 
             Text(

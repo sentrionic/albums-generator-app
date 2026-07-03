@@ -1,8 +1,8 @@
 package com.albumsgenerator.app.presentation.screens.stats.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_more_vert
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.albumsgenerator.app.domain.models.AlbumType
 import com.albumsgenerator.app.presentation.common.components.DropdownItem
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -48,7 +49,7 @@ fun StatsTopBar(
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.MoreVert,
+                        painter = painterResource(Res.drawable.ic_more_vert),
                         contentDescription = null,
                     )
                 }

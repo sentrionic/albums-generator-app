@@ -2,10 +2,9 @@ package com.albumsgenerator.app.presentation.common.components
 
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.action_open_web
+import albumsgenerator.sharedui.generated.resources.ic_arrow_back
 import albumsgenerator.sharedui.generated.resources.ic_external_link
 import albumsgenerator.sharedui.generated.resources.navigate_up
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -51,7 +50,7 @@ fun AppBar(
                     onClick = onBack,
                 ) {
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        painter = painterResource(Res.drawable.ic_arrow_back),
                         contentDescription = stringResource(Res.string.navigate_up),
                     )
                 }

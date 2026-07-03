@@ -3,6 +3,10 @@ package com.albumsgenerator.app.presentation.screens.settings.components
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.action_error
 import albumsgenerator.sharedui.generated.resources.copied_to_clipboard
+import albumsgenerator.sharedui.generated.resources.ic_android
+import albumsgenerator.sharedui.generated.resources.ic_share
+import albumsgenerator.sharedui.generated.resources.ic_sync
+import albumsgenerator.sharedui.generated.resources.ic_web
 import albumsgenerator.sharedui.generated.resources.logout
 import albumsgenerator.sharedui.generated.resources.settings_app_info_action
 import albumsgenerator.sharedui.generated.resources.settings_app_info_body
@@ -19,11 +23,6 @@ import albumsgenerator.sharedui.generated.resources.settings_sharing_title
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DeveloperMode
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -67,7 +66,7 @@ fun SettingsLayout(
     ) {
         SettingsCardWithAction(
             label = stringResource(Res.string.settings_sharing_title),
-            icon = Icons.Filled.Share,
+            icon = Res.drawable.ic_share,
             subtitle = stringResource(Res.string.settings_sharing_body),
             actionLabel = stringResource(Res.string.settings_sharing_action),
             onAction = {
@@ -99,7 +98,7 @@ fun SettingsLayout(
 
         SettingsCardWithAction(
             label = stringResource(Res.string.settings_refresh_title),
-            icon = Icons.Filled.Sync,
+            icon = Res.drawable.ic_sync,
             subtitle = stringResource(Res.string.settings_refresh_body),
             actionLabel = stringResource(Res.string.settings_refresh_action),
             onAction = {
@@ -109,7 +108,7 @@ fun SettingsLayout(
 
         SettingsCardWithAction(
             label = stringResource(Res.string.settings_external_info_title),
-            icon = Icons.Filled.Web,
+            icon = Res.drawable.ic_web,
             subtitle = stringResource(Res.string.settings_external_info_body),
             actionLabel = stringResource(Res.string.settings_external_info_action),
             onAction = {
@@ -124,7 +123,7 @@ fun SettingsLayout(
 
         SettingsCardWithAction(
             label = stringResource(Res.string.settings_app_info_title),
-            icon = Icons.Filled.DeveloperMode,
+            icon = Res.drawable.ic_android,
             subtitle = stringResource(Res.string.settings_app_info_body),
             actionLabel = stringResource(Res.string.settings_app_info_action),
             onAction = {

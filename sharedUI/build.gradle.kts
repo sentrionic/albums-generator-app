@@ -57,7 +57,6 @@ kotlin {
             implementation(libs.jetbrains.lifecycle.runtime.compose)
             implementation(libs.jetbrains.lifecycle.viewmodel.compose)
             implementation(libs.jetbrains.lifecycle.viewmodel.navigation3)
-            implementation(libs.jetbrains.material.icons.extended)
             implementation(libs.material3.placeholder)
             implementation(libs.metrox.viewmodel.compose)
             implementation(libs.room.runtime)

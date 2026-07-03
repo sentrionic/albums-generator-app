@@ -3,6 +3,8 @@ package com.albumsgenerator.app.presentation.screens.journey.components
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.accordion_collapse_accesibility
 import albumsgenerator.sharedui.generated.resources.accordion_expand_accesibility
+import albumsgenerator.sharedui.generated.resources.ic_arrow_drop_down
+import albumsgenerator.sharedui.generated.resources.ic_arrow_drop_up
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,9 +13,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +35,7 @@ import com.albumsgenerator.app.presentation.common.modifiers.listSemantics
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.format
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -97,11 +97,13 @@ fun ToggleableSectionCard(
                 )
 
                 Icon(
-                    imageVector = if (showSection) {
-                        Icons.Filled.ArrowDropUp
-                    } else {
-                        Icons.Filled.ArrowDropDown
-                    },
+                    painter = painterResource(
+                        if (showSection) {
+                            Res.drawable.ic_arrow_drop_up
+                        } else {
+                            Res.drawable.ic_arrow_drop_down
+                        },
+                    ),
                     contentDescription = null,
                 )
             }

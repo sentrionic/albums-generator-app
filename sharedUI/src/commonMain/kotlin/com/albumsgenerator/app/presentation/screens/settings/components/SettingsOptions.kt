@@ -79,7 +79,7 @@ fun SettingsOptions(
                 leadingIcon = {
                     {
                         Icon(
-                            imageVector = it.icon,
+                            painter = painterResource(it.icon),
                             contentDescription = null,
                         )
                     }

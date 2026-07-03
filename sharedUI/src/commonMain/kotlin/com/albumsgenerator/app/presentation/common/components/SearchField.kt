@@ -2,12 +2,11 @@ package com.albumsgenerator.app.presentation.common.components
 
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.history_filter_search
+import albumsgenerator.sharedui.generated.resources.ic_cancel
+import albumsgenerator.sharedui.generated.resources.ic_search
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +19,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -41,7 +41,7 @@ fun SearchField(
         },
         leadingIcon = {
             Icon(
-                imageVector = Icons.Outlined.Search,
+                painter = painterResource(Res.drawable.ic_search),
                 contentDescription = null,
             )
         },
@@ -56,7 +56,7 @@ fun SearchField(
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Cancel,
+                        painter = painterResource(Res.drawable.ic_cancel),
                         contentDescription = null,
                     )
                 }

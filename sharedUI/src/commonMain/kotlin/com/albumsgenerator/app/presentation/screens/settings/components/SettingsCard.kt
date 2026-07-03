@@ -1,13 +1,13 @@
 package com.albumsgenerator.app.presentation.screens.settings.components
 
+import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_music_note
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,11 +16,12 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.albumsgenerator.app.presentation.common.components.SectionHeader
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SettingsCard(
@@ -45,7 +46,7 @@ fun SettingsCard(
 @Composable
 fun SettingsCardWithAction(
     label: String,
-    icon: ImageVector,
+    icon: DrawableResource,
     subtitle: String,
     actionLabel: String,
     onAction: () -> Unit,
@@ -72,7 +73,7 @@ fun SettingsCardWithAction(
                 )
 
                 Icon(
-                    imageVector = icon,
+                    painter = painterResource(icon),
                     contentDescription = null,
                 )
             }
@@ -86,7 +87,7 @@ private fun SettingsCardWithActionPreview() {
     AppTheme {
         SettingsCardWithAction(
             label = "Section Header",
-            icon = Icons.Filled.MusicNote,
+            icon = Res.drawable.ic_music_note,
             subtitle = "This is a section",
             actionLabel = "Click Me",
             onAction = {},

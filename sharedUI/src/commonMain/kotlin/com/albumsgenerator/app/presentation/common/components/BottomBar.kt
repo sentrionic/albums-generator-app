@@ -6,24 +6,24 @@ import albumsgenerator.sharedui.generated.resources.destination_history
 import albumsgenerator.sharedui.generated.resources.destination_settings
 import albumsgenerator.sharedui.generated.resources.destination_stats
 import albumsgenerator.sharedui.generated.resources.destination_summary
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
-import androidx.compose.material.icons.filled.AutoGraph
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Summarize
+import albumsgenerator.sharedui.generated.resources.ic_album
+import albumsgenerator.sharedui.generated.resources.ic_history
+import albumsgenerator.sharedui.generated.resources.ic_query_stats
+import albumsgenerator.sharedui.generated.resources.ic_settings
+import albumsgenerator.sharedui.generated.resources.ic_summarize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation3.runtime.NavKey
 import com.albumsgenerator.app.presentation.navigation.Route
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -43,7 +43,7 @@ fun BottomBar(
                 },
                 icon = {
                     Icon(
-                        imageVector = data.icon,
+                        painter = painterResource(data.icon),
                         contentDescription = null,
                     )
                 },
@@ -57,28 +57,28 @@ fun BottomBar(
     }
 }
 
-data class NavigationItem(val label: StringResource, val icon: ImageVector)
+data class NavigationItem(val label: StringResource, val icon: DrawableResource)
 
 val TOP_LEVEL_DESTINATIONS = mapOf(
     Route.CurrentAlbum to NavigationItem(
         label = Res.string.destination_album,
-        icon = Icons.Default.Album,
+        icon = Res.drawable.ic_album,
     ),
     Route.History to NavigationItem(
         label = Res.string.destination_history,
-        icon = Icons.Filled.History,
+        icon = Res.drawable.ic_history,
     ),
     Route.Stats to NavigationItem(
         label = Res.string.destination_stats,
-        icon = Icons.Filled.AutoGraph,
+        icon = Res.drawable.ic_query_stats,
     ),
     Route.Summary to NavigationItem(
         label = Res.string.destination_summary,
-        icon = Icons.Default.Summarize,
+        icon = Res.drawable.ic_summarize,
     ),
     Route.Settings to NavigationItem(
         label = Res.string.destination_settings,
-        icon = Icons.Default.Settings,
+        icon = Res.drawable.ic_settings,
     ),
 )
 

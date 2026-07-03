@@ -1,6 +1,7 @@
 package com.albumsgenerator.app.presentation.screens.artist.components
 
 import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_question_mark
 import albumsgenerator.sharedui.generated.resources.unknown_album
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,8 +11,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -38,7 +38,7 @@ fun UnknownAlbum(modifier: Modifier = Modifier) {
                     .background(MaterialTheme.colorScheme.surfaceContainerLowest),
             ) {
                 Icon(
-                    imageVector = Icons.Filled.QuestionMark,
+                    painter = painterResource(Res.drawable.ic_question_mark),
                     contentDescription = null,
                     modifier = Modifier
                         .size(75.dp)

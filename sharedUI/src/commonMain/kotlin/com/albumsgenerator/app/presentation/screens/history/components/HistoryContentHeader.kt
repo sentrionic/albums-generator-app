@@ -4,6 +4,7 @@ import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.history_filter_all_genres
 import albumsgenerator.sharedui.generated.resources.history_filter_all_ratings
 import albumsgenerator.sharedui.generated.resources.history_filter_rating_unrated
+import albumsgenerator.sharedui.generated.resources.ic_arrow_forward
 import albumsgenerator.sharedui.generated.resources.star_rating
 import albumsgenerator.sharedui.generated.resources.your_journey
 import albumsgenerator.sharedui.generated.resources.your_journey_navigate_accessibility
@@ -14,8 +15,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +38,7 @@ import com.albumsgenerator.app.presentation.ui.theme.AppTheme
 import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.eygraber.compose.placeholder.material3.placeholder
 import kotlinx.collections.immutable.ImmutableList
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -102,7 +102,7 @@ private fun YourJourneyCard(modifier: Modifier = Modifier) {
                     .weight(1f),
             )
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                painter = painterResource(Res.drawable.ic_arrow_forward),
                 contentDescription = null,
             )
         }

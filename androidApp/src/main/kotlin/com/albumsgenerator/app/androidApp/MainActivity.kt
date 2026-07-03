@@ -21,7 +21,7 @@ import com.albumsgenerator.app.presentation.ui.theme.DarkColorScheme
 import com.albumsgenerator.app.presentation.ui.theme.LightColorScheme
 import dev.zacsweers.metro.createGraphFactory
 
-class MainActivity() : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     // TODO: Replace with BaseApplication application inject
     val appGraph = createGraphFactory<AndroidAppGraph.Factory>().create(activity = this)
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,6 +3,7 @@ package com.albumsgenerator.app.presentation.screens.history.components
 import albumsgenerator.sharedui.generated.resources.Res
 import albumsgenerator.sharedui.generated.resources.album_navigate_accessibility
 import albumsgenerator.sharedui.generated.resources.history_subtitle
+import albumsgenerator.sharedui.generated.resources.ic_arrow_upward
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,8 +17,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -47,6 +46,7 @@ import com.albumsgenerator.app.presentation.ui.theme.Paddings
 import com.albumsgenerator.app.presentation.utils.PreviewData
 import com.eygraber.compose.placeholder.material3.placeholder
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -155,7 +155,7 @@ fun HistoryContent(
                 },
             ) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowUpward,
+                    painter = painterResource(Res.drawable.ic_arrow_upward),
                     contentDescription = null,
                 )
             }

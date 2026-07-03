@@ -1,12 +1,11 @@
 package com.albumsgenerator.app.presentation.screens.webview
 
 import albumsgenerator.sharedui.generated.resources.Res
+import albumsgenerator.sharedui.generated.resources.ic_arrow_back
 import albumsgenerator.sharedui.generated.resources.navigate_up
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,6 +26,7 @@ import com.albumsgenerator.app.presentation.utils.collectIsScreenReaderEnabledAs
 import com.albumsgenerator.app.presentation.utils.getCurrentPlatform
 import com.saralapps.composemultiplatformwebview.PlatformWebView
 import com.saralapps.composemultiplatformwebview.rememberPlatformWebViewState
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +63,7 @@ fun WebViewScreen(
                             onClick = onBack,
                         ) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                painter = painterResource(Res.drawable.ic_arrow_back),
                                 contentDescription = stringResource(Res.string.navigate_up),
                             )
                         }
