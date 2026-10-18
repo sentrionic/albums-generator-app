@@ -54,7 +54,6 @@ class StatsViewModel(
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val state = combine(
         statsFlow,
         historyRepository.historiesFlow(),
@@ -79,7 +78,12 @@ class StatsViewModel(
 
         DataState.Success(
             StatsScreenState(
-                totalAlbums = stats.size,
+                totalAlbums = if (type == AlbumType.OFFICIAL) {
+                    // The Christmas album is excluded from the official stats, so add it to the count.
+                    stats.size + 1
+                } else {
+                    stats.size
+                },
                 topAlbums = stats.take(Constants.LIMIT).takeVisible(),
                 bottomAlbums = stats.takeLast(Constants.LIMIT).reversed().takeVisible(),
                 mostControversial = statsSortedByControversialScore.take(

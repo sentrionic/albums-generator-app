@@ -1,0 +1,5 @@
+[tasks]
+format = './gradlew formatKotlinCommonMain'
+lint = './gradlew lintKotlinCommonMain && ./gradlew :sharedUI:detekt'
+debug = './gradlew :android:assembleDebug'
+release = './gradlew :android:assembleRelease'

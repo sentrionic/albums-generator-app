@@ -5,5 +5,5 @@ object Constants {
     const val APP_REPOSITORY = "https://github.com/sentrionic/albums-generator-app"
     const val WEBSITE_API = "https://1001albumsgenerator.com/api/v1"
     const val WEBSITE_URL = "https://1001albumsgenerator.com"
-    const val TOTAL_ALBUMS_COUNT: Int = 1089
+    const val TOTAL_ALBUMS_COUNT: Int = 1102
 }

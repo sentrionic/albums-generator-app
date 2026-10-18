@@ -65,8 +65,8 @@ To run the application on android device/emulator:
 - open project in Android Studio and run imported android run configuration
 
 To build the application bundle:
-- run `./gradlew :androidApp:assembleDebug`
-- find `.apk` file in `androidApp/build/outputs/apk/debug/androidApp-debug.apk`
+- run `./gradlew :androidApp:assemble{Debug|Release}`
+- find `.apk` file in `androidApp/build/outputs/apk/{debug|release}/com.albumsgenerator.app-{version}.apk`
 
 ### Desktop
 Run the desktop application: `./gradlew :desktopApp:run`  

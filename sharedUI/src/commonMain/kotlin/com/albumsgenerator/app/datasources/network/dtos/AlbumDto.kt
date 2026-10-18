@@ -36,7 +36,9 @@ data class AlbumDto(
     @SerialName("spotifyId")
     val spotifyId: String? = null,
     @SerialName("subGenres")
-    val subGenres: List<String>,
+    val subGenres: List<String>? = null,
+    @SerialName("styles")
+    val styles: List<String>? = null,
     @SerialName("tidalId")
     val tidalId: String? = null,
     @SerialName("uuid")
@@ -60,7 +62,7 @@ data class AlbumDto(
         releaseDate = releaseDate,
         slug = slug,
         spotifyId = spotifyId,
-        subGenres = subGenres.toImmutableList(),
+        subGenres = (subGenres.orEmpty() + styles.orEmpty()).toImmutableList(),
         tidalId = tidalId,
         uuid = uuid,
         wikipediaUrl = wikipediaUrl,
